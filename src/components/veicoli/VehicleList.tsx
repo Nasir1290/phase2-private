@@ -1,18 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { SlArrowDown } from "react-icons/sl";
 import order from "@/assets/vehicle/frecce-filtro.svg";
-import VehicleCard from "../allCards/VehicleCard";
-import Pagination from "../shared/pagination/Pagination";
-import Loading from "../shared/loading/Loading";
-import { useGetAllAcceptedCarQuery } from "@/redux/api/carApi";
-import { useSearchParams } from "next/navigation";
 import { carBrands } from "@/lib/brands";
+import { useGetAllAcceptedCarQuery } from "@/redux/api/carApi";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { SlArrowDown } from "react-icons/sl";
+import VehicleCard from "../allCards/VehicleCard";
+import Loading from "../shared/loading/Loading";
+import Pagination from "../shared/pagination/Pagination";
+import VehicleFilterModal from "./CarFilterModal";
+
+// Dynamically import MapModal with no SSR
+const MapModal = dynamic(() => import("./MapModal"), {
+  ssr: false,
+  loading: () => <p>Loading map...</p>,
+});
 
 const VehicleList = () => {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Raccomandato");
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,13 +54,10 @@ const VehicleList = () => {
     { name: "longitude", value: longitude || undefined },
   ]);
 
-  const brandLogos: { [key: string]: string } = carBrands.reduce(
-    (acc, brand) => {
-      acc[brand.name] = brand.logo;
-      return acc;
-    },
-    {} as { [key: string]: string }
-  );
+  const brandLogos: { [key: string]: string } = carBrands.reduce((acc, brand) => {
+    acc[brand.name] = brand.logo;
+    return acc;
+  }, {} as { [key: string]: string });
 
   const vehicles = getAllCars?.data || [];
   const totalPage = getAllCars?.meta?.totalPage || 0;
@@ -78,10 +84,7 @@ const VehicleList = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -102,6 +105,9 @@ const VehicleList = () => {
     setCurrentPage(1);
   }, [brandParam]);
 
+  const handleApplyFilters = (filters: any) => {
+    console.log("Applied filters:", filters);
+  };
   return (
     <div className="container mx-auto">
       {isLoading && (
@@ -112,76 +118,65 @@ const VehicleList = () => {
       {!isLoading && (
         <>
           <div className="flex items-center justify-between my-10">
-            <p className="text-text_light_gray font-medium text-sm">
-              {getAllCars?.meta?.total} Risultati
-            </p>
-            <div onClick={toggleDropdown} className="flex items-center gap-2">
-              <Image
-                src={order}
-                alt="order"
-                width={20}
-                height={20}
-                className="h-4 w-4"
-              />
-              <p className="text-text_dark_gray text-sm cursor-pointer">
-                Ordina per
-              </p>
-              <div ref={dropdownRef} className="relative dropdown-container">
-                <button>
-                  <SlArrowDown className="h-3 w-3 font-bold text-red" />
-                </button>
+            <p className="text-text_light_gray font-medium text-sm">{getAllCars?.meta?.total} Risultati</p>
+            <div className="flex items-center gap-4">
+              <MapModal />
 
-                {isOpen && (
-                  <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-md border border-gray-200 z-30">
-                    <ul className="py-2 px-2">
-                      <li
-                        onClick={() => handleSelect("Raccomandato")}
-                        className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                          selectedOption === "Raccomandato"
-                            ? "bg-red-100 text-gray-500 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        Raccomandato
-                      </li>
-                      <li
-                        onClick={() => handleSelect("Dal più caro")}
-                        className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                          selectedOption === "Dal più caro"
-                            ? "bg-red-100 text-gray-500 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        Dal più caro
-                      </li>
-                      <li
-                        onClick={() => handleSelect("Dal meno caro")}
-                        className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                          selectedOption === "Dal meno caro"
-                            ? "bg-red-100 text-gray-500 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        Dal meno caro
-                      </li>
-                    </ul>
-                  </div>
-                )}
+              <VehicleFilterModal
+                open={isFilterModalOpen}
+                onClose={() => setIsFilterModalOpen(false)}
+                onApply={handleApplyFilters}
+              />
+              <div onClick={toggleDropdown} className="flex items-center gap-2 cursor-pointer">
+                <Image src={order} alt="order" width={20} height={20} className="h-4 w-4" />
+                <p className="text-text_dark_gray text-sm cursor-pointer">Ordina per</p>
+                <div ref={dropdownRef} className="relative dropdown-container">
+                  <button>
+                    <SlArrowDown className="h-3 w-3 font-bold text-red" />
+                  </button>
+
+                  {isOpen && (
+                    <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-md border border-gray-200 z-30">
+                      <ul className="py-2 px-2">
+                        <li
+                          onClick={() => handleSelect("Raccomandato")}
+                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
+                            selectedOption === "Raccomandato" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          }`}
+                        >
+                          Raccomandato
+                        </li>
+                        <li
+                          onClick={() => handleSelect("Dal più caro")}
+                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
+                            selectedOption === "Dal più caro" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          }`}
+                        >
+                          Dal più caro
+                        </li>
+                        <li
+                          onClick={() => handleSelect("Dal meno caro")}
+                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
+                            selectedOption === "Dal meno caro" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          }`}
+                        >
+                          Dal meno caro
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
           <div className="space-y-4 grid grid-cols-1 gap-4">
             {vehicles.map((vehicle: any) => {
-              const selectedPrice =
-                vehicle.price.find((p: any) => p.rentalTime === 24)?.price || 0;
-              const selectedKm =
-                vehicle.price.find((p: any) => p.rentalTime === 24)
-                  ?.kilometerPerHour || 0;
+              const selectedPrice = vehicle.price.find((p: any) => p.rentalTime === 24)?.price || 0;
+              const selectedKm = vehicle.price.find((p: any) => p.rentalTime === 24)?.kilometerPerHour || 0;
               const isAvailable = vehicle.carStatus === "ACTIVE";
               if (!isAvailable) return null;
               const brandLogo = brandLogos[vehicle.brand];
-              console.log(brandLogos, "brandLogo");
               return (
                 <VehicleCard
                   key={vehicle?.id}
@@ -198,18 +193,14 @@ const VehicleList = () => {
                   maxSpeed={selectedKm}
                   whatsappNumber={vehicle?.whatsapp}
                   phoneNumber={vehicle?.phoneNumber}
-                  location = {vehicle?.location}
+                  location={vehicle?.location}
                 />
               );
             })}
           </div>
 
           <div className="flex justify-center mt-6">
-            <Pagination
-              totalPages={totalPage}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-            />
+            <Pagination totalPages={totalPage} currentPage={currentPage} onPageChange={setCurrentPage} />
           </div>
         </>
       )}

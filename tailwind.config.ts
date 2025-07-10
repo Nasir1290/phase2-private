@@ -25,6 +25,7 @@ export default {
           lg: "1024px",
           md: "768px",
           sm: "576px",
+          xs: "480px",
         },
       },
       colors: {
@@ -34,7 +35,7 @@ export default {
         text_dark_gray: "#484848",
         button_bg: "#0EA548",
         black: "#1F1F1F",
-        red: "#D1252B",
+        // red: "#D1252B",
         green: "#0EA548",
         section_bg: "#FAFAFA",
         footer_bg: "#1F1F1F",
