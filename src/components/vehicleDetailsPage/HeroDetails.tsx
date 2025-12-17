@@ -1,21 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useRef, useState } from "react";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import location from "@/assets/vehicleDetails/location.svg";
+import { carBrands } from "@/lib/brands";
 import { Car } from "@/types/cars";
-import { Dialog, DialogContent } from "./VehicleDetailDialog";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import { carBrands } from "@/lib/brands";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Dialog, DialogContent } from "./VehicleDetailDialog";
 // Import the correct type for Swiper
+import heart from "@/assets/heartDetails.svg";
+import redHeart from "@/assets/redHeart.svg";
 import { Swiper as SwiperType } from "swiper/types";
 import Loading from "../shared/loading/Loading";
 
@@ -24,20 +26,22 @@ const HeroDetails = ({ car }: { car: Car }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [activeThumbIndex, setActiveThumbIndex] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
 
-  const brandLogos: { [key: string]: string } = carBrands.reduce(
-    (acc, brand) => {
-      acc[brand.name] = brand.logo;
-      return acc;
-    },
-    {} as { [key: string]: string }
-  );
+  const toggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+  };
+
+  const brandLogos: { [key: string]: string } = carBrands.reduce((acc, brand) => {
+    acc[brand?.name?.trim()?.toLowerCase()] = brand.logo;
+    return acc;
+  }, {} as { [key: string]: string });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSlideChange = (swiper: any) => {
     setActiveThumbIndex(swiper.realIndex);
   };
   // Get the logo of the car's brand from brandLogos
-  const brandLogo = brandLogos[car?.brand || ""];
+  const brandLogo = brandLogos[car?.brand?.trim()?.toLowerCase() || ""];
 
   const openModal = (index: number) => {
     setCurrentImageIndex(index);
@@ -45,9 +49,7 @@ const HeroDetails = ({ car }: { car: Car }) => {
   };
 
   const previousImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? car.otherImages.length : prev - 1
-    );
+    setCurrentImageIndex((prev) => (prev === 0 ? car.otherImages.length : prev - 1));
   };
 
   const nextImage = () => {
@@ -65,26 +67,36 @@ const HeroDetails = ({ car }: { car: Car }) => {
     <div className="relative w-full mt-16">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 md:gap-4 md:mb-12">
         <h2 className="flex items-center gap-6 text-xl md:text-2xl font-semibold">
-          <Image
-            src={brandLogo || "/placeholder.svg"}
-            alt="car"
-            width={300}
-            height={300}
-            className="w-8 h-8 md:w-12 md:h-12"
-          />
+          <Image src={brandLogo || "/placeholder.svg"} alt="car" width={300} height={300} className="w-8 h-8 md:w-12 md:h-12" />
           {car?.brand || "Car Name"} {car?.model || "Car Name"}
         </h2>
 
-        <h2 className="flex items-center gap-1 text-base underline text-text_dark_gray/95">
-          <Image
-            src={location || "/placeholder.svg"}
-            alt="location"
-            width={20}
-            height={20}
-            className="w-4 h-4"
-          />
-          {car?.location || "Location Not Available"}
-        </h2>
+        <div className="flex items-center gap-1">
+          <button onClick={toggleFavorite} className="">
+            {isFavorited ? 
+               <Image 
+                 src={redHeart}
+                 alt="heart"
+                 width={18}
+                 height={20}
+                    className="w-4 h-4"
+               /> : 
+              <Image 
+                src={heart}
+                alt="heart"
+                width={24}
+                height={24}
+                className="w-4 h-4"
+              />
+              }
+          </button>
+          
+
+          <h2 className="flex items-center gap-1 text-base underline text-text_dark_gray/95">
+            <Image src={location || "/placeholder.svg"} alt="location" width={20} height={20} className="w-4 h-4" />
+            {car?.location || "Location Not Available"}
+          </h2>
+        </div>
       </div>
 
       <div className="mt-6">
@@ -101,11 +113,7 @@ const HeroDetails = ({ car }: { car: Car }) => {
             className="mySwiper2"
             onSlideChange={(swiper) => setActiveThumbIndex(swiper.realIndex)}
           >
-            <SwiperSlide
-              key="main-image"
-              onClick={() => openModal(0)}
-              className="relative"
-            >
+            <SwiperSlide key="main-image" onClick={() => openModal(0)} className="relative">
               <img
                 src={car?.mainImage || ""}
                 alt="Main Car Image"
@@ -116,11 +124,7 @@ const HeroDetails = ({ car }: { car: Car }) => {
             </SwiperSlide>
 
             {car.otherImages?.map((image, index) => (
-              <SwiperSlide
-                key={index}
-                onClick={() => openModal(index + 1)}
-                className="relative"
-              >
+              <SwiperSlide key={index} onClick={() => openModal(index + 1)} className="relative">
                 <img
                   src={image || ""}
                   alt={`Car Image ${index + 1}`}
@@ -207,15 +211,9 @@ const HeroDetails = ({ car }: { car: Car }) => {
               <ChevronLeft className="w-6 h-6" />
             </button>
             <div className="relative w-full h-4/5 flex items-center justify-center">
-              {/* Show Main Image if it's the selected one */}{" "}
-              {/* 16:9 aspect ratio container */}
+              {/* Show Main Image if it's the selected one */} {/* 16:9 aspect ratio container */}
               <img
-                src={
-                  currentImageIndex === 0
-                    ? car.mainImage
-                    : car?.otherImages[currentImageIndex - 1] ||
-                      "/placeholder.svg"
-                }
+                src={currentImageIndex === 0 ? car.mainImage : car?.otherImages[currentImageIndex - 1] || "/placeholder.svg"}
                 alt={`Car Image ${currentImageIndex}`}
                 className="absolute inset-0 w-full h-full object-contain rounded-xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"

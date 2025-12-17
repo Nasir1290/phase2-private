@@ -17,13 +17,7 @@ interface NavLink {
   icon: React.ElementType;
 }
 
-export default function MainNavLink({
-  user,
-  navLink,
-}: {
-  user?: { name: string; role: string; image: string } | null;
-  navLink: NavLink[];
-}) {
+export default function MainNavLink({ user, navLink }: { user?: { name: string; role: string; image: string } | null; navLink: NavLink[] }) {
   const pathname = usePathname();
   const [logout] = useLogoutMutation();
   const router = useRouter();
@@ -70,9 +64,7 @@ export default function MainNavLink({
       )?.data;
 
       const errorMessage =
-        apiError?.errorMessages?.map((err) => err.message).join(", ") ||
-        apiError?.message ||
-        "Failed to logout. Please try again.";
+        apiError?.errorMessages?.map((err) => err.message).join(", ") || apiError?.message || "Failed to logout. Please try again.";
 
       toast.error(errorMessage);
     }
@@ -81,13 +73,7 @@ export default function MainNavLink({
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Link href={"/"} className="px-8 py-6 pb-10 lg:py-0 h-8 lg:h-20">
-        <Image
-          src={logo}
-          alt="logo"
-          width={200}
-          height={200}
-          className="w-36 lg:w-40 lg:h-24"
-        />
+        <Image src={logo} alt="logo" width={200} height={200} className="w-36 lg:w-40 lg:h-24" />
       </Link>
       <nav className="flex-1 px-4 py-6">
         <div className="space-y-1">
@@ -96,9 +82,7 @@ export default function MainNavLink({
               key={link.name}
               href={link.href}
               className={`flex items-center gap-3 px-3 py-3 rounded-md text-[15px] ${
-                isActive(link.href)
-                  ? "border border-red/20 bg-red/5 text-black shadow"
-                  : "hover:shadow hover:shadow-red/20"
+                isActive(link.href) ? "border border-primary/20 bg-primary/5 text-black shadow" : "hover:shadow hover:shadow-primary/20"
               }`}
             >
               <div className="rounded">
@@ -110,10 +94,7 @@ export default function MainNavLink({
         </div>
       </nav>
       <div className="mt-auto px-4 space-y-1">
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer text-black"
-        >
+        <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer text-black">
           <IoLogOut className="min-w-6 min-h-6" />
           Log Out
         </button>
@@ -121,13 +102,7 @@ export default function MainNavLink({
         {/* Profile Section */}
         {user ? (
           <div className="flex items-center gap-3 px-3 py-3 mt-4">
-            <Image
-              src={user.image || "/path/to/default/profile.jpg"}
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
+            <Image src={user.image || "/path/to/default/profile.jpg"} alt="Profile" width={40} height={40} className="rounded-full" />
             <div className="flex-1">
               <div className="font-medium">{user.name}</div>
               <div className="text-xs text-gray-500">{user.role}</div>

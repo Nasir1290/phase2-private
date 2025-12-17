@@ -25,19 +25,12 @@ const CookiesBox = () => {
         <div className="bg-[#F4F4F4] px-8 lg:px-10 py-5 w-full xl:w-[760px] container mx-auto rounded-lg">
           <div className="flex justify-between items-center gap-4">
             <div className="text-sm font-medium text-black/90">
-              Utilizziamo i cookie per assicurarvi la migliore esperienza sul
-              nostro sitoweb.{" "}
-              <Link
-                href="/terms-condition/#privacy-policy"
-                className="underline text-red"
-              >
+              Utilizziamo i cookie per assicurarvi la migliore esperienza sul nostro sitoweb.{" "}
+              <Link href="/terms-condition/#privacy-policy" className="underline text-primary">
                 Scopri di più.
               </Link>
             </div>
-            <button
-              className="text-sm font-medium bg-red text-white px-8 py-2 rounded"
-              onClick={handleOkClick}
-            >
+            <button className="text-sm font-medium bg-primary text-white px-8 py-2 rounded" onClick={handleOkClick}>
               OK
             </button>
           </div>

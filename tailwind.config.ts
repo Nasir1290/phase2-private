@@ -2,14 +2,28 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
-      container: {
+      // container: {
+      //   center: true,
+      //   padding: {
+      //     DEFAULT: "1rem",
+      //     // sm: "2rem",
+      //     // md: "4rem",
+      //     // lg: "6rem",
+      //     // xl: "6rem",
+      //     // "2xl": "12rem",
+      //   },
+      //   screens: {
+      //     "2xl": "1580px",
+      //     xl: "1324px",
+      //     lg: "1024px",
+      //     md: "768px",
+      //     sm: "576px",
+      //   },
+      // },
+       container: {
         center: true,
         padding: {
           DEFAULT: "1rem",
@@ -35,7 +49,7 @@ export default {
         text_dark_gray: "#484848",
         button_bg: "#0EA548",
         black: "#1F1F1F",
-        // red: "#D1252B",
+        "primary": "#D1252B",
         green: "#0EA548",
         section_bg: "#FAFAFA",
         footer_bg: "#1F1F1F",

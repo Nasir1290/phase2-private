@@ -14,9 +14,7 @@ import MapComponent from "@/components/vehicleInsert/mapComponent/MapComponent";
 
 interface ContactProps {
   formData: VehicleFormData;
-  onFormChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onFormChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 const EditContact = ({ formData, onFormChange }: ContactProps) => {
@@ -43,10 +41,7 @@ const EditContact = ({ formData, onFormChange }: ContactProps) => {
   return (
     <div>
       {/* Contact Information */}
-      <VehicleInsertionHeader
-        title="Contatto"
-        subtitle="Gestisci le tue opzioni di contatto in modo rapido e semplice"
-      />
+      <VehicleInsertionHeader title="Contatto" subtitle="Gestisci le tue opzioni di contatto in modo rapido e semplice" />
       {/* Contact Info  */}
       <div className="space-y-10">
         {/* Name of the inserter */}
@@ -113,11 +108,7 @@ const EditContact = ({ formData, onFormChange }: ContactProps) => {
               E-mail
             </Label>
             <div className="relative">
-              <Image
-                src={email}
-                alt="email"
-                className="z-10 absolute top-3.5 left-4 rounded-lg w-6 h-6"
-              />
+              <Image src={email} alt="email" className="z-10 absolute top-3.5 left-4 rounded-lg w-6 h-6" />
               <Input
                 id="email"
                 value={formData.email}
@@ -134,22 +125,11 @@ const EditContact = ({ formData, onFormChange }: ContactProps) => {
               <Label htmlFor="whatsapp" className="font-normal">
                 Whatsapp
               </Label>
-              <Image
-                onClick={toggleModal}
-                width={200}
-                height={200}
-                src={infoIcon}
-                alt="info"
-                className="w-4 h-4 opacity-80 mr-1"
-              />
+              <Image onClick={toggleModal} width={200} height={200} src={infoIcon} alt="info" className="w-4 h-4 opacity-80 mr-1" />
             </div>
 
             <div className="relative">
-              <Image
-                src={whatsapp}
-                alt="whatsapp"
-                className="z-10 absolute top-[13px] left-4 rounded-lg w-6 h-6"
-              />
+              <Image src={whatsapp} alt="whatsapp" className="z-10 absolute top-[13px] left-4 rounded-lg w-6 h-6" />
               <p className="z-10 absolute top-[13px] left-12">wa.me/</p>
               <Input
                 id="whatsapp"
@@ -168,25 +148,13 @@ const EditContact = ({ formData, onFormChange }: ContactProps) => {
 
       {/* WhatsApp Info Modal */}
       {openModal && (
-        <div
-          className="flex justify-center items-center z-50"
-          onClick={toggleModal}
-        >
-          <div
-            className="bg-white p-6 rounded-2xl shadow-xl max-w-[300px] mx-auto relative min-w-[400px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={toggleModal}
-              className="absolute top-3 right-3 text-lg text-gray-500 hover:text-red-500"
-            >
+        <div className="flex justify-center items-center z-50" onClick={toggleModal}>
+          <div className="bg-white p-6 rounded-2xl shadow-xl max-w-[300px] mx-auto relative min-w-[400px]" onClick={(e) => e.stopPropagation()}>
+            <button onClick={toggleModal} className="absolute top-3 right-3 text-lg text-gray-500 hover:text-primary">
               <CgClose size={15} />
             </button>
             <h2 className="text-xl font-medium">Whatsapp</h2>
-            <p className="text-sm text-gray-600 mt-4">
-              Inserisci il tuo numero con il prefisso internazionale senza
-              spazi.
-            </p>
+            <p className="text-sm text-gray-600 mt-4">Inserisci il tuo numero con il prefisso internazionale senza spazi.</p>
           </div>
         </div>
       )}

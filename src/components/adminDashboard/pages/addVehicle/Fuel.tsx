@@ -5,25 +5,18 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface FuelProps {
   formData: VehicleFormData;
-  onFormChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onFormChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 interface FuelProps {
   formData: VehicleFormData;
-  onFormChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void; // Typing onFormChange
+  onFormChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void; // Typing onFormChange
 }
 
 const Fuel = ({ formData, onFormChange }: FuelProps) => {
   return (
     <div className="space-y-10">
-      <VehicleInsertionHeader
-        title="Carburante"
-        subtitle="Seleziona il tipo di carburante necessario per il tuo veicolo"
-      />
+      <VehicleInsertionHeader title="Carburante" subtitle="Seleziona il tipo di carburante necessario per il tuo veicolo" />
       {/* Carburante */}
       <div className="relative flex flex-col gap-3">
         <Label htmlFor="fuelType">Carburante</Label>
@@ -52,7 +45,7 @@ const Fuel = ({ formData, onFormChange }: FuelProps) => {
 
         {/* Custom Dropdown Arrow */}
         <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-          <IoIosArrowDown className="w-4 h-4 text-red" />
+          <IoIosArrowDown className="w-4 h-4 text-primary" />
         </div>
       </div>
     </div>

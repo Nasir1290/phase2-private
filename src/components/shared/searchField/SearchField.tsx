@@ -21,11 +21,7 @@ const SearchField = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const handleResult = (
-    result: string,
-    longitude: number,
-    latitude: number
-  ) => {
+  const handleResult = (result: string, longitude: number, latitude: number) => {
     // setSearchQuery(result);
     onResult(result, longitude, latitude);
   };
@@ -41,15 +37,9 @@ const SearchField = ({
         <div>
           <LocationWithoutMap onResult={handleResult} />
         </div>
-        <div
-          ref={dropdownRef}
-          className="flex items-center gap-2 absolute right-0 top-1/2 transform -translate-y-1/2 bg-white w-28 rounded-lg"
-        >
+        <div ref={dropdownRef} className="flex items-center gap-2 absolute right-0 top-1/2 transform -translate-y-1/2 bg-white w-28 rounded-lg">
           <Image src={flagIcon} alt="Flag Icon" className="w-[18px] h-[18px]" />
-          <div
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-1"
-          >
+          <div onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-1">
             <p className="text-sm font-medium text-text_dark_gray">Svizzera</p>
           </div>
         </div>
@@ -58,7 +48,7 @@ const SearchField = ({
       <button
         type="submit"
         // onClick={handleSearchClick}
-        className="hidden md:flex items-center justify-center bg-red h-10 md:h-12 px-5 lg:px-12 rounded-lg shadow-lg font-medium text-sm lg:text-[15px] text-white tracking-wider transition-all duration-800 ease-in-out hover:bg-red/90"
+        className="hidden md:flex items-center justify-center bg-primary h-10 md:h-12 px-5 lg:px-12 rounded-lg shadow-lg font-medium text-sm lg:text-[15px] text-white tracking-wider transition-all duration-800 ease-in-out hover:bg-primary/90"
       >
         CERCA
       </button>

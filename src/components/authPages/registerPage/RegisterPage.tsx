@@ -60,10 +60,7 @@ const RegisterPage = () => {
         }
       )?.data;
 
-      const errorMessage =
-        apiError?.errorMessages?.map((err) => err.message).join(", ") ||
-        apiError?.message ||
-        "An unexpected error occurred";
+      const errorMessage = apiError?.errorMessages?.map((err) => err.message).join(", ") || apiError?.message || "An unexpected error occurred";
 
       toast.error(errorMessage);
     }
@@ -73,11 +70,7 @@ const RegisterPage = () => {
     setIsSuccessModalOpen(!isSuccessModalOpen);
   };
 
-  const handleSearchResult = (
-    result: string,
-    longitude: number,
-    latitude: number
-  ) => {
+  const handleSearchResult = (result: string, longitude: number, latitude: number) => {
     // Create the URL with the search parameters
     const newUrl = `/veicoli?latitude=${latitude}&longitude=${longitude}`;
 
@@ -90,12 +83,7 @@ const RegisterPage = () => {
       {/* Search Part */}
       <div className="bg-section_bg h-40 hidden md:flex items-center justify-center">
         <div className="container mx-auto px-4 pt-12 pb-10 flex gap-2 mb-4 w-[800px]">
-          <SearchField
-            onResult={handleSearchResult}
-            countryList={["Svizzera", "Italy"]}
-            searchIcon={search}
-            flagIcon={swiss}
-          />
+          <SearchField onResult={handleSearchResult} countryList={["Svizzera", "Italy"]} searchIcon={search} flagIcon={swiss} />
         </div>
       </div>
       {/* Register Part */}
@@ -104,34 +92,23 @@ const RegisterPage = () => {
         <div className="xl:w-1/2 space-y-10">
           <header className="max-w-[370px] text-start">
             <div className="flex flex-col gap-4">
-              <span className="text-sm font-medium text-text_light_gray uppercase">
-                NETWORK
-              </span>
+              <span className="text-sm font-medium text-text_light_gray uppercase">NETWORK</span>
               <h1 className="text-3xl md:text-[30px] font-extrabold">
-                Registrati <span className="text-red">gratuitamente</span>{" "}
-                <br />
+                Registrati <span className="text-primary">gratuitamente</span> <br />
                 su bittengo.org
               </h1>
             </div>
           </header>
           <p className="text-text_light_gray font-normal text-sm">
-            Registrati gratuitamente su Bittengo.org e scopri un nuovo modo di
-            noleggiare o offrire veicoli in totale sicurezza. Se cerchi
-            un&apos;auto o un furgone, potrai accedere a un’ampia selezione di
-            mezzi da fornitori affidabili con un rating minimo di 4.5,
-            confrontare tariffe trasparenti e ricevere supporto 7 giorni su 7.
-            Se invece sei un’azienda, potrai pubblicare i tuoi veicoli, ricevere
-            richieste dirette da clienti interessati e aumentare la visibilità
-            della tua attività. Con Bittengo, il noleggio diventa semplice,
-            veloce e senza sorprese. Registrati ora e inizia subito a noleggiare
-            oppure guadagnare con i tuoi veicoli.
+            Registrati gratuitamente su Bittengo.org e scopri un nuovo modo di noleggiare o offrire veicoli in totale sicurezza. Se cerchi
+            un&apos;auto o un furgone, potrai accedere a un’ampia selezione di mezzi da fornitori affidabili con un rating minimo di 4.5, confrontare
+            tariffe trasparenti e ricevere supporto 7 giorni su 7. Se invece sei un’azienda, potrai pubblicare i tuoi veicoli, ricevere richieste
+            dirette da clienti interessati e aumentare la visibilità della tua attività. Con Bittengo, il noleggio diventa semplice, veloce e senza
+            sorprese. Registrati ora e inizia subito a noleggiare oppure guadagnare con i tuoi veicoli.
           </p>
           <p className="text-text_light_gray font-normal text-sm">
             Sei un azienda?{" "}
-            <Link
-              href="/partnership"
-              className="text-red underline font-medium"
-            >
+            <Link href="/partnership" className="text-primary underline font-medium">
               Partnership
             </Link>
           </p>
@@ -147,39 +124,21 @@ const RegisterPage = () => {
                 <Label htmlFor="name" className="font-normal">
                   Nome
                 </Label>
-                <Input
-                  type="text"
-                  id="name"
-                  name="firstName"
-                  className="shadow-md rounded-lg w-full border"
-                  required
-                />
+                <Input type="text" id="name" name="firstName" className="shadow-md rounded-lg w-full border" required />
               </div>
               {/* Cognome */}
               <div className="grid w-full items-center gap-3">
                 <Label htmlFor="cognome" className="font-normal">
                   Cognome
                 </Label>
-                <Input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  className="shadow-md rounded-lg w-full border"
-                  required
-                />
+                <Input type="text" id="lastName" name="lastName" className="shadow-md rounded-lg w-full border" required />
               </div>
               {/* Email */}
               <div className="grid w-full items-center gap-3">
                 <Label htmlFor="email" className="font-normal">
                   E-mail
                 </Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="shadow-md rounded-lg w-full border"
-                  required
-                />
+                <Input type="email" id="email" name="email" className="shadow-md rounded-lg w-full border" required />
               </div>
               {/* Phone Number */}
               <div className="grid w-full gap-4 mb-24">
@@ -217,13 +176,7 @@ const RegisterPage = () => {
                   <Label htmlFor="password" className="font-normal">
                     Password
                   </Label>
-                  <Input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="shadow-md rounded-lg w-full border"
-                    required
-                  />
+                  <Input type="password" id="password" name="password" className="shadow-md rounded-lg w-full border" required />
                 </div>
                 {/* Confirm Password */}
                 <div className="grid w-full items-center gap-3">
@@ -235,20 +188,16 @@ const RegisterPage = () => {
                     id="confirm-password"
                     name="confirm-password"
                     required
-                    className={`shadow-md rounded-lg w-full border ${
-                      passwordError ? "border-red" : ""
-                    }`}
+                    className={`shadow-md rounded-lg w-full border ${passwordError ? "border-primary" : ""}`}
                   />
                 </div>
               </div>
-              {passwordError && (
-                <p className="text-red text-sm">{passwordError}</p>
-              )}
+              {passwordError && <p className="text-primary text-sm">{passwordError}</p>}
               {/* Submit Button */}
               <SharedButton text="Registrati" cls="w-full" />
               <p className="mx-auto text-center text-text_light_gray text-[13px]">
                 Hai già un account registrato?
-                <Link href="/login" className="text-red font-medium">
+                <Link href="/login" className="text-primary font-medium">
                   {" "}
                   Accedi
                 </Link>
@@ -261,10 +210,7 @@ const RegisterPage = () => {
                 Termini e le Condizioni
               </Link>
                e{" "}
-              <Link
-                href="/terms-condition/#privacy-policy"
-                className="underline font-medium"
-              >
+              <Link href="/terms-condition/#privacy-policy" className="underline font-medium">
                 l&apos;Informativa sulla Privacy
               </Link>
             </p>
@@ -275,8 +221,7 @@ const RegisterPage = () => {
             toggleModal={toggleSuccessModal}
             messages={{
               title: "Registrazione avvenuta con successo",
-              description:
-                "Controlla la tua casella email, incluso lo spam, e clicca sul link di conferma per attivare il tuo account.",
+              description: "Controlla la tua casella email, incluso lo spam, e clicca sul link di conferma per attivare il tuo account.",
             }}
           />
         </div>

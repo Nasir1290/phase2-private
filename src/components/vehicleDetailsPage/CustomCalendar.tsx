@@ -50,21 +50,19 @@ const CustomCalendar: React.FC = () => {
       {/* Month and Static Year Header */}
       <div className="flex items-center justify-between mb-4">
         <button
-          className="text-red bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition-all"
+          className="text-primary bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition-all"
           onClick={() => handleMonthChange("prev")}
         >
           <FaChevronLeft size={18} />
         </button>
 
         <div className="text-lg font-semibold text-gray-700">
-          {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
-            new Date(currentYear, currentMonth)
-          )}{" "}
+          {new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(currentYear, currentMonth))}{" "}
           <span className="text-gray-500">{currentYear}</span>
         </div>
 
         <button
-          className="text-red bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition-all"
+          className="text-primary bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition-all"
           onClick={() => handleMonthChange("next")}
         >
           <FaChevronRight size={18} />
@@ -72,7 +70,7 @@ const CustomCalendar: React.FC = () => {
       </div>
 
       {/* Weekdays Header */}
-      <div className="grid grid-cols-7 text-center text-sm font-semibold text-red-600 mb-2">
+      <div className="grid grid-cols-7 text-center text-sm font-semibold text-primary mb-2">
         {daysOfWeek.map((day) => (
           <div key={day} className="py-2">
             {day}
@@ -88,14 +86,9 @@ const CustomCalendar: React.FC = () => {
             className={`py-3 text-sm cursor-pointer rounded-md ${
               day === null
                 ? "pointer-events-none"
-                : selectedDates.some(
-                    (d) =>
-                      d.getDate() === day &&
-                      d.getMonth() === currentMonth &&
-                      d.getFullYear() === currentYear
-                  )
-                ? "bg-red-500 text-white"
-                : "hover:bg-red-100"
+                : selectedDates.some((d) => d.getDate() === day && d.getMonth() === currentMonth && d.getFullYear() === currentYear)
+                ? "bg-primary-500 text-white"
+                : "hover:bg-primary-100"
             }`}
             onClick={() => handleDayClick(day)}
           >

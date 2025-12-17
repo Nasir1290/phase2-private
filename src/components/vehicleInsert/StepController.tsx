@@ -8,315 +8,187 @@ import { DetailsStep } from "./steps/Details";
 import { RootState } from "@/redux/store";
 import { setCurrentStep } from "@/redux/slice/vehicleInsertSlice";
 import { FormStep } from "@/types/vehiclStep";
-import { ReactNode, useEffect, useState, useCallback } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { PricingStep } from "./steps/Pricing";
 import { ContactStep } from "./steps/Contact";
 import { useCreateCarMutation } from "@/redux/api/carApi";
 import { useGetMyProfileQuery } from "@/redux/api/authApi";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { resetFormData } from "@/redux/slice/vehicleInsertSlice";
-
-type StepFieldErrors = {
-  [key in FormStep]?: string[];
-};
+import PublishStep from "./steps/PublishStep";
 
 export function StepController() {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [createCar] = useCreateCarMutation();
   const { data: getProfile } = useGetMyProfileQuery({});
   const userId = getProfile?.data?.id;
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [fieldErrors, setFieldErrors] = useState<StepFieldErrors>({});
+  const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-  const { currentStep, formData } = useSelector(
-    (state: RootState) => state.form
-  );
-  const stepOrder: FormStep[] = [
-    "basic",
-    "media",
-    "details",
-    "pricing",
-    "description",
-  ];
+  const { currentStep, formData } = useSelector((state: RootState) => state.form);
+
+  const stepOrder: FormStep[] = ["basic", "media", "details", "pricing", "description", "publish"];
+
+  // Get current step from URL query
+  const getStepFromQuery = (): FormStep => {
+    const stepFromQuery = searchParams.get("step") as FormStep;
+    return stepOrder.includes(stepFromQuery) ? stepFromQuery : "basic";
+  };
+
+  // Sync Redux state with URL on mount and URL changes
+  useEffect(() => {
+    const stepFromQuery = getStepFromQuery();
+    if (currentStep !== stepFromQuery) {
+      dispatch(setCurrentStep(stepFromQuery));
+    }
+  }, [searchParams]);
 
   const currentIndex = stepOrder.indexOf(currentStep);
 
-  const isStepComplete = useCallback(
-    (step: FormStep): boolean => {
-      switch (step) {
-        case "basic":
-          return (
-            !!formData.category &&
-            !!formData.brand &&
-            !!formData.model &&
-            !!formData.year &&
-            !!formData.transmission &&
-            !!formData.color &&
-            !!formData.kmh &&
-            !!formData.engine &&
-            !!formData.maxSpeed &&
-            !!formData.horsePower &&
-            !!formData.seats &&
-            !!formData.fuelType &&
-            !!formData.isConfirmed
-          );
-        case "media":
-          return !!formData.mainImage;
-        case "details":
-          const descriptionWordCount = (formData.description || "")
-            .trim()
-            .split(/\s+/)
-            .filter(Boolean).length;
-          return (
-            descriptionWordCount >= 20 &&
-            formData.deposite !== undefined && // Changed this line
-            formData.deposite !== null &&
-            !!formData.depositePolicy &&
-            !!formData.fuelPolicy &&
-            !!formData.mileagePolicy &&
-            !!formData.damagePolicy
-          );
-        case "pricing":
-          const hasValid24HourPrice = formData.price?.some(
-            (item: any) =>
-              item.rentalTime === 24 &&
-              item.price > 0 &&
-              (item.kilometerPerHour || item.kilometerPerHour === "Unlimited")
-          );
-          const allPriceKmPairsValid = !formData.price?.some(
-            (item: any) =>
-              item.price > 0 &&
-              !item.kilometerPerHour &&
-              item.kilometerPerHour !== "Unlimited"
-          );
-
-          return (
-            hasValid24HourPrice &&
-            allPriceKmPairsValid &&
-            !!formData.accessories
-          );
-
-        case "description":
-          return (
-            !!formData.advertiserName &&
-            !!formData.phoneNumber &&
-            !!formData.email &&
-            !!formData.whatsapp &&
-            !!formData.location &&
-            !!formData.authenticationFile
-          );
-        default:
-          return false;
-      }
-    },
-    [formData]
-  );
-
-  const isAllStepsComplete = useCallback(() => {
-    return stepOrder.every((step) => isStepComplete(step));
-  }, [stepOrder, isStepComplete]);
-
-  useEffect(() => {
-    // Reset the step to "basic" when the component mounts
-    dispatch(setCurrentStep("basic"));
-  }, [dispatch]);
-
-  const steps: Record<FormStep, ReactNode> = {
-    basic: <BasicInfoStep errors={fieldErrors.basic || []} />,
-    media: <MediaStep errors={fieldErrors.media || []} />,
-    details: <DetailsStep errors={fieldErrors.details || []} />,
-    pricing: <PricingStep errors={fieldErrors.pricing || []} />,
-    description: <ContactStep errors={fieldErrors.description || []} />,
-  };
-
-  const getBasicStepErrors = useCallback((): string[] => {
-    const errors: string[] = [];
-    if (!formData.category) errors.push("category");
-    if (!formData.brand) errors.push("brand");
-    if (!formData.model) errors.push("model");
-    if (!formData.year) errors.push("year");
-    if (!formData.transmission) errors.push("transmission");
-    if (!formData.color) errors.push("color");
-    if (!formData.kmh) errors.push("kmh");
-    if (!formData.engine) errors.push("engine");
-    if (!formData.maxSpeed) errors.push("maxSpeed");
-    if (!formData.horsePower) errors.push("horsePower");
-    if (!formData.seats) errors.push("seats");
-    if (!formData.fuelType) errors.push("fuelType");
-    // Add checks for all required basic fields...
-    return errors;
-  }, [formData]);
-  const getDetailsStepErrors = useCallback((): string[] => {
-    const errors: string[] = [];
-    if (!formData.description) errors.push("description");
-    if (formData.deposite === undefined || formData.deposite === null)
-      errors.push("deposite");
-    if (!formData.depositePolicy) errors.push("depositePolicy");
-    if (!formData.fuelPolicy) errors.push("fuelPolicy");
-    if (!formData.mileagePolicy) errors.push("mileagePolicy");
-    if (!formData.damagePolicy) errors.push("damagePolicy");
-
-    // Add checks for all required basic fields...
-    return errors;
-  }, [formData]);
-  // Update the getPricingStepErrors function in StepController
-  const getPricingStepErrors = useCallback((): string[] => {
+  // Centralized validation logic
+  const validateStep = (step: FormStep): string[] => {
     const errors: string[] = [];
 
-    // Check if price array exists and has at least one entry
-    if (!formData.price || !Array.isArray(formData.price)) {
-      errors.push("price");
-      return errors;
-    }
-
-    // Find the 24-hour entry
-    const twentyFourHourEntry = formData.price.find(
-      (item) => item.rentalTime === 24
-    );
-
-    // Validate 24-hour entry
-    if (
-      !twentyFourHourEntry ||
-      twentyFourHourEntry.price <= 0 ||
-      (!twentyFourHourEntry.kilometerPerHour &&
-        twentyFourHourEntry.kilometerPerHour !== "Unlimited")
-    ) {
-      errors.push("24hourPrice");
-      errors.push("24hourKm");
-    }
-
-    // Validate other price entries (if they have price, they must have km)
-    formData.price.forEach((entry) => {
-      if (
-        entry.rentalTime !== 24 &&
-        entry.price > 0 &&
-        !entry.kilometerPerHour &&
-        entry.kilometerPerHour !== "Unlimited"
-      ) {
-        errors.push(`price_${entry.rentalTime}`);
-        errors.push(`km_${entry.rentalTime}`);
-      }
-    });
-
-    if (!formData.accessories) {
-      errors.push("accessories");
-    }
-
-    return errors;
-  }, [formData.price, formData.accessories]);
-  const getDescriptionStepErrors = useCallback((): string[] => {
-    const errors: string[] = [];
-    if (!formData.advertiserName) errors.push("advertiserName");
-    if (!formData.phoneNumber) errors.push("phoneNumber");
-    if (!formData.email) errors.push("email");
-    if (!formData.whatsapp) errors.push("whatsapp");
-    if (!formData.location) errors.push("location");
-    if (!formData.authenticationFile) errors.push("authenticationFile");
-
-    // Add checks for all required basic fields...
-    return errors;
-  }, [formData]);
-
-  const validateCurrentStep = useCallback((): string[] => {
-    switch (currentStep) {
+    switch (step) {
       case "basic":
-        return getBasicStepErrors();
+        if (!formData.category) errors.push("Category is required");
+        if (!formData.brand) errors.push("Brand is required");
+        if (!formData.model) errors.push("Model is required");
+        if (!formData.year) errors.push("Year is required");
+        if (!formData.transmission) errors.push("Transmission is required");
+        if (!formData.color) errors.push("Color is required");
+        if (!formData.kmh) errors.push("Mileage is required");
+        if (!formData.engine) errors.push("Engine is required");
+        if (!formData.maxSpeed) errors.push("Max speed is required");
+        if (!formData.horsePower) errors.push("Horse power is required");
+        if (!formData.seats) errors.push("Number of seats is required");
+        if (!formData.fuelType) errors.push("Fuel type is required");
+        if (!formData.isConfirmed) errors.push("Please confirm the vehicle details");
+        break;
+
       case "media":
-        return !formData.mainImage ? ["mainImage"] : [];
+        if (!formData.mainImage) errors.push("Main image is required");
+        break;
+
       case "details":
-        return getDetailsStepErrors();
+        const descriptionWordCount = (formData.description || "").trim().split(/\s+/).filter(Boolean).length;
+        if (descriptionWordCount < 20) errors.push("Description must be at least 20 words");
+        if (formData.deposite === undefined || formData.deposite === null) errors.push("Deposit amount is required");
+        if (!formData.depositePolicy) errors.push("Deposit policy is required");
+        if (!formData.fuelPolicy) errors.push("Fuel policy is required");
+        if (!formData.mileagePolicy) errors.push("Mileage policy is required");
+        if (!formData.damagePolicy) errors.push("Damage policy is required");
+        break;
+
       case "pricing":
-        return getPricingStepErrors();
+        if (!formData.price || !Array.isArray(formData.price)) {
+          errors.push("Price information is required");
+          break;
+        }
+
+        const nineHourEntry = formData.price.find((item) => item.rentalTime === 9);
+        const twentyFourHourEntry = formData.price.find((item) => item.rentalTime === 24);
+        const thirtyHourEntry = formData.price.find((item) => item.rentalTime === 30);
+        if (!nineHourEntry || nineHourEntry.price <= 0) {
+          errors.push("9-hour rental price is required");
+        }
+        if (!twentyFourHourEntry || twentyFourHourEntry.price <= 0) {
+          errors.push("24-hour rental price is required");
+        }
+        if (!thirtyHourEntry || thirtyHourEntry.price <= 0) {
+          errors.push("30-hour rental price is required");
+        }
+
+        formData.price.forEach((entry) => {
+          if (entry.rentalTime !== 24 && entry.price > 0 && !entry.kilometerPerHour && entry.kilometerPerHour !== "Unlimited") {
+            errors.push(`Kilometer limit is required for ${entry.rentalTime}h rental`);
+          }
+        });
+
+        if (!formData.accessories) errors.push("Accessories information is required");
+        break;
+
       case "description":
-        return getDescriptionStepErrors();
-      // Add validation for other steps...
-      default:
-        return [];
-    }
-  }, [
-    currentStep,
-    formData,
-    getBasicStepErrors,
-    formData.mainImage,
-    getDetailsStepErrors,
-    getPricingStepErrors,
-    getDescriptionStepErrors,
-  ]);
-
-  // Handle error state only when trying to go to the next step
-  const handleNext = () => {
-    const stepErrors = validateCurrentStep();
-    if (stepErrors.length > 0) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        [currentStep]: stepErrors,
-      }));
-      toast.error("Please fill all required fields before proceeding...");
-      return;
+        if (!formData.advertiserName) errors.push("Advertiser name is required");
+        if (!formData.phoneNumber) errors.push("Phone number is required");
+        if (!formData.email) errors.push("Email is required");
+        if (!formData.whatsapp) errors.push("WhatsApp number is required");
+        if (!formData.location) errors.push("Location is required");
+        if (!formData.authenticationFile) errors.push("Authentication file is required");
+        break;
     }
 
-    const stepIsValid = isStepComplete(currentStep);
-
-    if (!stepIsValid) {
-      // Set error message based on current step
-      let errorMessage = "";
-      switch (currentStep) {
-        case "basic":
-          errorMessage = "Please fill in all basic fields before proceeding.";
-          break;
-        case "media":
-          errorMessage = "Main image is required.";
-          break;
-        case "details":
-          errorMessage = "Please fill in all details fields before proceeding.";
-          break;
-        case "pricing":
-          errorMessage = "Price and accessories are required.";
-          break;
-        case "description":
-          errorMessage = "Please fill in all contact fields.";
-          break;
-        default:
-          break;
-      }
-
-      setErrors((prev) => ({
-        ...prev,
-        [currentStep]: errorMessage,
-      }));
-    } else {
-      // Proceed to next step if valid
-      if (currentIndex < stepOrder.length - 1) {
-        dispatch(setCurrentStep(stepOrder[currentIndex + 1]));
-        setErrors({});
-      }
-    }
+    return errors;
   };
 
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      dispatch(setCurrentStep(stepOrder[currentIndex - 1]));
-    }
+  const isStepComplete = (step: FormStep): boolean => {
+    return validateStep(step).length === 0;
   };
-  // Scroll to the top when the current step changes
+
+  const isAllStepsComplete = (): boolean => {
+    return stepOrder.slice(0, -1).every((step) => isStepComplete(step));
+  };
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentStep]);
 
-  const handleSubmit = async () => {
-    if (!isAllStepsComplete()) {
-      toast.error("Please complete all steps before submitting");
+  const steps: Record<FormStep, ReactNode> = {
+    basic: <BasicInfoStep errors={errors} />,
+    media: <MediaStep errors={errors} />,
+    details: <DetailsStep errors={errors} />,
+    pricing: <PricingStep errors={errors} />,
+    description: <ContactStep errors={errors} />,
+    publish: <PublishStep errors={errors} />,
+  };
+
+  const navigateToStep = (step: FormStep) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("step", step);
+    router.replace(`?${params.toString()}`, { scroll: false });
+    dispatch(setCurrentStep(step));
+  };
+
+  const handleNext = () => {
+    const stepErrors = validateStep(currentStep);
+
+    if (stepErrors.length > 0) {
+      setErrors(stepErrors);
+      toast.error("Please fix the errors before proceeding");
       return;
     }
 
-    if (isSubmitting) return; // Prevent multiple submissions
+    setErrors([]);
+    if (currentIndex < stepOrder.length - 1) {
+      navigateToStep(stepOrder[currentIndex + 1]);
+    }
+  };
 
+  const handlePrevious = () => {
+    setErrors([]);
+    if (currentIndex > 0) {
+      navigateToStep(stepOrder[currentIndex - 1]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isAllStepsComplete()) {
+      const allErrors: string[] = [];
+      stepOrder.forEach((step) => {
+        const stepErrors = validateStep(step);
+        allErrors.push(...stepErrors);
+      });
+      setErrors(allErrors);
+      toast.error("Please complete all required fields");
+      return;
+    }
+
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     const bodyData = new FormData();
-
     const data = {
       ownerId: userId,
       category: formData?.category,
@@ -347,24 +219,25 @@ export function StepController() {
       latitude: formData?.latitude,
       longitude: formData?.longitude,
     };
+
     bodyData.append("bodyData", JSON.stringify(data));
 
     if (formData?.otherImages) {
-      formData?.otherImages.forEach((image) => {
+      formData.otherImages.forEach((image) => {
         bodyData.append("otherImages", image);
       });
     }
 
     if (formData?.video) {
-      bodyData.append("video", formData?.video);
+      bodyData.append("video", formData.video);
     }
 
     if (formData?.mainImage) {
-      bodyData.append("mainImage", formData?.mainImage);
+      bodyData.append("mainImage", formData.mainImage);
     }
 
     if (formData?.authenticationFile) {
-      bodyData.append("authenticationFile", formData?.authenticationFile);
+      bodyData.append("authenticationFile", formData.authenticationFile);
     }
 
     try {
@@ -372,98 +245,88 @@ export function StepController() {
 
       if (res.success === true) {
         toast.success("Car Created Successfully");
-        // toast.success(res.message);
         router.push(`/inserted-vehicle/${res.data.id}`);
-
-        // Reset the form data after successful submission
         dispatch(resetFormData());
       }
     } catch (error: any) {
-
-      // Check if errorMessages exists and is an array
       if (Array.isArray(error?.data?.errorMessages)) {
-        // Display each error message as a separate toast
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        error?.data?.errorMessages.forEach((msg: any) => {
-          toast.success(msg?.path + ": " + msg?.message || "Unknown error"); // Display the message from each error object
+        error.data.errorMessages.forEach((msg: any) => {
+          toast.error(`${msg?.path}: ${msg?.message}` || "Unknown error");
         });
       } else {
-        // If errorMessages is not available, display the overall message
-        toast.success(error?.path + ": " + error?.message || "Unknown error");
+        toast.error(`${error?.path}: ${error?.message}` || "An error occurred");
       }
-
-      console.error("Error submitting data:", error); // Log the full error
+      console.error("Error submitting data:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const handleReset = () => {
+    dispatch(resetFormData());
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("step", "basic");
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <div className="space-y-6">
-      {/* Display error message if any required fields are missing */}
-      {Object.keys(errors).length > 0 && (
-        <div className="p-4 bg-red text-white text-center">
-          <p>{errors[currentStep]}</p>
+      {/* Error Display */}
+      {errors.length > 0 && (
+        <div className="p-4 bg-red-50 border border-primary-200 rounded-md">
+          <h3 className="text-primary font-medium mb-2">Please fix the following errors:</h3>
+          <ul className="list-disc list-inside text-primary space-y-1">
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
         </div>
       )}
 
-      {/* Display the current step */}
+      {/* Current Step */}
       {steps[currentStep]}
 
-      {/* Navigation buttons */}
+      {/* Navigation Buttons */}
       <div className="flex justify-end gap-6 mt-6">
         {currentIndex > 0 && (
-          <button
-            onClick={handlePrevious}
-            className="w-[140px] py-1.5 rounded text-[15px] shadow shadow-black/10 border border-gray-200/20 font-medium"
-          >
-            Indietro
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handlePrevious}
+              className="w-[140px] py-1.5 rounded text-[15px] shadow shadow-black/10 border border-gray-200/20 font-medium"
+            >
+              Indietro
+            </button>
+            <button
+              onClick={handleReset}
+              className="w-[140px] py-1.5 rounded text-[15px] shadow shadow-black/10 border border-gray-200/20 font-medium"
+            >
+              reset
+            </button>
+          </div>
         )}
 
         {currentIndex < stepOrder.length - 1 ? (
-          <button
-            onClick={handleNext}
-            // disabled={!isStepComplete(currentStep)}
-            className={`w-[140px] py-1.5 rounded text-[15px] font-medium ${
-              isStepComplete(currentStep)
-                ? "bg-red text-white"
-                : "bg-gray-300 text-white"
-            }`}
-          >
+          <button onClick={handleNext} className="w-[140px] py-1.5 rounded text-[15px] font-medium bg-primary text-white">
             Avanti
           </button>
         ) : (
           <button
             onClick={handleSubmit}
-            disabled={!isAllStepsComplete() || isSubmitting}
+            disabled={isSubmitting}
             className={`w-[140px] py-1.5 rounded text-[15px] font-medium ${
-              isAllStepsComplete() && !isSubmitting
-                ? "bg-red text-white cursor-pointer"
-                : "bg-gray-300 text-white cursor-not-allowed"
+              isSubmitting ? "bg-gray-300 text-white cursor-not-allowed" : "bg-primary text-white cursor-pointer"
             }`}
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2 ml-3">
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
-                </svg>{" "}
+                </svg>
                 Publishing...
               </div>
             ) : (

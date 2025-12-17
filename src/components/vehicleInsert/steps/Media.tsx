@@ -22,12 +22,7 @@ interface OtherImageSlotProps {
 }
 
 // A component for each additional image slot
-function OtherImageSlot({
-  index,
-  image,
-  onUpload,
-  onRemove,
-}: OtherImageSlotProps) {
+function OtherImageSlot({ index, image, onUpload, onRemove }: OtherImageSlotProps) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
@@ -43,16 +38,8 @@ function OtherImageSlot({
   if (image) {
     return (
       <div className="w-[270px] h-[170px] relative border border-gray-50 rounded-lg overflow-hidden">
-        <Image
-          src={image}
-          alt={`Vehicle photo ${index + 1}`}
-          layout="fill"
-          className="object-cover"
-        />
-        <button
-          onClick={() => onRemove(index)}
-          className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-lg"
-        >
+        <Image src={image} alt={`Vehicle photo ${index + 1}`} layout="fill" className="object-cover" />
+        <button onClick={() => onRemove(index)} className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-lg">
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -67,9 +54,7 @@ function OtherImageSlot({
       <input {...getInputProps()} />
       <div className="flex flex-col items-center gap-2">
         <Image src={upload} alt="upload" className="w-5 h-5" />
-        <span className="text-sm text-gray-500">
-          Clicca o trascina l’immagine
-        </span>
+        <span className="text-sm text-gray-500">Clicca o trascina l’immagine</span>
       </div>
     </div>
   );
@@ -85,17 +70,12 @@ export function MediaStep({ errors }: MediaStepProps) {
   );
 
   const [mainImage, setMainImage] = useState<string | null>(null);
-  const [otherImages, setOtherImages] = useState<(string | null)[]>(
-    Array(5).fill(null)
-  );
+  const [otherImages, setOtherImages] = useState<(string | null)[]>(Array(5).fill(null));
   const otherImageFilesRef = useRef<(File | null)[]>(Array(5).fill(null));
   // Initialize state with Redux formData
   useEffect(() => {
     if (formData?.mainImage) {
-      const url =
-        formData.mainImage instanceof File
-          ? URL.createObjectURL(formData.mainImage)
-          : null;
+      const url = formData.mainImage instanceof File ? URL.createObjectURL(formData.mainImage) : null;
       setMainImage(url);
     }
 
@@ -128,19 +108,14 @@ export function MediaStep({ errors }: MediaStepProps) {
     [dispatch]
   );
 
-  const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } =
-    useDropzone({
-      onDrop: onDropMainImage,
-      accept: { "image/*": [".jpeg", ".jpg", ".png"] },
-      multiple: false,
-    });
+  const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } = useDropzone({
+    onDrop: onDropMainImage,
+    accept: { "image/*": [".jpeg", ".jpg", ".png"] },
+    multiple: false,
+  });
 
   // Update a specific slot when an image is dropped
-  const handleUploadOtherImage = (
-    index: number,
-    file: File,
-    imageUrl: string
-  ) => {
+  const handleUploadOtherImage = (index: number, file: File, imageUrl: string) => {
     const newOtherImages = [...otherImages];
     newOtherImages[index] = imageUrl;
     setOtherImages(newOtherImages);
@@ -180,28 +155,18 @@ export function MediaStep({ errors }: MediaStepProps) {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <VehicleInsertionHeader
-        title="Foto"
-        subtitle="Aggiungi, modifica o rimuovi immagini del tuo annuncio"
-      />
+      <VehicleInsertionHeader title="Foto" subtitle="Aggiungi, modifica o rimuovi immagini del tuo annuncio" />
       {/* Main Image Section */}
       <div className="pt-10">
         <p className="text-[17px] font-normal pb-6">Immagine principale</p>
         <div
           className={`relative xl:w-2/5 aspect-video rounded-lg overflow-hidden border shadow-lg flex items-center justify-center ${
-            hasError("mainImage") && !formData.mainImage
-              ? "border-red"
-              : "border-gray-100"
+            hasError("mainImage") && !formData.mainImage ? "border-primary" : "border-gray-100"
           }`}
         >
           {mainImage ? (
             <div className="relative w-full h-full">
-              <Image
-                src={mainImage}
-                alt="Main Image"
-                layout="fill"
-                className="object-cover"
-              />
+              <Image src={mainImage} alt="Main Image" layout="fill" className="object-cover" />
               <button
                 onClick={() => {
                   if (mainImage) URL.revokeObjectURL(mainImage);
@@ -219,14 +184,8 @@ export function MediaStep({ errors }: MediaStepProps) {
               className={`w-full h-full flex flex-col items-center justify-center rounded-lg cursor-pointer transition-colors`}
             >
               <input {...getMainInputProps()} />
-              <Image
-                src={upload}
-                alt="uploadIcon"
-                className="w-6 h-6 text-gray-400"
-              />
-              <span className="text-sm text-gray-500 mt-4">
-                Clicca o trascina l’immagine
-              </span>
+              <Image src={upload} alt="uploadIcon" className="w-6 h-6 text-gray-400" />
+              <span className="text-sm text-gray-500 mt-4">Clicca o trascina l’immagine</span>
             </div>
           )}
         </div>
@@ -244,22 +203,21 @@ export function MediaStep({ errors }: MediaStepProps) {
               onRemove={handleRemoveOtherImage}
             />
           ))}
+          <div className="w-full h-[170px] aspect-square rounded-lg flex flex-col gap-2 items-center justify-center cursor-pointer transition-colors shadow-lg border border-gray-50 bg-gray-100 p-4">
+            <Image src={lock} alt="lock" className="w-[18px] h-[18px]" />
+            <span className="underline text-text_dark_gray text-[15px]">Scopri come caricare più foto</span>
+          </div>
         </div>
       </div>
       <div>
         <Separator className="my-20" />
       </div>
       <div className="mt-10">
-        <VehicleInsertionHeader
-          title="Video"
-          subtitle="Carica, modifica o rimuovi i video del tuo annuncio"
-        />
+        <VehicleInsertionHeader title="Video" subtitle="Carica, modifica o rimuovi i video del tuo annuncio" />
         <p className="text-[17px] font-normal pb-6">Video principale</p>
         <div className="w-[300px] h-[180px] aspect-square rounded-lg flex flex-col gap-2 items-center justify-center cursor-pointer transition-colors shadow-lg border border-gray-50 bg-gray-100 p-4">
           <Image src={lock} alt="lock" className="w-[18px] h-[18px]" />
-          <span className="underline text-text_dark_gray text-[15px]">
-            Disponibile prossimamente
-          </span>
+          <span className="underline text-text_dark_gray text-[15px]">Scopri come caricare video</span>
         </div>
       </div>
       <div>

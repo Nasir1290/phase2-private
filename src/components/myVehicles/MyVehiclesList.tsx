@@ -133,7 +133,7 @@
 //                 </div>
 //               )}
 //           </div>
-//           <div className="bg-red text-white px-2.5 py-2 rounded-md shadow-lg">
+//           <div className="bg-primary text-white px-2.5 py-2 rounded-md shadow-lg">
 //             <MdOutlineSearch size={26} />
 //           </div>
 //         </div>
@@ -213,8 +213,7 @@ const MyVehiclesList = () => {
     queryParams.push({ name: "searchTerm", value: debouncedSearchTerm });
   }
 
-  const { data: ownerDetails, isLoading: carsLoading } =
-    useGetCarOwnerByIDQuery(queryParams);
+  const { data: ownerDetails, isLoading: carsLoading } = useGetCarOwnerByIDQuery(queryParams);
 
   // Reset to first page when search term changes
   useEffect(() => {
@@ -253,7 +252,7 @@ const MyVehiclesList = () => {
               aria-label="Search for a vehicle"
             />
           </div>
-          <div className="bg-red text-white px-2.5 py-2 rounded-md shadow-lg hidden lg:block">
+          <div className="bg-primary text-white px-2.5 py-2 rounded-md shadow-lg hidden lg:block">
             <MdOutlineSearch size={26} />
           </div>
         </div>
@@ -269,26 +268,16 @@ const MyVehiclesList = () => {
       {/* Vehicle list */}
       <div className="space-y-4 grid grid-cols-1 gap-4">
         {ownerDetails?.data?.cars?.length ? (
-          ownerDetails.data.cars.map((vehicle: any) => (
-            <MyVehicleCard key={vehicle.id} {...vehicle} />
-          ))
+          ownerDetails.data.cars.map((vehicle: any) => <MyVehicleCard key={vehicle.id} {...vehicle} />)
         ) : (
-          <p className="text-center font-semibold text-gray-500">
-            {searchTerm
-              ? "No matching vehicles found"
-              : "No vehicles available"}
-          </p>
+          <p className="text-center font-semibold text-gray-500">{searchTerm ? "No matching vehicles found" : "No vehicles available"}</p>
         )}
       </div>
 
       {/* Pagination */}
       {ownerDetails?.data?.meta?.totalPage > 1 && (
         <div className="flex justify-center mt-6">
-          <Pagination
-            totalPages={ownerDetails.data.meta.totalPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
+          <Pagination totalPages={ownerDetails.data.meta.totalPage} currentPage={currentPage} onPageChange={setCurrentPage} />
         </div>
       )}
     </div>

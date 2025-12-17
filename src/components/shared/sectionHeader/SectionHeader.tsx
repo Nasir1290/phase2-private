@@ -1,19 +1,11 @@
+import { cn } from "@/lib/utils";
+
 // SectionHeader1
-export const SectionHeader1 = ({
-  title,
-  subtitle,
-}: {
-  title?: string | React.ReactNode;
-  subtitle?: string | React.ReactNode;
-}) => {
+export const SectionHeader1 = ({ title, subtitle }: { title?: string | React.ReactNode; subtitle?: string | React.ReactNode }) => {
   return (
     <div className="flex flex-col items-center text-center mt-10 md:mt-0 mb-12 md:mb-16 space-y-10">
-      <h2 className=" font-extrabold text-2xl md:text-[30px] uppercase">
-        {title}
-      </h2>
-      <p className="text-sm font-medium text-text_light_gray max-w-[1100px] ">
-        {subtitle}
-      </p>
+      <h2 className=" font-extrabold text-2xl md:text-[30px] uppercase">{title}</h2>
+      <p className="text-sm font-medium text-text_light_gray max-w-[1100px] ">{subtitle}</p>
     </div>
   );
 };
@@ -27,27 +19,13 @@ interface SectionHeaderProps2 {
   className?: string;
 }
 
-export const SectionHeader2 = ({
-  topText,
-  title,
-  highlightedText,
-  remainingText,
-  className,
-}: SectionHeaderProps2) => {
+export const SectionHeader2 = ({ topText, title, highlightedText, remainingText, className }: SectionHeaderProps2) => {
   return (
     <header className={`max-w-2xl text-start mb-5 lg:mb-16 ${className}`}>
       <div className="flex flex-col gap-4">
-        {topText && (
-          <span className="text-sm font-medium text-text_light_gray uppercase">
-            {topText}
-          </span>
-        )}
+        {topText && <span className="text-sm font-medium text-text_light_gray uppercase">{topText}</span>}
         <h1 className="text-2xl md:text-[30px] font-extrabold">
-          {title}{" "}
-          {highlightedText && (
-            <span className="text-red">{highlightedText}</span>
-          )}{" "}
-          {remainingText}
+          {title} {highlightedText && <span className="text-primary">{highlightedText}</span>} {remainingText}
         </h1>
       </div>
     </header>
@@ -71,19 +49,14 @@ interface VehicleInsertionHeaderProps {
   title?: string | React.ReactNode;
   subtitle?: string | React.ReactNode;
   className?: string;
+  subtitleClassName?: string;
 }
-export const VehicleInsertionHeader = ({
-  title,
-  subtitle,
-  className,
-}: VehicleInsertionHeaderProps) => {
+export const VehicleInsertionHeader = ({ title, subtitle, className, subtitleClassName }: VehicleInsertionHeaderProps) => {
   return (
-    <header className={`max-w-2xl text-start mb-10 ${className}`}>
+    <header className={cn(`max-w-2xl text-start mb-10 `, className)}>
       <div className="space-y-2">
         <h2 className="text-2xl font-semibold">{title}</h2>
-        <p className="text-text_light_gray font-normal text-[15px]">
-          {subtitle}
-        </p>
+        <p className={cn("text-text_light_gray font-normal text-[15px]", subtitleClassName)}>{subtitle}</p>
       </div>
     </header>
   );

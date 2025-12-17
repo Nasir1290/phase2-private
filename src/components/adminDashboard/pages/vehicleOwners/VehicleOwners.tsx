@@ -24,7 +24,7 @@
 //       {/* Page Header */}
 //       <div className="mt-10 md:mt-0 mb-12 md:mb-16 space-y-5">
 //         <div className="flex flex-col items-start gap-5">
-//           <h2 className="text-red font-extrabold text-3xl md:text-[30px] uppercase">
+//           <h2 className="text-primary font-extrabold text-3xl md:text-[30px] uppercase">
 //             Vehicle Owners
 //           </h2>
 //           <p className="text-black text-base font-medium max-w-[1100px] ">
@@ -88,11 +88,11 @@
 //                   <button onClick={() => handleDelete(user?.id)} className="">
 //                     <Trash2
 //                       size={18}
-//                       className="text-red hover:text-gray-500"
+//                       className="text-primary hover:text-gray-500"
 //                     />
 //                   </button>
 //                 </TableCell> */}
-//                 <TableCell className="text-sm p-3 text-black underline text-center hover:font-medium hover:text-red">
+//                 <TableCell className="text-sm p-3 text-black underline text-center hover:font-medium hover:text-primary">
 //                   <Link href={`/dashboard/vehicle-owners/${user?.id}`}>
 //                     Details
 //                   </Link>
@@ -111,14 +111,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useGetAllCarOwnersQuery } from "@/redux/api/carApi";
@@ -126,9 +119,7 @@ import { useState } from "react";
 
 const VehicleOwners = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: carOwners } = useGetAllCarOwnersQuery(
-    `page=${currentPage}&limit=10`
-  );
+  const { data: carOwners } = useGetAllCarOwnersQuery(`page=${currentPage}&limit=10`);
   const ownerData = carOwners?.data?.owners;
   const meta = carOwners?.data?.meta;
 
@@ -149,11 +140,7 @@ const VehicleOwners = () => {
         <button
           key={i}
           onClick={() => handlePageChange(i)}
-          className={`mx-1 px-3 py-1 rounded ${
-            currentPage === i
-              ? "bg-red text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
+          className={`mx-1 px-3 py-1 rounded ${currentPage === i ? "bg-primary text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
         >
           {i}
         </button>
@@ -167,12 +154,9 @@ const VehicleOwners = () => {
       {/* Page Header */}
       <div className="mt-10 md:mt-0 mb-12 md:mb-16 space-y-5">
         <div className="flex flex-col items-start gap-5">
-          <h2 className="text-red font-extrabold text-3xl md:text-[30px] uppercase">
-            Vehicle Owners
-          </h2>
+          <h2 className="text-primary font-extrabold text-3xl md:text-[30px] uppercase">Vehicle Owners</h2>
           <p className="text-black text-base font-medium max-w-[1100px] ">
-            View all the vehicle owners and their owned cars and their current
-            status
+            View all the vehicle owners and their owned cars and their current status
           </p>
         </div>
         <div>
@@ -187,21 +171,11 @@ const VehicleOwners = () => {
           <TableHeader className="">
             <TableRow>
               <TableHead className="text-text_light_gray p-3">ID</TableHead>
-              <TableHead className="text-text_light_gray p-3">
-                First Name
-              </TableHead>
-              <TableHead className="text-text_light_gray p-3">
-                Last Name
-              </TableHead>
-              <TableHead className="text-text_light_gray p-3 hidden md:table-cell">
-                Email
-              </TableHead>
-              <TableHead className="text-text_light_gray p-3 hidden lg:table-cell">
-                Phone
-              </TableHead>
-              <TableHead className="text-text_light_gray p-3 text-center">
-                Details
-              </TableHead>
+              <TableHead className="text-text_light_gray p-3">First Name</TableHead>
+              <TableHead className="text-text_light_gray p-3">Last Name</TableHead>
+              <TableHead className="text-text_light_gray p-3 hidden md:table-cell">Email</TableHead>
+              <TableHead className="text-text_light_gray p-3 hidden lg:table-cell">Phone</TableHead>
+              <TableHead className="text-text_light_gray p-3 text-center">Details</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -209,25 +183,13 @@ const VehicleOwners = () => {
           <TableBody>
             {ownerData?.map((user: any, index: number) => (
               <TableRow key={index} className="border-t">
-                <TableCell className="text-sm p-3 text-text_dark_gray font-semibold ">
-                  {index + 1}
-                </TableCell>
-                <TableCell className="text-sm p-3 text-black">
-                  {user?.firstName}
-                </TableCell>
-                <TableCell className="text-sm p-3 text-black">
-                  {user?.lastName}
-                </TableCell>
-                <TableCell className="text-sm p-3 text-black">
-                  {user?.email}
-                </TableCell>
-                <TableCell className="text-sm p-3 text-black">
-                  {user?.phoneNumber}
-                </TableCell>
-                <TableCell className="text-sm p-3 text-black underline text-center hover:font-medium hover:text-red">
-                  <Link href={`/dashboard/vehicle-owners/${user?.id}`}>
-                    Details
-                  </Link>
+                <TableCell className="text-sm p-3 text-text_dark_gray font-semibold ">{index + 1}</TableCell>
+                <TableCell className="text-sm p-3 text-black">{user?.firstName}</TableCell>
+                <TableCell className="text-sm p-3 text-black">{user?.lastName}</TableCell>
+                <TableCell className="text-sm p-3 text-black">{user?.email}</TableCell>
+                <TableCell className="text-sm p-3 text-black">{user?.phoneNumber}</TableCell>
+                <TableCell className="text-sm p-3 text-black underline text-center hover:font-medium hover:text-primary">
+                  <Link href={`/dashboard/vehicle-owners/${user?.id}`}>Details</Link>
                 </TableCell>
               </TableRow>
             ))}
@@ -241,9 +203,7 @@ const VehicleOwners = () => {
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className={`px-4 py-2 rounded ${
-            currentPage === 1
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-red text-white hover:bg-red-600"
+            currentPage === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-primary text-white hover:bg-primary-600"
           }`}
         >
           Previous
@@ -253,9 +213,7 @@ const VehicleOwners = () => {
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === meta?.totalPage}
           className={`px-4 py-2 rounded ${
-            currentPage === meta?.totalPage
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-red text-white hover:bg-red-600"
+            currentPage === meta?.totalPage ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-primary text-white hover:bg-primary-600"
           }`}
         >
           Next

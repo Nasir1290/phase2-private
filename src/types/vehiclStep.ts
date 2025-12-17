@@ -65,4 +65,5 @@ export type FormStep =
   | "media"
   | "details"
   | "pricing"
-  | "description";
+  | "description"
+  | "publish";

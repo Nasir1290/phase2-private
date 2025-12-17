@@ -2,18 +2,20 @@
 
 import Image from "next/image";
 // import { FaRegCalendarCheck } from "react-icons/fa";
-import manuale from "@/assets/vehicle/manule.svg";
+import heart from "@/assets/heart.svg";
+import redHeart from "@/assets/redHeart.svg";
 import automatic from "@/assets/vehicle/automatic.svg";
-import seat from "@/assets/vehicle/seat.svg";
 import deposito from "@/assets/vehicle/deposit.svg";
-import noDiposite from "@/assets/vehicle/no-deposit.svg";
 import eye from "@/assets/vehicle/eye.svg";
 import kilometers from "@/assets/vehicle/kilometers.svg";
+import manuale from "@/assets/vehicle/manule.svg";
+import noDiposite from "@/assets/vehicle/no-deposit.svg";
+import seat from "@/assets/vehicle/seat.svg";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ContactModal from "../veicoli/contactModal/ContactModal";
-import { motion } from "framer-motion";
 import { IoLocationOutline } from "react-icons/io5";
+import ContactModal from "../veicoli/contactModal/ContactModal";
 
 interface VehicleCardProps {
   id: string;
@@ -47,6 +49,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
   phoneNumber,
   location,
 }) => {
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [randomViews, setRandomViews] = useState<number>(0);
   const toggleModal = () => setIsContactModalOpen((prev) => !prev);
@@ -66,6 +69,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="w-full h-full relative"
             >
+              {/* Link wraps only the image */}
               <Link href={`/veicoli/${id}`}>
                 <Image
                   src={imageUrl}
@@ -75,12 +79,22 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
                   className="relative w-[400px] md:w-[800px] lg:w-[300px] xl:w-[280px] h-[175px] rounded-lg object-cover"
                 />
               </Link>
-
               {/* <div className="absolute top-2 right-2 flex md:hidden items-center gap-2 border border-gray-700 rounded-full py-0.5 px-2 text-[14px]">
               <IoLocationOutline  className=" size-4"/>
                 <p className="text-[14px] font-normal">{location.split(",").slice(0,-1).join(",")}</p>
               </div> */}
             </motion.div>
+            {/* Heart sits on top */}
+            <div
+              onClick={() => setIsHeartClicked(!isHeartClicked)}
+              className="absolute top-2 right-2 bg-whit p-1 rounded-full shadow-md cursor-pointer z-10"
+            >
+              {isHeartClicked ? (
+                <Image src={redHeart} alt="heart" width={20} height={20} />
+              ) : (
+                <Image src={heart} alt="heart" width={20} height={20}  />
+              )}
+            </div>
           </div>
         </div>
 
@@ -129,8 +143,8 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
               <p className="text-[14px] text-text_dark_gray/70">{randomViews} utenti stanno vedendo questo veicolo</p>
             </div>
             {/* Location for mobile */}
-            <div className=" flex  items-center gap-2 sm:gap-2.5   text-[14px] mb-2 sm:mb-0 lg:bg-[#BCC3CE]/10 rounded-full py-1 lg:px-3 text-sm">
-              <IoLocationOutline className=" size-4 text-red-500" />
+            <div className=" flex  items-center gap-2 sm:gap-2.5   text-[14px] mb-2 sm:mb-0 lg:bg-[#BCC3CE]/10 rounded-full py-1 lg:px-2 text-sm">
+              <IoLocationOutline className=" size-4 text-primary" />
               <p className="text-text_dark_gray text-[13px] font-normal">{location.split(",").slice(0, -1).join(",")}</p>
             </div>
 
@@ -182,7 +196,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
               </Link>
               <button
                 onClick={toggleModal}
-                className="w-full text-[13px] px-8 xl:px-8 py-2 md:py-1.5 bg-[#D1252B] hover:bg-red/90 hover:shadow-xl  text-white font-medium rounded shadow-lg"
+                className="w-full text-[13px] px-8 xl:px-8 py-2 md:py-1.5 bg-primary hover:bg-primary/90 hover:shadow-xl  text-white font-medium rounded shadow-lg"
               >
                 CONTATTA
               </button>

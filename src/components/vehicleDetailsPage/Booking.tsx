@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@radix-ui/react-accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
 import { SectionHeader3 } from "../shared/sectionHeader/SectionHeader";
 import { IoIosArrowDown, IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { Car } from "@/types/cars";
@@ -25,14 +20,12 @@ const Booking = ({ car }: { car: Car }) => {
           >
             <AccordionTrigger className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg transition w-full font-[450px]">
               <span className="flex items-center gap-6">
-                <IoIosCheckmarkCircleOutline className="text-2xl text-red" />
+                <IoIosCheckmarkCircleOutline className="text-2xl text-primary" />
                 Politiche sul deposito
               </span>
-              <IoIosArrowDown className="text-red text-xl font-bold" />
+              <IoIosArrowDown className="text-primary text-xl font-bold" />
             </AccordionTrigger>
-            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">
-              {car?.depositePolicy || "Nessuna politica specificata"}
-            </AccordionContent>
+            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">{car?.depositePolicy || "Nessuna politica specificata"}</AccordionContent>
           </AccordionItem>
 
           {/* Damage Policy Accordion Item */}
@@ -42,14 +35,12 @@ const Booking = ({ car }: { car: Car }) => {
           >
             <AccordionTrigger className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg transition w-full font-[450px]">
               <span className="flex items-center gap-6">
-                <IoIosCheckmarkCircleOutline className="text-2xl text-red" />
+                <IoIosCheckmarkCircleOutline className="text-2xl text-primary" />
                 Politiche sui danni
               </span>
-              <IoIosArrowDown className="text-red text-xl font-bold" />
+              <IoIosArrowDown className="text-primary text-xl font-bold" />
             </AccordionTrigger>
-            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">
-              {car?.damagePolicy || "Nessuna politica specificata"}
-            </AccordionContent>
+            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">{car?.damagePolicy || "Nessuna politica specificata"}</AccordionContent>
           </AccordionItem>
 
           {/* Mileage Policy Accordion Item */}
@@ -59,14 +50,12 @@ const Booking = ({ car }: { car: Car }) => {
           >
             <AccordionTrigger className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg transition w-full font-[450px]">
               <span className="flex items-center gap-6">
-                <IoIosCheckmarkCircleOutline className="text-2xl text-red" />
+                <IoIosCheckmarkCircleOutline className="text-2xl text-primary" />
                 Politiche sui chilometri
               </span>
-              <IoIosArrowDown className="text-red text-xl font-bold" />
+              <IoIosArrowDown className="text-primary text-xl font-bold" />
             </AccordionTrigger>
-            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">
-              {car?.mileagePolicy || "Nessuna politica specificata"}
-            </AccordionContent>
+            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">{car?.mileagePolicy || "Nessuna politica specificata"}</AccordionContent>
           </AccordionItem>
 
           {/* Fuel Policy Accordion Item */}
@@ -76,14 +65,12 @@ const Booking = ({ car }: { car: Car }) => {
           >
             <AccordionTrigger className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg transition w-full font-[450px]">
               <span className="flex items-center gap-6">
-                <IoIosCheckmarkCircleOutline className="text-2xl text-red" />
+                <IoIosCheckmarkCircleOutline className="text-2xl text-primary" />
                 Politiche sul carburante
               </span>
-              <IoIosArrowDown className="text-red text-xl font-bold" />
+              <IoIosArrowDown className="text-primary text-xl font-bold" />
             </AccordionTrigger>
-            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">
-              {car?.fuelPolicy || "Nessuna politica specificata"}
-            </AccordionContent>
+            <AccordionContent className="p-3 rounded-b-lg bg-section_bg/30">{car?.fuelPolicy || "Nessuna politica specificata"}</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

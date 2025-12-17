@@ -23,9 +23,7 @@ const MarchiPage = () => {
   const brandNames = brands.map((brand: any) => brand.brand);
 
   // Filter car brands based on brand names
-  const filteredBrands = carBrands.filter((category) =>
-    brandNames.includes(category.name)
-  );
+  const filteredBrands = carBrands.filter((category) => brandNames.includes(category.name));
 
   return (
     <div className="p-6 container mx-auto space-y-28">
@@ -44,18 +42,11 @@ affidabilità e prestazioni eccellenti per ogni tua esigenza di mobilità"
           <Link
             href={`/veicoli?brand=${brand.name}`}
             key={brand.id}
-            className="w-80 xl:w-72 border border-section_bg rounded-2xl shadow-md shadow-black/20 hover:shadow-lg hover:shadow-red/20 px-4 py-3 md:py-6 flex flex-row md:flex-col gap-4 md:gap-0 items-center"
+            className="w-80 xl:w-72 border border-section_bg rounded-2xl shadow-md shadow-black/20 hover:shadow-lg hover:shadow-primary/20 px-4 py-3 md:py-6 flex flex-row md:flex-col gap-4 md:gap-0 items-center"
           >
-            <Image
-              width={1000}
-              height={1000}
-              src={brand.logo}
-              alt={brand.name}
-              className="w-10 h-10 md:w-20 md:h-20 md:mb-8"
-            />
+            <Image width={1000} height={1000} src={brand.logo} alt={brand.name} className="w-10 h-10 md:w-20 md:h-20 md:mb-8" />
             <p className="text-text_light_gray font-medium text-sm">
-              {brandCountMap[brand.name] || 0}{" "}
-              {brandCountMap[brand.name] === 1 ? "Veicolo" : "Veicoli"}
+              {brandCountMap[brand.name] || 0} {brandCountMap[brand.name] === 1 ? "Veicolo" : "Veicoli"}
             </p>
           </Link>
         ))}

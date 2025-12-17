@@ -18,7 +18,7 @@ export default function Footer() {
     ],
     Servizi: [
       { href: "/veicoli ", label: "Veicoli" },
-      { href: "/#best-offer", label: "Offerte speciali" },
+      { href: "/subscriptions", label: "Abbonamenti" },
       { href: "/marchi", label: "Marchi" },
     ],
     Aiuto: [

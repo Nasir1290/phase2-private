@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setCurrentStep } from "@/redux/slice/vehicleInsertSlice";
 import { FormStep } from "@/types/vehiclStep";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const steps = [
   { id: "basic", label: "Registrazione" },
@@ -12,9 +13,12 @@ const steps = [
   { id: "details", label: "Descrizione" },
   { id: "pricing", label: "Prezzo" },
   { id: "description", label: "Contatto" },
+   { id: "publish", label: "Pubblica" },
 ];
 
 export function ProgressSteps() {
+  const router = useRouter();
+    const searchParams = useSearchParams();
   const { currentStep, formData } = useSelector(
     (state: RootState) => state.form
   );
@@ -59,14 +63,9 @@ export function ProgressSteps() {
       case "pricing":
         return !!formData.price && !!formData.accessories;
       case "description":
-        return (
-          !!formData.advertiserName &&
-          !!formData.phoneNumber &&
-          !!formData.email &&
-          !!formData.whatsapp &&
-          !!formData.location &&
-          !!formData.authenticationFile
-        );
+        return true
+        case "publish":
+        return true
       default:
         return false;
     }
@@ -76,6 +75,7 @@ export function ProgressSteps() {
   const canNavigateToStep = (index: number) => {
     if (index === 0) return true;
     for (let i = 0; i < index; i++) {
+      console.log("canNavigateToStep", steps[i].id, );
       if (!isStepComplete(steps[i].id)) {
         return false;
       }
@@ -84,10 +84,22 @@ export function ProgressSteps() {
   };
 
   const handleStepClick = (stepId: string, index: number) => {
+    console.log(stepId, index , canNavigateToStep(index));
     if (canNavigateToStep(index)) {
+      dispatch(setCurrentStep(stepId as FormStep));
+
+       const params = new URLSearchParams(searchParams.toString());
+      params.set("step",  stepId);
+      router.replace(`?${params.toString()}`, { scroll: false });
       dispatch(setCurrentStep(stepId as FormStep));
     }
   };
+    // const navigateToStep = (step: FormStep) => {
+    //   const params = new URLSearchParams(searchParams.toString());
+    //   params.set("step", step);
+    //   router.replace(`?${params.toString()}`, { scroll: false });
+    //   dispatch(setCurrentStep(step));
+    // };
 
   return (
     <div className="flex items-center justify-between mb-20 mx-auto relative">
@@ -113,7 +125,7 @@ export function ProgressSteps() {
               className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center border shadow-md text-xs md:text-sm",
                 currentStep === step.id
-                  ? "border-red bg-red text-white"
+                  ? "border-primary bg-primary text-white"
                   : isStepComplete(step.id)
                   ? "text-black"
                   : "text-gray-700"
@@ -124,7 +136,7 @@ export function ProgressSteps() {
             <span
               className={cn(
                 "text-[15px]",
-                currentStep === step.id ? "text-red" : "text-black"
+                currentStep === step.id ? "text-primary" : "text-black"
               )}
             >
               {step.label}

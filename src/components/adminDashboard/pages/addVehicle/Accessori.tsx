@@ -31,14 +31,10 @@ export const availableAccessories = [
 ];
 
 const Accessori = ({ formData, onFormChange }: AccessoriProps) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>(
-    formData.accessories || []
-  );
+  const [selectedAccessories, setSelectedAccessories] = useState<string[]>(formData.accessories || []);
 
   // Handle accessory selection or deselection
-  const handleAccessoryChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleAccessoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
     const updatedAccessories = checked
       ? [...selectedAccessories, value] // Add to selected
@@ -51,10 +47,7 @@ const Accessori = ({ formData, onFormChange }: AccessoriProps) => {
 
   return (
     <div>
-      <VehicleInsertionHeader
-        title="Accessori"
-        subtitle="Seleziona gli accessori disponibili nel tuo veicolo dall'elenco"
-      />
+      <VehicleInsertionHeader title="Accessori" subtitle="Seleziona gli accessori disponibili nel tuo veicolo dall'elenco" />
       <p className="text-sm font-normal text-gray-500 pt-6 pb-4">
         {selectedAccessories.length}/{availableAccessories.length} Selezionati
       </p>
@@ -63,7 +56,7 @@ const Accessori = ({ formData, onFormChange }: AccessoriProps) => {
           <div key={accessory} className="flex items-center space-x-4">
             <label
               className={`flex items-center space-x-2 bg-white border border-gray-100 shadow-md w-[260px] rounded-lg px-4 py-4 cursor-pointer transition ${
-                selectedAccessories.includes(accessory) ? "bg-red" : ""
+                selectedAccessories.includes(accessory) ? "bg-primary" : ""
               }`}
             >
               <input
@@ -76,7 +69,7 @@ const Accessori = ({ formData, onFormChange }: AccessoriProps) => {
               />
               <div
                 className={`checkbox-custom h-4 w-4 border-2 border-black/70 relative rounded-sm ${
-                  selectedAccessories.includes(accessory) ? "bg-red" : ""
+                  selectedAccessories.includes(accessory) ? "bg-primary" : ""
                 }`}
                 role="checkbox"
                 aria-checked={selectedAccessories.includes(accessory)}

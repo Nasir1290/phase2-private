@@ -11,9 +11,7 @@ interface CompanyRegistrationProps {
   toggleModal: () => void; // ✅ Explicitly define the toggle function type
 }
 
-const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
-  toggleModal,
-}) => {
+const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({ toggleModal }) => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   // Handle form submission
@@ -45,11 +43,10 @@ const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
       <Modal isOpen={true} toggleModal={toggleModal}>
         <div className="space-y-4 max-h-[650px] overflow-y-auto">
           <h2 className="text-2xl font-bold">
-            Registrati come <span className="text-red">azienda</span>
+            Registrati come <span className="text-primary">azienda</span>
           </h2>
           <p className="text-text_light_gray text-sm">
-            Entra a far parte del nostro marketplace e raggiungi nuovi clienti.
-            Offri i tuoi veicoli a noleggio con facilità e in totale sicurezza.
+            Entra a far parte del nostro marketplace e raggiungi nuovi clienti. Offri i tuoi veicoli a noleggio con facilità e in totale sicurezza.
           </p>
 
           {/* ✅ Registration Form */}
@@ -57,17 +54,9 @@ const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
             {/* Nome e cognome */}
             <div className="grid w-full items-center gap-3">
               <Label htmlFor="name" className="font-medium">
-                Nome e cognome{" "}
-                <span className="text-xs text-text_light_gray">
-                  (facoltativo)
-                </span>
+                Nome e cognome <span className="text-xs text-text_light_gray">(facoltativo)</span>
               </Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                className="shadow-md rounded-lg w-full border"
-              />
+              <Input type="text" id="name" name="name" className="shadow-md rounded-lg w-full border" />
             </div>
 
             {/* Numero di telefono */}
@@ -75,13 +64,7 @@ const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
               <Label htmlFor="phone" className="font-medium">
                 Numero di telefono
               </Label>
-              <Input
-                type="number"
-                id="phone"
-                name="phone"
-                className="shadow-md rounded-lg w-full border"
-                required
-              />
+              <Input type="number" id="phone" name="phone" className="shadow-md rounded-lg w-full border" required />
             </div>
 
             {/* Email */}
@@ -89,13 +72,7 @@ const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
               <Label htmlFor="email" className="font-medium">
                 Email
               </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                className="shadow-md rounded-lg w-full border"
-                required
-              />
+              <Input type="email" id="email" name="email" className="shadow-md rounded-lg w-full border" required />
             </div>
 
             {/* Nome dell'azienda */}
@@ -103,50 +80,27 @@ const CompanyRegistration: React.FC<CompanyRegistrationProps> = ({
               <Label htmlFor="companyName" className="font-medium">
                 Nome dell&apos;azienda
               </Label>
-              <Input
-                type="text"
-                id="companyName"
-                name="companyName"
-                className="shadow-md rounded-lg w-full border"
-              />
+              <Input type="text" id="companyName" name="companyName" className="shadow-md rounded-lg w-full border" />
             </div>
 
             {/* Sito web aziendale */}
             <div className="grid w-full items-center gap-3">
               <Label htmlFor="companyWebsite" className="font-medium">
-                Sito web aziendale{" "}
-                <span className="text-xs text-text_light_gray">
-                  (facoltativo)
-                </span>
+                Sito web aziendale <span className="text-xs text-text_light_gray">(facoltativo)</span>
               </Label>
-              <Input
-                type="text"
-                id="companyWebsite"
-                name="companyWebsite"
-                className="shadow-md rounded-lg w-full border"
-              />
+              <Input type="text" id="companyWebsite" name="companyWebsite" className="shadow-md rounded-lg w-full border" />
             </div>
 
             {/* Messaggio */}
             <div className="grid w-full gap-3">
               <Label htmlFor="message" className="font-medium">
-                Messaggio{" "}
-                <span className="text-xs text-text_light_gray">
-                  (facoltativo)
-                </span>
+                Messaggio <span className="text-xs text-text_light_gray">(facoltativo)</span>
               </Label>
-              <Textarea
-                id="message"
-                name="message"
-                className="shadow-md rounded-lg w-full"
-              />
+              <Textarea id="message" name="message" className="shadow-md rounded-lg w-full" />
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="bg-red text-white w-full px-6 py-3 rounded-lg font-medium"
-            >
+            <button type="submit" className="bg-primary text-white w-full px-6 py-3 rounded-lg font-medium">
               INVIA RICHIESTA
             </button>
           </form>

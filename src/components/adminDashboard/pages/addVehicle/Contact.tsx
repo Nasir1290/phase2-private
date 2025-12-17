@@ -322,7 +322,7 @@ const Contact = ({ formData, onFormChange }: ContactProps) => {
           >
             <button
               onClick={toggleModal}
-              className="absolute top-3 right-3 text-lg text-gray-500 hover:text-red-500"
+              className="absolute top-3 right-3 text-lg text-gray-500 hover:text-primary"
             >
               <CgClose size={15} />
             </button>

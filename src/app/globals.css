@@ -23,3 +23,17 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+.reservation-modal  .ant-modal-content{
+  padding: 0 !important;
+  border-radius: 18px !important;
+}
+
+/* handle (thumb) */
+.ant-slider .ant-slider-handle::after {
+  background-color: #D1252B !important;
+  border-color: #D1252B !important;
+}
+
+

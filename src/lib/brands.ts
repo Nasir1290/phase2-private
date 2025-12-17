@@ -95,7 +95,7 @@ export const carBrands = [
   { id: 35, name: "Maserati", logo: maserati },
   { id: 36, name: "Mazda", logo: mazda },
   { id: 37, name: "Mclaren", logo: mclaren },
-  { id: 38, name: "Mercedes-benz", logo: mercedesBenz },
+  { id: 38, name: "Mercedes-Benz", logo: mercedesBenz },
   { id: 39, name: "Mitsubishi", logo: mitsubishi },
   { id: 40, name: "Nissan", logo: nissan },
   { id: 41, name: "Opel", logo: opel },

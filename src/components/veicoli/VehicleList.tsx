@@ -55,7 +55,7 @@ const VehicleList = () => {
   ]);
 
   const brandLogos: { [key: string]: string } = carBrands.reduce((acc, brand) => {
-    acc[brand.name] = brand.logo;
+    acc[brand?.name?.trim()?.toLowerCase()] = brand.logo;
     return acc;
   }, {} as { [key: string]: string });
 
@@ -122,17 +122,13 @@ const VehicleList = () => {
             <div className="flex items-center gap-4">
               <MapModal />
 
-              <VehicleFilterModal
-                open={isFilterModalOpen}
-                onClose={() => setIsFilterModalOpen(false)}
-                onApply={handleApplyFilters}
-              />
+              <VehicleFilterModal open={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} onApply={handleApplyFilters} />
               <div onClick={toggleDropdown} className="flex items-center gap-2 cursor-pointer">
                 <Image src={order} alt="order" width={20} height={20} className="h-4 w-4" />
                 <p className="text-text_dark_gray text-sm cursor-pointer">Ordina per</p>
                 <div ref={dropdownRef} className="relative dropdown-container">
                   <button>
-                    <SlArrowDown className="h-3 w-3 font-bold text-red" />
+                    <SlArrowDown className="h-3 w-3 font-bold text-primary" />
                   </button>
 
                   {isOpen && (
@@ -140,24 +136,24 @@ const VehicleList = () => {
                       <ul className="py-2 px-2">
                         <li
                           onClick={() => handleSelect("Raccomandato")}
-                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                            selectedOption === "Raccomandato" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
+                            selectedOption === "Raccomandato" ? "bg- text-gray-500 cursor-not-allowed" : ""
                           }`}
                         >
                           Raccomandato
                         </li>
                         <li
                           onClick={() => handleSelect("Dal più caro")}
-                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                            selectedOption === "Dal più caro" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
+                            selectedOption === "Dal più caro" ? "bg- text-gray-500 cursor-not-allowed" : ""
                           }`}
                         >
                           Dal più caro
                         </li>
                         <li
                           onClick={() => handleSelect("Dal meno caro")}
-                          className={`px-4 py-2 cursor-pointer hover:bg-red/5 text-sm ${
-                            selectedOption === "Dal meno caro" ? "bg-red-100 text-gray-500 cursor-not-allowed" : ""
+                          className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
+                            selectedOption === "Dal meno caro" ? "bg- text-gray-500 cursor-not-allowed" : ""
                           }`}
                         >
                           Dal meno caro
@@ -176,7 +172,7 @@ const VehicleList = () => {
               const selectedKm = vehicle.price.find((p: any) => p.rentalTime === 24)?.kilometerPerHour || 0;
               const isAvailable = vehicle.carStatus === "ACTIVE";
               if (!isAvailable) return null;
-              const brandLogo = brandLogos[vehicle.brand];
+              const brandLogo = brandLogos[vehicle?.brand?.trim()?.toLowerCase()];
               return (
                 <VehicleCard
                   key={vehicle?.id}

@@ -18,17 +18,12 @@ const LocationBanner = () => {
   return (
     <div className="container mx-auto">
       <div className="flex flex-col items-center text-center mt-10 md:mt-0 mb-12 md:mb-16 space-y-10 max-w-[950px] mx-auto">
-        <h2 className=" font-extrabold text-2xl md:text-[30px]">
-          Noleggia un veicolo in Svizzera
-        </h2>
+        <h2 className=" font-extrabold text-2xl md:text-[30px]">Noleggia un veicolo in Svizzera</h2>
         <p className="text-sm font-medium text-text_light_gray max-w-[920px] ">
-          Noleggio veicoli di alta qualità per ogni esigenza. Il nostro
-          marketplace comprende auto e furgoni perfettamente manutenuti, ideali
-          per spostamenti personali, professionali o per grandi trasporti.
-          Offriamo tariffe di noleggio trasparenti e competitive, con un
-          servizio affidabile e senza sorprese. Scopri le opzioni di noleggio a
-          breve e lungo termine, tutte con assicurazione inclusa, per
-          un&apos;esperienza di mobilità premium
+          Noleggio veicoli di alta qualità per ogni esigenza. Il nostro marketplace comprende auto e furgoni perfettamente manutenuti, ideali per
+          spostamenti personali, professionali o per grandi trasporti. Offriamo tariffe di noleggio trasparenti e competitive, con un servizio
+          affidabile e senza sorprese. Scopri le opzioni di noleggio a breve e lungo termine, tutte con assicurazione inclusa, per un&apos;esperienza
+          di mobilità premium
         </p>
       </div>
 
@@ -60,7 +55,7 @@ const LocationBanner = () => {
           {filteredBrands.map((brand) => (
             <SwiperSlide key={brand.id}>
               <Link href={`/veicoli/?brand=${brand.name}`}>
-                <div className="bg-white shadow-md shadow-black/20 hover:shadow-red/20 hover:shadow-md rounded-2xl border/40 py-3 flex justify-center items-center m-2 min-w-[120px] max-w-[260px]">
+                <div className="bg-white shadow-md shadow-black/20 hover:shadow-primary/20 hover:shadow-md rounded-2xl border/40 py-3 flex justify-center items-center m-2 min-w-[120px] max-w-[260px]">
                   <Image
                     src={brand?.logo}
                     alt={brand?.name}

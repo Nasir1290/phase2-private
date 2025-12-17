@@ -10,7 +10,6 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
       <div>
         <Navbar />
         <div className="relative">
-          {" "}
           {children}
           <div className="fixed bottom-10 w-full z-10">
             <CookiesBox />

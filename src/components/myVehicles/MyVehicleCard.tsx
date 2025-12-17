@@ -24,16 +24,7 @@ interface VehicleCardProps {
   price: { price: number }[];
 }
 
-const MyVehicleCard: React.FC<VehicleCardProps> = ({
-  id,
-  mainImage,
-  model,
-  brand,
-  description,
-  acceptanceStatus,
-  carStatus,
-  price,
-}) => {
+const MyVehicleCard: React.FC<VehicleCardProps> = ({ id, mainImage, model, brand, description, acceptanceStatus, carStatus, price }) => {
   const [isEliminaModalOpen, setIsEliminaModalOpen] = useState(false);
   const [isSospendiModalOpen, setIsSospendiModalOpen] = useState(false);
   const toggleEliminaModal = () => setIsEliminaModalOpen((prev) => !prev);
@@ -51,10 +42,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -82,9 +70,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
     <div className="w-full">
       <div
         className={`relative flex flex-col lg:flex-row items-start rounded-2xl shadow-md w-full border ${
-          carStatus === "SUSPEND"
-            ? " bg-black/40 opacity-40"
-            : "border-black/5 bg-white"
+          carStatus === "SUSPEND" ? " bg-black/40 opacity-40" : "border-black/5 bg-white"
         }`}
       >
         {/* Car Image */}
@@ -114,13 +100,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
           {/* Title */}
           <div className="flex justify-start items-center gap-4">
             <div className="w-6 h-6">
-              <Image
-                src={logo}
-                alt={model}
-                width={56}
-                height={40}
-                className="w-full h-full"
-              />
+              <Image src={logo} alt={model} width={56} height={40} className="w-full h-full" />
             </div>
             <Link href={`/veicoli/${id}`} passHref>
               <h3 className="text-[18px] font-medium">
@@ -129,18 +109,10 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
             </Link>
           </div>
           {/* Description  */}
-          <p className="text-text_light_gray text-sm">
-            {truncate(description, 20)}{" "}
-          </p>
+          <p className="text-text_light_gray text-sm">{truncate(description, 20)} </p>
           {/* deposite  */}
           <div className="flex items-center gap-3">
-            <Image
-              src={depositetag}
-              alt={model}
-              width={56}
-              height={40}
-              className="w-5 h-5"
-            />
+            <Image src={depositetag} alt={model} width={56} height={40} className="w-5 h-5" />
             <p className="font-bold text-[16px]">
               {/* Accessing the price from an array of objects */}
               {price && price[2]?.price ? `${price[2].price} CHF` : "N/A"}
@@ -152,11 +124,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
           <div className="flex items-center justify-between w-full">
             <p
               className={`${
-                acceptanceStatus === "ACCEPTED" && carStatus === "ACTIVE"
-                  ? "text-green"
-                  : acceptanceStatus === "PENDING"
-                  ? "text-yellow-500"
-                  : ""
+                acceptanceStatus === "ACCEPTED" && carStatus === "ACTIVE" ? "text-green" : acceptanceStatus === "PENDING" ? "text-yellow-500" : ""
               } font-medium text-[15px]`}
             >
               {acceptanceStatus === "ACCEPTED" && carStatus === "ACTIVE"
@@ -172,13 +140,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
                 onTouchEnd={handleOpenDropdown} // Add touch support for mobile
                 className="p-2 -mr-2" // Added padding for better touch target
               >
-                <Image
-                  src={dots}
-                  alt="Menu"
-                  width={100}
-                  height={100}
-                  className="w-3 h-3 xl:w-4 xl:h-4 opacity-70 hover:opacity-100"
-                />
+                <Image src={dots} alt="Menu" width={100} height={100} className="w-3 h-3 xl:w-4 xl:h-4 opacity-70 hover:opacity-100" />
               </button>
               {isOpen && (
                 <div className="z-50 bg-white absolute right-0 mt-2 w-36 shadow-lg rounded-md border">
@@ -192,16 +154,10 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
                         e.stopPropagation();
                         toggleEliminaModal();
                       }}
-                      className="rounded font-[450] px-4 py-2 hover:bg-red/5 cursor-pointer flex justify-between"
+                      className="rounded font-[450] px-4 py-2 hover:bg-primary/5 cursor-pointer flex justify-between"
                     >
                       <span>Elimina</span>
-                      <Image
-                        src={trash}
-                        alt="Elimina"
-                        width={100}
-                        height={100}
-                        className="w-4 h-4"
-                      />
+                      <Image src={trash} alt="Elimina" width={100} height={100} className="w-4 h-4" />
                     </li>
                     <li
                       onClick={(e) => {
@@ -212,16 +168,10 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
                         e.stopPropagation();
                         toggleSospendiModal();
                       }}
-                      className="rounded font-[450] px-4 py-2 hover:bg-red/5 cursor-pointer flex justify-between"
+                      className="rounded font-[450] px-4 py-2 hover:bg-primary/5 cursor-pointer flex justify-between"
                     >
                       <span>Sospendi</span>
-                      <Image
-                        src={pause}
-                        alt="Sospendi"
-                        width={100}
-                        height={100}
-                        className="w-3.5 h-3.5"
-                      />
+                      <Image src={pause} alt="Sospendi" width={100} height={100} className="w-3.5 h-3.5" />
                     </li>
                   </ul>
                 </div>
@@ -231,47 +181,20 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
         </div>
 
         {/* Dropdown Options */}
-        <div
-          className="hidden lg:relative lg:inline-block p-5"
-          ref={dropdownRef}
-        >
+        <div className="hidden lg:relative lg:inline-block p-5" ref={dropdownRef}>
           <button onClick={handleOpenDropdown} className="">
-            <Image
-              src={dots}
-              alt="Menu"
-              width={100}
-              height={100}
-              className="w-3 h-3 xl:w-4 xl:h-4 opacity-70 hover:opacity-100"
-            />
+            <Image src={dots} alt="Menu" width={100} height={100} className="w-3 h-3 xl:w-4 xl:h-4 opacity-70 hover:opacity-100" />
           </button>
           {isOpen && (
             <div className="z-10 bg-white absolute left-4 mt-0 w-36 shadow-lg rounded-md border">
               <ul className="p-1 text-sm text-gray-700">
-                <li
-                  onClick={toggleEliminaModal}
-                  className="rounded font-[450] px-4 py-2 hover:bg-red/5 cursor-pointer flex justify-between"
-                >
+                <li onClick={toggleEliminaModal} className="rounded font-[450] px-4 py-2 hover:bg-primary/5 cursor-pointer flex justify-between">
                   <span>Elimina</span>
-                  <Image
-                    src={trash}
-                    alt="Elimina"
-                    width={100}
-                    height={100}
-                    className="w-4 h-4"
-                  />
+                  <Image src={trash} alt="Elimina" width={100} height={100} className="w-4 h-4" />
                 </li>
-                <li
-                  onClick={toggleSospendiModal}
-                  className="rounded font-[450] px-4 py-2 hover:bg-red/5 cursor-pointer flex justify-between"
-                >
+                <li onClick={toggleSospendiModal} className="rounded font-[450] px-4 py-2 hover:bg-primary/5 cursor-pointer flex justify-between">
                   <span>Sospendi</span>
-                  <Image
-                    src={pause}
-                    alt="Sospendi"
-                    width={100}
-                    height={100}
-                    className="w-3.5 h-3.5"
-                  />
+                  <Image src={pause} alt="Sospendi" width={100} height={100} className="w-3.5 h-3.5" />
                 </li>
               </ul>
             </div>
@@ -285,13 +208,7 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
             onClick={toggleSospendiModal}
             className="absolute top-3 right-2 rounded-full"
           >
-            <Image
-              src={playIcon}
-              alt="Reattiva annuncio"
-              width={100}
-              height={100}
-              className="w-12 h-12 z-30"
-            />
+            <Image src={playIcon} alt="Reattiva annuncio" width={100} height={100} className="w-12 h-12 z-30" />
           </button>
         )}
       </div>
@@ -312,20 +229,14 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
       <MyVehicleModal
         isOpen={isSospendiModalOpen}
         toggleModal={toggleSospendiModal}
-        title={
-          carStatus === "SUSPEND"
-            ? "Confermi di voler attivare il tuo annuncio?"
-            : "Confermi di voler sospendere il tuo annuncio?"
-        }
+        title={carStatus === "SUSPEND" ? "Confermi di voler attivare il tuo annuncio?" : "Confermi di voler sospendere il tuo annuncio?"}
         // title="Confermi di voler attivare il tuo annuncio?"
         mainImage={mainImage}
         model={model}
         brand={brand}
         logo={logo}
         description={description}
-        confirmButtontext={
-          carStatus === "SUSPEND" ? "Sì, attivo" : "Si, sospendi"
-        }
+        confirmButtontext={carStatus === "SUSPEND" ? "Sì, attivo" : "Si, sospendi"}
         vehicleId={id}
         currentStatus={carStatus}
       />

@@ -69,35 +69,20 @@ const ResetPassword = () => {
           <Label htmlFor="password" className="font-normal">
             Password
           </Label>
-          <Input
-            type="password"
-            name="password"
-            required
-            className="shadow-md rounded-lg w-full border mt-1 block border-gray-300"
-          />
+          <Input type="password" name="password" required className="shadow-md rounded-lg w-full border mt-1 block border-gray-300" />
         </div>
 
         <div>
           <Label htmlFor="confirmPassword" className="font-normal">
             Conferma Password
           </Label>
-          <Input
-            type="password"
-            name="confirmPassword"
-            required
-            className="shadow-md rounded-lg w-full border mt-1 block border-gray-300"
-          />
+          <Input type="password" name="confirmPassword" required className="shadow-md rounded-lg w-full border mt-1 block border-gray-300" />
         </div>
 
-        {passwordError && (
-          <p className="text-red-500 text-sm font-medium">{passwordError}</p>
-        )}
+        {passwordError && <p className="text-primary text-sm font-medium">{passwordError}</p>}
 
         <div>
-          <button
-            type="submit"
-            className="w-full py-3 px-4 bg-red text-white rounded-lg mt-3"
-          >
+          <button type="submit" className="w-full py-3 px-4 bg-primary text-white rounded-lg mt-3">
             Reset Password
           </button>
         </div>
