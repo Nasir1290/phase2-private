@@ -58,10 +58,6 @@ const renderFeatures = (features: string[]) => (
             <p className="text-text_light_gray text-sm">Gestisci i dettagli del tuo abbonamento e controlla le altre delle tue funzionalità</p>
           </div>
 
-          {/* <div onClick={handleOpenModal} className="flex items-center gap-2  text-sm font-semibold text-primary cursor-pointer">
-            <p> GESTISCI ABBONAMENTO </p>
-            <FaChevronRight size={14} />
-          </div> */}
           <div  onClick={handleOpenModal} className="hidden md:flex cursor-pointer text-sm font-semibold text-primary uppercase items-center gap-1 hover:bg-primary/5 px-3 py-2 rounded-lg">
             GESTISCI ABBONAMENTO
             <MdArrowForwardIos />

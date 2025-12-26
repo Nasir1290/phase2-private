@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "./globals.css";
 import ReduxProvider from "@/redux/ReduxProvider";
 import { Toaster } from "@/components/ui/sonner";
+import StripeProvider from "./stripe-provider";
 
 export const metadata: Metadata = {
   // Sets the root for resolving relative URLs (important for OpenGraph & canonical URLs)
@@ -71,10 +72,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msvalidate.01" content="7DDDEFB6D58B6DE049D9EF74321F5A8A" />
       </head>
       <body className={`antialiased font-roboto`}>
-        <ReduxProvider>
-          {children}
-          <Toaster />
-        </ReduxProvider>
+         <StripeProvider>
+          <ReduxProvider>
+            {children}
+            <Toaster />
+          </ReduxProvider>
+        </StripeProvider>
       </body>
     </html>
   );

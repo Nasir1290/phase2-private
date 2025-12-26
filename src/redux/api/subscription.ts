@@ -2,16 +2,16 @@ import { baseApi } from "./baseApi";
 
 const subscriptionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    //create contact --done
-    createContact: build.mutation({
+    //create subscription --done
+    createSubscription: build.mutation({
       query: (data) => {
         return {
-          url: "/contact/send-email",
+          url: "/subscription/create",
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["Contact"],
+      invalidatesTags: ["Subscription"],
     }),
      getAllSubscriptions: build.query({
           query: () => {
@@ -25,6 +25,4 @@ const subscriptionApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateContactMutation , 
-useGetAllSubscriptionsQuery
-} = subscriptionApi;
+export const { useCreateSubscriptionMutation, useGetAllSubscriptionsQuery } = subscriptionApi;
