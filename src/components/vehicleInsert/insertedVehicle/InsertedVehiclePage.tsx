@@ -28,30 +28,21 @@ const InsertedVehiclePage = () => {
     return text;
   };
 
-  const brandLogos: { [key: string]: string } = carBrands.reduce(
-    (acc, brand) => {
-      acc[brand.name] = brand.logo;
-      return acc;
-    },
-    {} as { [key: string]: string }
-  );
+  const brandLogos: { [key: string]: string } = carBrands.reduce((acc, brand) => {
+    acc[brand.name?.trim()?.toLowerCase()] = brand.logo;
+    return acc;
+  }, {} as { [key: string]: string });
 
   const brand = carDetails?.brand; // Get the brand from the carDetails
 
-
   // Directly access the brand logo using the brand name
-  const brandLogo = brandLogos[brand || ""];
+  const brandLogo = brandLogos[brand?.trim()?.toLowerCase() || ""];
 
   return (
     <div className="">
       <div className="text-center space-y-8">
-        <h2 className="text-3xl font-semibold">
-          Congratulazioni il tuo annuncio è in fase di revisione!
-        </h2>
-        <p className="text-text_light_gray">
-          Il tuo annuncio è in revisione, ti informeremo non appena verrà
-          approvato
-        </p>
+        <h2 className="text-3xl font-semibold">Congratulazioni il tuo annuncio è in fase di revisione!</h2>
+        <p className="text-text_light_gray">Il tuo annuncio è in revisione, ti informeremo non appena verrà approvato</p>
       </div>
 
       <div className="my-20">
@@ -112,21 +103,11 @@ const InsertedVehiclePage = () => {
                 </Link>
               </div>
               {/* Description  */}
-              <p className="text-text_light_gray text-sm">
-                {carDetails?.description
-                  ? truncate(carDetails.description, 20)
-                  : ""}
-              </p>
+              <p className="text-text_light_gray text-sm">{carDetails?.description ? truncate(carDetails.description, 20) : ""}</p>
 
               {/* Price  */}
               <div className="flex items-center gap-3">
-                <Image
-                  src={pricetag}
-                  alt="Mercedes-Benz C43 AMG (Cabriolet)"
-                  width={56}
-                  height={40}
-                  className="w-5 h-5"
-                />
+                <Image src={pricetag} alt="Mercedes-Benz C43 AMG (Cabriolet)" width={56} height={40} className="w-5 h-5" />
                 <p className="font-medium">CHF {selectedPrice || "N/A"}</p>
               </div>
               <Separator />
@@ -161,9 +142,7 @@ const InsertedVehiclePage = () => {
       </div>
       <div className="flex justify-end">
         <Link href="/">
-          <button className="w-[140px] py-2 rounded text-[15px] bg-red text-white">
-            Homepage
-          </button>
+          <button className="w-[140px] py-2 rounded text-[15px] bg-primary text-white">Homepage</button>
         </Link>
       </div>
     </div>

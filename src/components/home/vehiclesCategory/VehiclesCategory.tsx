@@ -124,34 +124,27 @@ const VehiclesCategory = () => {
   const categories = allCategories?.data || [];
 
   // Filter carCategories to only include those present in the categories array from the database
-  const filteredCategories = carCategories.filter((category) =>
-    categories.includes(category.name)
-  );
+  const filteredCategories = carCategories.filter((category) => categories.includes(category.name));
 
   return (
     <div className="container mx-auto">
       {/* Section Header */}
       <div className="max-w-[400px]">
-        <SectionHeader2
-          topText="SCOPRI"
-          title="Scegli tra le nostre"
-          highlightedText="categorie"
-          remainingText="di veicoli"
-        />
+        <SectionHeader2 topText="SCOPRI" title="Scegli tra le nostre" highlightedText="categorie" remainingText="di veicoli" />
       </div>
 
       {/* Navigation Buttons */}
       <div className="relative">
         {/* Left icon  */}
         <button
-          className="hidden md:flex custom-prev absolute top-1/2 left-[-20px] lg:left-[-60px] z-10 transform -translate-y-1/2 text-4xl font-thin text-red"
+          className="hidden md:flex custom-prev absolute top-1/2 left-[-20px] lg:left-[-60px] z-10 transform -translate-y-1/2 text-4xl font-thin text-primary"
           aria-label="Previous"
         >
           <BsChevronLeft />
         </button>
         {/* Right icon  */}
         <button
-          className="hidden md:flex custom-next absolute top-1/2 right-[-20px] lg:right-[-60px] z-10 transform -translate-y-1/2 text-4xl font-thin text-red"
+          className="hidden md:flex custom-next absolute top-1/2 right-[-20px] lg:right-[-60px] z-10 transform -translate-y-1/2 text-4xl font-thin text-primary"
           aria-label="Next"
         >
           <BsChevronRight />
@@ -195,32 +188,24 @@ const VehiclesCategory = () => {
           className="mySwiper p-10"
         >
           {filteredCategories?.length === 0 ? (
-            <div className="col-span-full text-center text-xl font-bold text-gray-500">
-              No Category available in this section.
-            </div>
+            <div className="col-span-full text-center text-xl font-bold text-gray-500">No Category available in this section.</div>
           ) : (
             filteredCategories.map((category) => (
               <SwiperSlide
                 key={category.id}
-                className=" hover:shadow-md shadow shadow-black/20 hover:shadow-red/10 rounded-2xl border/40 px-2 py-3 flex flex-col justify-center items-center gap-3 m-2 transition-all duration-300 max-w-[155px] sm:max-w-[180px] md:max-w-[178px] lg:max-w-[180px] xl:max-w-[158px] 2xl:max-w-[170px] bg-white"
+                className=" hover:shadow-md shadow shadow-black/20 hover:shadow-primary/10 rounded-2xl border/40 px-2 py-3 flex flex-col justify-center items-center gap-3 m-2 transition-all duration-300 max-w-[155px] sm:max-w-[180px] md:max-w-[178px] lg:max-w-[180px] xl:max-w-[158px] 2xl:max-w-[170px] bg-white"
                 onMouseEnter={() => setHoveredItem(category?.id)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <Link href={`/veicoli?category=${category.name}`}>
                   <Image
-                    src={
-                      hoveredItem === category.id
-                        ? category.hoverLogo
-                        : category.logo
-                    }
+                    src={hoveredItem === category.id ? category.hoverLogo : category.logo}
                     alt={category.name}
                     width={500}
                     height={500}
                     className="object-contain w-[50px] 2xl:w-[55px] h-6 mx-auto mb-2 transition-transform duration-300"
                   />
-                  <p className="text-base font-medium text-center transition-colors text-black">
-                    {category.displayName}
-                  </p>
+                  <p className="text-base font-medium text-center transition-colors text-black">{category.displayName}</p>
                 </Link>
               </SwiperSlide>
             ))

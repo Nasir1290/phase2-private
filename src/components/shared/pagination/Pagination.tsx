@@ -19,7 +19,7 @@
 //     <div className="flex items-center justify-center space-x-5 mt-4">
 //       {/* Previous Button */}
 //       <button
-//         className="p-2 text-red disabled:text-gray-300"
+//         className="p-2 text-primary disabled:text-gray-300"
 //         onClick={() => onPageChange(currentPage - 1)}
 //         disabled={currentPage === 1}
 //       >
@@ -31,7 +31,7 @@
 //         <button
 //           key={index}
 //           className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-//             currentPage === index + 1 ? "bg-red text-white" : "text-black "
+//             currentPage === index + 1 ? "bg-primary text-white" : "text-black "
 //           }`}
 //           onClick={() => onPageChange(index + 1)}
 //         >
@@ -41,7 +41,7 @@
 
 //       {/* Next Button */}
 //       <button
-//         className="p-2 text-red disabled:text-gray-300"
+//         className="p-2 text-primary disabled:text-gray-300"
 //         onClick={() => onPageChange(currentPage + 1)}
 //         disabled={currentPage === totalPages}
 //       >
@@ -52,9 +52,6 @@
 // };
 
 // export default Pagination;
-
-
-
 
 // import {
 //   MdOutlineArrowBackIosNew,
@@ -81,7 +78,7 @@
 //         <button
 //           key={i}
 //           className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-//             currentPage === i ? "bg-red text-white" : "text-black"
+//             currentPage === i ? "bg-primary text-white" : "text-black"
 //           }`}
 //           onClick={() => onPageChange(i)}
 //         >
@@ -103,7 +100,7 @@
 //         <button
 //           key={totalPages}
 //           className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-//             currentPage === totalPages ? "bg-red text-white" : "text-black"
+//             currentPage === totalPages ? "bg-primary text-white" : "text-black"
 //           }`}
 //           onClick={() => onPageChange(totalPages)}
 //         >
@@ -119,7 +116,7 @@
 //     <div className="flex items-center justify-center space-x-5 mt-4">
 //       {/* Previous Button */}
 //       <button
-//         className="p-2 text-red disabled:text-gray-300"
+//         className="p-2 text-primary disabled:text-gray-300"
 //         onClick={() => onPageChange(currentPage - 1)}
 //         disabled={currentPage === 1}
 //       >
@@ -131,7 +128,7 @@
 
 //       {/* Next Button */}
 //       <button
-//         className="p-2 text-red disabled:text-gray-300"
+//         className="p-2 text-primary disabled:text-gray-300"
 //         onClick={() => onPageChange(currentPage + 1)}
 //         disabled={currentPage === totalPages}
 //       >
@@ -143,12 +140,7 @@
 
 // export default Pagination;
 
-
-
-import {
-  MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
-} from "react-icons/md";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 interface PaginationProps {
   totalPages: number;
@@ -156,11 +148,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
-  totalPages,
-  currentPage,
-  onPageChange,
-}) => {
+const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
   // Handle invalid totalPages
   const validTotalPages = Math.max(0, totalPages);
   // Ensure currentPage is within valid range
@@ -181,7 +169,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={i}
             className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-              validCurrentPage === i ? "text-white bg-red" : "text-black"
+              validCurrentPage === i ? "text-white bg-primary" : "text-black"
             }`}
             onClick={() => onPageChange(i)}
           >
@@ -195,7 +183,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={1}
           className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-            validCurrentPage === 1 ? "bg-red text-white" : "text-black"
+            validCurrentPage === 1 ? "bg-primary text-white" : "text-black"
           }`}
           onClick={() => onPageChange(1)}
         >
@@ -221,7 +209,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={i}
             className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-              validCurrentPage === i ? "bg-red text-white" : "text-black"
+              validCurrentPage === i ? "bg-primary text-white" : "text-black"
             }`}
             onClick={() => onPageChange(i)}
           >
@@ -244,9 +232,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={validTotalPages}
           className={`w-8 h-8 flex items-center justify-center rounded-lg text-[14px] font-medium ${
-            validCurrentPage === validTotalPages
-              ? "bg-red text-white"
-              : "text-black"
+            validCurrentPage === validTotalPages ? "bg-primary text-white" : "text-black"
           }`}
           onClick={() => onPageChange(validTotalPages)}
         >
@@ -262,9 +248,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="flex items-center justify-center space-x-5 mt-4">
       {/* Previous Button */}
       <button
-        className={`p-2 text-red disabled:text-gray-300 ${
-          validTotalPages === 0 ? "invisible" : ""
-        }`}
+        className={`p-2 text-primary disabled:text-gray-300 ${validTotalPages === 0 ? "invisible" : ""}`}
         onClick={() => onPageChange(validCurrentPage - 1)}
         disabled={validCurrentPage === 1 || validTotalPages === 0}
       >
@@ -276,9 +260,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {/* Next Button */}
       <button
-        className={`p-2 text-red disabled:text-gray-300 ${
-          validTotalPages === 0 ? "invisible" : ""
-        }`}
+        className={`p-2 text-primary disabled:text-gray-300 ${validTotalPages === 0 ? "invisible" : ""}`}
         onClick={() => onPageChange(validCurrentPage + 1)}
         disabled={validCurrentPage === validTotalPages || validTotalPages === 0}
       >

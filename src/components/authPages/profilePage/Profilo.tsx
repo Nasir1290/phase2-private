@@ -10,12 +10,7 @@ import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import Modal from "@/components/shared/modal/Modal";
 import Cookies from "js-cookie";
-import {
-  useDeleteProfileMutation,
-  useGetMyProfileQuery,
-  useRemoveProfilePictureMutation,
-  useUpdateProfileMutation,
-} from "@/redux/api/authApi";
+import { useDeleteProfileMutation, useGetMyProfileQuery, useRemoveProfilePictureMutation, useUpdateProfileMutation } from "@/redux/api/authApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { SlArrowDown } from "react-icons/sl";
@@ -181,7 +176,7 @@ export default function ProfileEditor() {
     setIsEditing(false);
   };
   return (
-    <div className="mx-auto py-4 mt-14">
+    <div className="mx-auto my-8 md:my-16 lg:my-24">
       <h2 className="text-xl font-bold mb-8">Profilo</h2>
       <div className="space-y-12 md:space-y-16 lg:space-y-20 xl:space-y-28">
         {/* Profile Box */}
@@ -196,13 +191,7 @@ export default function ProfileEditor() {
                 className="rounded-full w-20 h-20 md:w-24 md:h-24 bg-black object-cover"
               />
             </label>
-            <input
-              id="fileInput"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageChange}
-            />
+            <input id="fileInput" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
             <div className="flex flex-col gap-5">
               <p className="font-medium text-base">
                 {user?.firstName} {user?.lastName}
@@ -281,9 +270,7 @@ export default function ProfileEditor() {
 
                 <PhoneInput
                   country={countryCode}
-                  onChange={(phone) =>
-                    setFormData({ ...formData, phoneNumber: phone })
-                  }
+                  onChange={(phone) => setFormData({ ...formData, phoneNumber: phone })}
                   value={formData.phoneNumber || user?.phoneNumber || ""}
                   inputStyle={{
                     width: "100%",
@@ -350,12 +337,8 @@ export default function ProfileEditor() {
                     >
                       <option value=""> </option>
                       <option value="Argovia">Argovia</option>
-                      <option value="Appenzello Esterno">
-                        Appenzello Esterno
-                      </option>
-                      <option value="Appenzello Interno">
-                        Appenzello Interno
-                      </option>
+                      <option value="Appenzello Esterno">Appenzello Esterno</option>
+                      <option value="Appenzello Interno">Appenzello Interno</option>
                       <option value="Basilea Campagna">Basilea Campagna</option>
                       <option value="Basilea Città">Basilea Città</option>
                       <option value="Berna">Berna</option>
@@ -382,7 +365,7 @@ export default function ProfileEditor() {
                     </select>
 
                     {/* Custom Icon */}
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-red pointer-events-none">
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary pointer-events-none">
                       <SlArrowDown size={14} />
                     </div>
                   </div>
@@ -393,17 +376,10 @@ export default function ProfileEditor() {
             <Separator />
             {/* Buttons */}
             <div className="flex flex-row justify-between items-center pt-4 mt-10 gap-4">
-              <button
-                type="button"
-                onClick={toggleModal}
-                className="text-[15px] underline"
-              >
+              <button type="button" onClick={toggleModal} className="text-[15px] underline">
                 Cancella profilo
               </button>
-              <button
-                type="submit"
-                className="bg-red text-white px-12 py-2 text-sm font-medium rounded-sm"
-              >
+              <button type="submit" className="bg-primary text-white px-12 py-2 text-sm font-medium rounded-sm">
                 SALVA
               </button>
             </div>
@@ -413,25 +389,14 @@ export default function ProfileEditor() {
 
       {/* Modal Component */}
       <Modal isOpen={isModalOpen} toggleModal={toggleModal}>
-        <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
-          Cancella profilo
-        </h2>
-        <p className="text-sm mb-4 sm:mb-8">
-          Questa operazione è irreversibile. Sei sicuro di voler cancellare il
-          tuo profilo?
-        </p>
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Cancella profilo</h2>
+        <p className="text-sm mb-4 sm:mb-8">Questa operazione è irreversibile. Sei sicuro di voler cancellare il tuo profilo?</p>
         <Separator />
         <div className="flex justify-between items-center gap-4 mt-4 sm:mt-8">
-          <button
-            onClick={toggleModal}
-            className="bg-white border shadow-md w-36 px-6 py-2 rounded-md text-sm"
-          >
+          <button onClick={toggleModal} className="bg-white border shadow-md w-36 px-6 py-2 rounded-md text-sm">
             No
           </button>
-          <button
-            onClick={handleDeleteUser}
-            className="shadow-md w-36 px-6 py-2 rounded-md bg-red text-white text-sm"
-          >
+          <button onClick={handleDeleteUser} className="shadow-md w-36 px-6 py-2 rounded-md bg-primary text-white text-sm">
             Si, cancella
           </button>
         </div>

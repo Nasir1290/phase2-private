@@ -61,19 +61,17 @@ const ContactForm = () => {
     <div className="w-full space-y-10 sm:space-y-20">
       <div className="container mx-auto w-full flex gap-3 justify-between">
         {/* Subject Options */}
-        {["Supporto clienti", "Multe e pedaggi", "Rimborso deposito"].map(
-          (subject) => (
-            <p
-              key={subject}
-              className={`text-[12px] sm:text-sm md:text-base font-medium underline cursor-pointer ${
-                selectedSubject === subject ? "text-red" : ""
-              }`}
-              onClick={() => handleSubjectClick(subject)}
-            >
-              {subject}
-            </p>
-          )
-        )}
+        {["Supporto clienti", "Multe e pedaggi", "Rimborso deposito"].map((subject) => (
+          <p
+            key={subject}
+            className={`text-[12px] sm:text-sm md:text-base font-medium underline cursor-pointer ${
+              selectedSubject === subject ? "text-primary" : ""
+            }`}
+            onClick={() => handleSubjectClick(subject)}
+          >
+            {subject}
+          </p>
+        ))}
       </div>
 
       <div className="mx-auto w-full sm:min-w-[400px] max-w-[500px] flex justify-center items-center">
@@ -87,12 +85,7 @@ const ContactForm = () => {
               <Label htmlFor="name" className="font-medium">
                 Nome e cognome
               </Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                className="shadow-md focus:shadow-red/10 rounded-lg w-full border"
-              />
+              <Input type="text" id="name" name="name" className="shadow-md focus:shadow-primary/10 rounded-lg w-full border" />
             </div>
 
             {/* Email */}
@@ -100,12 +93,7 @@ const ContactForm = () => {
               <Label htmlFor="email" className="font-medium">
                 Email
               </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                className="shadow-md focus:shadow-red/10 rounded-lg w-full border"
-              />
+              <Input type="email" id="email" name="email" className="shadow-md focus:shadow-primary/10 rounded-lg w-full border" />
             </div>
 
             {/* Numero di telefono */}
@@ -117,12 +105,7 @@ const ContactForm = () => {
                   (facoltativo)
                 </span>
               </Label>
-              <Input
-                type="text"
-                id="phone"
-                name="phone"
-                className="shadow-md focus:shadow-red/10 rounded-lg w-full border"
-              />
+              <Input type="text" id="phone" name="phone" className="shadow-md focus:shadow-primary/10 rounded-lg w-full border" />
             </div>
 
             {/* Messaggio */}
@@ -130,11 +113,7 @@ const ContactForm = () => {
               <Label htmlFor="message" className="font-medium">
                 Messaggio
               </Label>
-              <Textarea
-                id="message"
-                name="message"
-                className="shadow-md focus:shadow-red/10 rounded-lg w-full"
-              />
+              <Textarea id="message" name="message" className="shadow-md focus:shadow-primary/10 rounded-lg w-full" />
             </div>
 
             {/* Submit Button */}

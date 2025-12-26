@@ -14,9 +14,7 @@ const BestBrands = () => {
   const brands = allBrands?.data || [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const brandNames = brands.map((brand: any) => brand.brand);
-  const filteredBrands = carBrands.filter((category) =>
-    brandNames.includes(category.name)
-  );
+  const filteredBrands = carBrands.filter((category) => brandNames.includes(category.name));
 
   return (
     <div className="container mx-auto">
@@ -58,7 +56,7 @@ affidabilità e prestazioni eccellenti per ogni tua esigenza di mobilità"
         {filteredBrands.map((brand) => (
           <SwiperSlide key={brand.id}>
             <Link href={`/veicoli/?brand=${brand.name}`}>
-              <div className="bg-white shadow-md shadow-black/20 hover:shadow-red/20 hover:shadow-md rounded-2xl border/40 py-3 flex justify-center items-center m-2 max-w-[260px] ml-[1px]">
+              <div className="bg-white shadow-md shadow-black/20 hover:shadow-primary/20 hover:shadow-md rounded-2xl border/40 py-3 flex justify-center items-center m-2 max-w-[260px] ml-[1px]">
                 <Image
                   src={brand.logo}
                   alt={brand.name}

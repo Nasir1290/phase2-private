@@ -1,10 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import {
-  useChangePasswordMutation,
-  useGetMyProfileQuery,
-} from "@/redux/api/authApi";
+import { useChangePasswordMutation, useGetMyProfileQuery } from "@/redux/api/authApi";
 import { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { toast } from "sonner";
@@ -58,10 +55,7 @@ const Sicurezza = () => {
           }
         )?.data;
 
-        const errorMessage =
-          apiError?.errorMessages?.map((err) => err.message).join(", ") ||
-          apiError?.message ||
-          "An unexpected error occurred";
+        const errorMessage = apiError?.errorMessages?.map((err) => err.message).join(", ") || apiError?.message || "An unexpected error occurred";
 
         toast.error(errorMessage);
       }
@@ -69,20 +63,15 @@ const Sicurezza = () => {
   };
 
   return (
-    <div className="py-4 space-y-16 xl:space-y-24 pt-12">
+    <div className="space-y-16 xl:space-y-24 my-8 md:my-16 lg:my-24">
       <div>
         <h2 className="text-2xl font-bold mb-2">Modifica password</h2>
-        <p className="text-sm mb-8 text-text_light_gray">
-          Aggiorna le tue credenziali in modo rapido e sicuro
-        </p>
+        <p className="text-sm mb-8 text-text_light_gray">Aggiorna le tue credenziali in modo rapido e sicuro</p>
         {/* Password Update Section */}
         <div className=" space-y-8 my-20">
           {/* Old Password */}
           <div className="space-y-4 relative">
-            <Label
-              htmlFor="password"
-              className="text-[15px] text-text_default font-normal"
-            >
+            <Label htmlFor="password" className="text-[15px] text-text_default font-normal">
               Password attuale
             </Label>
             <div className="relative w-full max-w-md">
@@ -99,11 +88,7 @@ const Sicurezza = () => {
                 onClick={togglePasswordVisibility}
                 className="absolute right-4 md:left-[515px] top-1/2 transform -translate-y-1/2 text-gray-500"
               >
-                {showPassword ? (
-                  <IoEyeOutline size={20} />
-                ) : (
-                  <IoEyeOffOutline size={20} />
-                )}
+                {showPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
               </button>
             </div>
           </div>
@@ -111,10 +96,7 @@ const Sicurezza = () => {
           <div className="flex gap-5 md:gap-20 w-full">
             {/* New Password */}
             <div className="space-y-4 w-full relative">
-              <Label
-                htmlFor="new-password"
-                className="text-[15px] text-text_default font-normal"
-              >
+              <Label htmlFor="new-password" className="text-[15px] text-text_default font-normal">
                 Nuova password
               </Label>
               <div className="relative">
@@ -131,21 +113,14 @@ const Sicurezza = () => {
                   onClick={() => setShowNewPassword((prevState) => !prevState)}
                   className="absolute right-4 xl:left-[515px] top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
-                  {showNewPassword ? (
-                    <IoEyeOutline size={20} />
-                  ) : (
-                    <IoEyeOffOutline size={20} />
-                  )}
+                  {showNewPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
                 </button>
               </div>
             </div>
 
             {/* Confirm Password */}
             <div className="space-y-4 w-full relative">
-              <Label
-                htmlFor="confirm-password"
-                className="text-[15px] text-text_default font-normal"
-              >
+              <Label htmlFor="confirm-password" className="text-[15px] text-text_default font-normal">
                 Conferma password
               </Label>
               <div className="relative">
@@ -159,16 +134,10 @@ const Sicurezza = () => {
                 {/* Toggle Icon */}
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowConfirmPassword((prevState) => !prevState)
-                  }
+                  onClick={() => setShowConfirmPassword((prevState) => !prevState)}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
-                  {showConfirmPassword ? (
-                    <IoEyeOutline size={20} />
-                  ) : (
-                    <IoEyeOffOutline size={20} />
-                  )}
+                  {showConfirmPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
                 </button>
               </div>
             </div>
@@ -176,16 +145,12 @@ const Sicurezza = () => {
         </div>
 
         {/* Error Message */}
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-primary text-sm">{error}</p>}
 
         <Separator />
         {/* Save Button */}
         <div className="flex justify-end pt-4 mt-10">
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="bg-red text-white px-12 py-2 font-medium text-sm rounded-sm"
-          >
+          <button type="button" onClick={handleSubmit} className="bg-primary text-white px-12 py-2 font-medium text-sm rounded-sm">
             SALVA
           </button>
         </div>

@@ -59,16 +59,10 @@ const SmDeviceContact = ({ car }: SmDeviceContactProps) => {
             <p className="text-base font-medium">{car?.advertiserName}</p>
           </div>
           <div className="flex gap-1 text-sm font-semibold">
-            <button
-              onClick={toggleContactModal}
-              className="bg-green text-white h-9  px-8 rounded-lg w-full"
-            >
+            <button onClick={toggleContactModal} className="bg-green text-white h-9  px-8 rounded-lg w-full">
               Contatta
             </button>
-            <button
-              onClick={() => openModal("reserve")}
-              className="bg-red text-white h-9  px-8 rounded-lg w-full"
-            >
+            <button onClick={() => openModal("reserve")} className="bg-primary text-white h-9  px-8 rounded-lg w-full">
               Riserva
             </button>
           </div>
@@ -88,10 +82,7 @@ const SmDeviceContact = ({ car }: SmDeviceContactProps) => {
             <div className="mb-4">
               <Rental car={car} />
             </div>
-            <button
-              onClick={closeModal}
-              className="bg-gray-500 text-white py-2 px-6 rounded-lg w-full"
-            >
+            <button onClick={closeModal} className="bg-gray-500 text-white py-2 px-6 rounded-lg w-full">
               Close
             </button>
           </div>

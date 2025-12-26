@@ -1,11 +1,6 @@
 import { SectionHeader2 } from "@/components/shared/sectionHeader/SectionHeader";
 import { SharedButton } from "@/components/shared/sharedButton/SharedButton";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -47,40 +42,24 @@ const PartnershipFaq = () => {
       <div className="container mx-auto ">
         <div className="grid grid-cols-4 gap-5 md:gap-10 2xl:gap-20">
           <div className="col-span-5 xl:col-span-2">
-            <SectionHeader2
-              title="Ottieni maggiori informazioni"
-              highlightedText="sulle partnership"
-              topText="DOMANDE"
-            />
+            <SectionHeader2 title="Ottieni maggiori informazioni" highlightedText="sulle partnership" topText="DOMANDE" />
             <Link href="/contatti">
               <SharedButton text="Facci una domanda" />
             </Link>
           </div>
           {/* Faq  */}
           <div className="col-span-5 xl:col-span-2 w-full mx-auto ">
-            <Accordion
-              type="single"
-              collapsible
-              className="space-y-5 rounded-lg"
-            >
+            <Accordion type="single" collapsible className="space-y-5 rounded-lg">
               {faqData.map((item, index) => (
                 <AccordionItem value={`item-${index}`} key={index}>
                   <AccordionTrigger className="flex items-center gap-6 text-start text-sm md:text-base font-semibold p-3 rounded-lg shadow-md transition w-full ">
-                    <Image
-                      src={ques}
-                      alt="Question"
-                      width={40}
-                      height={40}
-                      className="w-8 h-8"
-                    />
+                    <Image src={ques} alt="Question" width={40} height={40} className="w-8 h-8" />
                     <span className="flex justify-between items-center w-full">
                       {item.question}
-                      <IoIosArrowDown className="text-2xl text-red" />
+                      <IoIosArrowDown className="text-2xl text-primary" />
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="p-3 shadow-inner  mb-4">
-                    {item.answer}
-                  </AccordionContent>
+                  <AccordionContent className="p-3 shadow-inner  mb-4">{item.answer}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

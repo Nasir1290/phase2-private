@@ -14,8 +14,6 @@ interface PriceStepProps {
   errors: string[];
 }
 
-
-
 type Accessory = (typeof availableAccessories)[number];
 
 export function PricingStep({ errors }: PriceStepProps) {
@@ -35,6 +33,8 @@ export function PricingStep({ errors }: PriceStepProps) {
             { rentalTime: 1, price: 0, kilometerPerHour: "" },
             { rentalTime: 9, price: 0, kilometerPerHour: "" },
             { rentalTime: 24, price: 0, kilometerPerHour: "" },
+            { rentalTime: 7, price: 0, kilometerPerHour: "" },
+            { rentalTime: 30, price: 0, kilometerPerHour: "" },
           ],
         })
       );
@@ -55,27 +55,19 @@ export function PricingStep({ errors }: PriceStepProps) {
   }, [formData.price]);
 
   const shouldShowError = (rentalTime: number, field: "price" | "km") => {
-    const fieldKey =
-      field === "price" ? `${rentalTime}_price` : `${rentalTime}_km`;
+    const fieldKey = field === "price" ? `${rentalTime}_price` : `${rentalTime}_km`;
 
     return (
       (touchedFields[rentalTime] &&
         ((rentalTime === 24 &&
-          ((field === "price" &&
-            formData.price?.find((p: any) => p.rentalTime === rentalTime)
-              ?.price <= 0) ||
+          ((field === "price" && formData.price?.find((p: any) => p.rentalTime === rentalTime)?.price <= 0) ||
             (field === "km" &&
-              !formData.price?.find((p: any) => p.rentalTime === rentalTime)
-                ?.kilometerPerHour &&
-              formData.price?.find((p: any) => p.rentalTime === rentalTime)
-                ?.kilometerPerHour !== "Unlimited"))) ||
+              !formData.price?.find((p: any) => p.rentalTime === rentalTime)?.kilometerPerHour &&
+              formData.price?.find((p: any) => p.rentalTime === rentalTime)?.kilometerPerHour !== "Unlimited"))) ||
           (rentalTime !== 24 &&
-            formData.price?.find((p: any) => p.rentalTime === rentalTime)
-              ?.price > 0 &&
-            !formData.price?.find((p: any) => p.rentalTime === rentalTime)
-              ?.kilometerPerHour &&
-            formData.price?.find((p: any) => p.rentalTime === rentalTime)
-              ?.kilometerPerHour !== "Unlimited"))) ||
+            formData.price?.find((p: any) => p.rentalTime === rentalTime)?.price > 0 &&
+            !formData.price?.find((p: any) => p.rentalTime === rentalTime)?.kilometerPerHour &&
+            formData.price?.find((p: any) => p.rentalTime === rentalTime)?.kilometerPerHour !== "Unlimited"))) ||
       hasError(fieldKey)
     );
   };
@@ -100,11 +92,9 @@ export function PricingStep({ errors }: PriceStepProps) {
         const updatedItem = { ...item };
 
         if (fieldName === "kilometerPerHour") {
-          updatedItem.kilometerPerHour =
-            value === "Unlimited" ? "Unlimited" : value.replace(/[^0-9]/g, "");
+          updatedItem.kilometerPerHour = value === "Unlimited" ? "Unlimited" : value.replace(/[^0-9]/g, "");
         } else if (fieldName === "price") {
-          updatedItem.price =
-            value === "" ? 0 : parseFloat(value.replace(/[^0-9.]/g, ""));
+          updatedItem.price = value === "" ? 0 : parseFloat(value.replace(/[^0-9.]/g, ""));
         }
 
         return updatedItem;
@@ -115,10 +105,7 @@ export function PricingStep({ errors }: PriceStepProps) {
     dispatch(updateFormData({ price: updatedPriceData }));
   };
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    field: string
-  ) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: string) => {
     if (field.includes("kilometerPerHour") || field.includes("price")) {
       // Allow: backspace, delete, tab, escape, enter
       if (
@@ -129,12 +116,7 @@ export function PricingStep({ errors }: PriceStepProps) {
         return;
       }
       // Allow only numbers
-      if (
-        !(
-          (e.keyCode >= 48 && e.keyCode <= 57) ||
-          (e.keyCode >= 96 && e.keyCode <= 105)
-        )
-      ) {
+      if (!((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105))) {
         e.preventDefault();
       }
     }
@@ -145,8 +127,7 @@ export function PricingStep({ errors }: PriceStepProps) {
       if (item.rentalTime === rentalTime) {
         return {
           ...item,
-          kilometerPerHour:
-            item.kilometerPerHour === "Unlimited" ? "" : "Unlimited",
+          kilometerPerHour: item.kilometerPerHour === "Unlimited" ? "" : "Unlimited",
         };
       }
       return item;
@@ -161,29 +142,21 @@ export function PricingStep({ errors }: PriceStepProps) {
     <div className="space-y-6">
       {/* Price Section */}
       <div>
-        <VehicleInsertionHeader
-          title="Prezzo"
-          subtitle="Gestisci il prezzo e i chilometri inclusi, compila almeno una riga"
-        />
+        <VehicleInsertionHeader title="Prezzo" subtitle="Gestisci il prezzo e i chilometri inclusi, compila almeno una riga" />
 
         <div className="space-y-6">
           {formData.price?.map((entry: any) => (
-            <div
-              key={entry.rentalTime}
-              className="flex flex-wrap gap-10 items-center"
-            >
+            <div key={entry.rentalTime} className="flex flex-wrap gap-10 items-center">
               {/* Rental Time (readonly) */}
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   <Input
-                    type="number"
-                    value={entry.rentalTime}
+                    type="text"
+                    value={entry.rentalTime === 1 ? "1" : entry.rentalTime === 7 ? "7" : entry.rentalTime === 30 ? "30" : entry.rentalTime === 9 ? "9" : "24*"}
                     readOnly
                     className="relative border shadow-md w-[260px] rounded-lg px-4 py-6 border-black/5"
                   />
-                  <span className="absolute top-3 right-8 text-[15px] font-normal">
-                    {entry.rentalTime === 1 ? "ORA" : "ORE"}
-                  </span>
+                  <span className="absolute top-3 right-8 text-[15px] font-normal">{entry.rentalTime === 1 ? "ORA" : entry.rentalTime === 7 ? "GIORNI" : entry.rentalTime === 30 ? "GIORNI" : "ORE"}</span>
                 </div>
               </div>
 
@@ -194,23 +167,14 @@ export function PricingStep({ errors }: PriceStepProps) {
                     required={entry.rentalTime === 24}
                     type="text"
                     value={entry.price === 0 ? "" : entry.price}
-                    onChange={(e) =>
-                      handleInputChange(
-                        `${entry.rentalTime}_price`,
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleInputChange(`${entry.rentalTime}_price`, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(e, "price")}
                     className={`relative border shadow-md w-[260px] rounded-lg px-4 py-6 ${
-                      shouldShowError(entry.rentalTime, "price")
-                        ? "border-red"
-                        : "border-black/5"
+                      shouldShowError(entry.rentalTime, "price") ? "border-primary" : "border-black/5"
                     }`}
                     inputMode="numeric"
                   />
-                  <span className="absolute top-3 right-8 text-[15px] font-normal">
-                    CHF
-                  </span>
+                  <span className="absolute top-3 right-8 text-[15px] font-normal">CHF</span>
                 </div>
               </div>
 
@@ -221,29 +185,18 @@ export function PricingStep({ errors }: PriceStepProps) {
                     required={entry.rentalTime === 24 || entry.price > 0}
                     type="text"
                     value={entry.kilometerPerHour}
-                    onChange={(e) =>
-                      handleInputChange(
-                        `${entry.rentalTime}_kilometerPerHour`,
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleInputChange(`${entry.rentalTime}_kilometerPerHour`, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(e, "kilometerPerHour")}
                     className={`relative border shadow-md w-[260px] rounded-lg px-4 py-6 ${
-                      shouldShowError(entry.rentalTime, "km")
-                        ? "border-red"
-                        : "border-black/5"
+                      shouldShowError(entry.rentalTime, "km") ? "border-primary" : "border-black/5"
                     }`}
                     disabled={entry.kilometerPerHour === "Unlimited"}
                     inputMode="numeric"
                   />
-                  <span className="absolute top-3 right-8 text-[15px] font-normal">
-                    KM
-                  </span>
+                  <span className="absolute top-3 right-8 text-[15px] font-normal">KM</span>
                   {shouldShowError(entry.rentalTime, "km") && (
-                    <p className="text-red text-xs mt-1">
-                      {entry.rentalTime === 24
-                        ? "24-hour rental requires both price and kilometers"
-                        : "Please enter kilometers or select Unlimited"}
+                    <p className="text-primary text-xs mt-1">
+                      {entry.rentalTime === 24 ? "24-hour rental requires both price and kilometers" : "Please enter kilometers or select Unlimited"}
                     </p>
                   )}
                 </div>
@@ -264,14 +217,9 @@ export function PricingStep({ errors }: PriceStepProps) {
                   }`}
                   onClick={() => handleUnlimitedKmToggle(entry.rentalTime)}
                 >
-                  {entry.kilometerPerHour === "Unlimited" && (
-                    <div className="absolute top-0.5 bottom-0.5 left-0.5 right-0.5 w-2 h-2 bg-red" />
-                  )}
+                  {entry.kilometerPerHour === "Unlimited" && <div className="absolute top-0.5 bottom-0.5 left-0.5 right-0.5 w-2 h-2 bg-primary" />}
                 </div>
-                <label
-                  htmlFor={`unlimitedKm_${entry.rentalTime}`}
-                  className="text-sm font-medium cursor-pointer"
-                >
+                <label htmlFor={`unlimitedKm_${entry.rentalTime}`} className="text-sm font-medium cursor-pointer">
                   Km illimitati
                 </label>
               </div>
@@ -286,14 +234,10 @@ export function PricingStep({ errors }: PriceStepProps) {
 
       {/* Accessories Section */}
       <div>
-        <VehicleInsertionHeader
-          title="Accessori"
-          subtitle="Seleziona gli accessori disponibili nel tuo veicolo dall'elenco"
-        />
+        <VehicleInsertionHeader title="Accessori" subtitle="Seleziona gli accessori disponibili nel tuo veicolo dall'elenco" />
 
         <p className="text-sm font-normal text-text_light_gray pt-6 pb-4">
-          {formData.accessories?.length || 0}/{availableAccessories.length}{" "}
-          Selezionati
+          {formData.accessories?.length || 0}/{availableAccessories.length} Selezionati
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -301,34 +245,21 @@ export function PricingStep({ errors }: PriceStepProps) {
             <div key={accessory} className="flex items-center space-x-4">
               <div
                 className={`${
-                  hasError("accessories") && !formData.accessories
-                    ? "border-red"
-                    : "border-black/5"
+                  hasError("accessories") && !formData.accessories ? "border-primary" : "border-black/5"
                 } flex items-center space-x-2 bg-white border border-gray-100 shadow-md w-[260px] rounded-lg px-4 py-4 ${
-                  formData.accessories?.includes(accessory)
-                    ? "shadow-sm shadow-red/30"
-                    : ""
+                  formData.accessories?.includes(accessory) ? "shadow-sm shadow-primary/30" : ""
                 }`}
                 onClick={() => handleAccessoryChange(accessory)}
               >
-                <input
-                  type="checkbox"
-                  checked={formData.accessories?.includes(accessory) || false}
-                  readOnly
-                  className="hidden"
-                />
+                <input type="checkbox" checked={formData.accessories?.includes(accessory) || false} readOnly className="hidden" />
                 <div
                   className={`checkbox-custom h-4 w-4 border-2 border-black/70 relative rounded-[3px] ${
                     formData.accessories?.includes(accessory) ? "bg-white" : ""
                   }`}
                 >
-                  {formData.accessories?.includes(accessory) && (
-                    <div className="absolute top-0.5 bottom-0.5 left-0.5 right-0.5 w-2 h-2 bg-red" />
-                  )}
+                  {formData.accessories?.includes(accessory) && <div className="absolute top-0.5 bottom-0.5 left-0.5 right-0.5 w-2 h-2 bg-primary" />}
                 </div>
-                <p className="text-sm font-normal cursor-pointer">
-                  {accessory}
-                </p>
+                <p className="text-sm font-normal cursor-pointer">{accessory}</p>
               </div>
             </div>
           ))}

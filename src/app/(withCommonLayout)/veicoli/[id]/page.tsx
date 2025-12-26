@@ -37,7 +37,7 @@ const VehicleDetails = () => {
           <div className="hidden md:flex">
             {" "}
             <Rental car={carDetails as Car} />
-          </div>
+          </div> 
         </div>
         <div className="container mx-auto hidden md:flex">
           <Separator />

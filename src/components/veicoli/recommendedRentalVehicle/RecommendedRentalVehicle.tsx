@@ -25,7 +25,7 @@ const RecommendedRentalVehicle = () => {
       logo: benz,
       brand: "Noleggia Mercedes-Benz",
       diposit: "Da 50 CHF",
-      link: "/veicoli?brand=Mercedes-benz",
+      link: "/veicoli?brand=Mercedes-Benz",
     },
     {
       id: 3,

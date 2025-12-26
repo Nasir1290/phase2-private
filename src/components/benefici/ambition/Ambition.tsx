@@ -30,7 +30,7 @@ const Ambition = () => {
         {cardData.map((card, index) => (
           <div
             key={index}
-            className={`border shadow-lg hover:shadow-red/10 hover:shadow-lg rounded-2xl p-6 md:px-5 lg:px-8 xl:px-5 2xl:px-6 flex flex-col items-center justify-evenly w-[350px] sm:w-[390px] md:w-[350px] lg:w-[400px] xl:w-[320px] 2xl:w-[360px] h-[240px]`}
+            className={`border shadow-lg hover:shadow-primary/10 hover:shadow-lg rounded-2xl p-6 md:px-5 lg:px-8 xl:px-5 2xl:px-6 flex flex-col items-center justify-evenly w-[350px] sm:w-[390px] md:w-[350px] lg:w-[400px] xl:w-[320px] 2xl:w-[360px] h-[240px]`}
           >
             <div className="w-12 h-12">
               <Image

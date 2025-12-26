@@ -12,11 +12,7 @@ const GoogleReview = () => {
     <div id="recensioni" className="container mx-auto ">
       {/* Section Header */}
       <div className="max-w-[500px]">
-        <SectionHeader2
-          topText="RECENSIONI"
-          title="Cosa dicono i nostri clienti"
-          highlightedText="sul nostro servizio di noleggio"
-        />
+        <SectionHeader2 topText="RECENSIONI" title="Cosa dicono i nostri clienti" highlightedText="sul nostro servizio di noleggio" />
       </div>
       {/* Content Grid */}
       <div className="grid grid-cols-12 md:gap-3 lg:gap-5 items-center">
@@ -38,10 +34,7 @@ const GoogleReview = () => {
               <span className="text-text_dark_gray/70 text-[15px]">43</span>
             </div>
 
-            <Link
-              href="https://g.page/r/CSE8B-rI3SAyEBM/review"
-              className="text-red font-semibold text-center text-sm uppercase mx-auto block"
-            >
+            <Link href="https://g.page/r/CSE8B-rI3SAyEBM/review" className="text-primary font-semibold text-center text-sm uppercase mx-auto block">
               Lascia una recensione
             </Link>
           </div>

@@ -29,12 +29,7 @@ const RentSteps = () => {
       <div className=" grid grid-cols-12 gap-16 items-center justify-between ">
         {/* Left Section */}
         <div className="col-span-12 lg:col-span-6 space-y-8 max-w-[330px] ">
-          <SectionHeader2
-            topText="COME FUNZIONA"
-            title="Noleggia un veicolo in"
-            highlightedText="soli 3 steps"
-            className="mb-8"
-          />
+          <SectionHeader2 topText="COME FUNZIONA" title="Noleggia un veicolo in" highlightedText="soli 3 steps" className="mb-8" />
           <Link href="/veicoli">
             <SharedButton text="Noleggia un veicolo" cls="mx-auto" />
           </Link>{" "}
@@ -44,21 +39,16 @@ const RentSteps = () => {
         <div className="col-span-6">
           <div className="relative">
             {steps.map((step, index) => (
-              <div
-                key={step.number}
-                className="flex items-start mb-6 lg:mb-8 last:mb-0 "
-              >
+              <div key={step.number} className="flex items-start mb-6 lg:mb-8 last:mb-0 ">
                 {/* Number with Circle */}
                 <div className="flex flex-col items-center mr-6 relative">
-                  <div className="flex items-center justify-center w-14 h-14 text-white bg-red rounded-full font-bold text-3xl">
+                  <div className="flex items-center justify-center w-14 h-14 text-white bg-primary rounded-full font-bold text-3xl">
                     {step.number}
                   </div>
                   {index < steps.length - 1 && (
                     <div
                       className={`absolute top-full w-0.5 h-28 ${
-                        index === steps.length - 2
-                          ? "border-l-2 border-red border-dashed"
-                          : "bg-red"
+                        index === steps.length - 2 ? "border-l-2 border-primary border-dashed" : "bg-primary"
                       }`}
                       style={
                         index === steps.length - 2
@@ -77,12 +67,8 @@ const RentSteps = () => {
 
                 {/* Text Content */}
                 <div className="">
-                  <span className="text-lg font-bold border-b-2 border-red mb-4">
-                    {step.title}
-                  </span>
-                  <p className="text-text_dark_gray text-sm font-[440] mt-4">
-                    {step.description}
-                  </p>
+                  <span className="text-lg font-bold border-b-2 border-primary mb-4">{step.title}</span>
+                  <p className="text-text_dark_gray text-sm font-[440] mt-4">{step.description}</p>
                 </div>
               </div>
             ))}

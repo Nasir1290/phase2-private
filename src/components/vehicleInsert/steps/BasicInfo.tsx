@@ -13,6 +13,7 @@ import { VehicleInsertionHeader } from "@/components/shared/sectionHeader/Sectio
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { updateFormData } from "@/redux/slice/vehicleInsertSlice";
+import { carBrands } from "@/lib/brands";
 
 interface BasicInfoStepProps {
   errors: string[];
@@ -21,90 +22,86 @@ interface BasicInfoStepProps {
 export function BasicInfoStep({ errors }: BasicInfoStepProps) {
   const dispatch = useDispatch();
   const { formData } = useSelector((state: RootState) => state.form);
-  const carBrands = [
-    "Alfa romeo",
-    "Alpine",
-    "Aston martin",
-    "Audi",
-    "Bentley",
-    "Bmw",
-    "BYD",
-    "Cadillac",
-    "Chevrolet",
-    "Chrysler",
-    "Citroen",
-    "Cupra",
-    "Dacia",
-    "Daihatsu",
-    "Dodge",
-    "Dongfeng",
-    "Dr",
-    "Ferrari",
-    "Fiat",
-    "Ford",
-    "Genesis",
-    "Honda",
-    "Hummer",
-    "Hyundai",
-    "Infiniti",
-    "Isuzu",
-    "Iveco",
-    "Jaguar",
-    "Jeep",
-    "Kia",
-    "Lamborghini",
-    "Lancia",
-    "Land rover",
-    "Lexus",
-    "Lotus",
-    "Maserati",
-    "Mazda",
-    "Mclaren",
-    "Mercedes-benz",
-    "Mini",
-    "Mitsubishi",
-    "Nissan",
-    "Opel",
-    "Peugeout",
-    "Polestar",
-    "Porsche",
-    "Renault",
-    "Rolls-royce",
-    "Seat",
-    "Skoda",
-    "Smart",
-    "Subaru",
-    "Suzuki",
-    "Tesla",
-    "Toyota",
-    "Volvo",
-    "Volkswagen",
-    "Voyah",
-  ];
+  // const carBrands = [
+  //   "Alfa romeo",
+  //   "Alpine",
+  //   "Aston martin",
+  //   "Audi",
+  //   "Bentley",
+  //   "Bmw",
+  //   "BYD",
+  //   "Cadillac",
+  //   "Chevrolet",
+  //   "Chrysler",
+  //   "Citroen",
+  //   "Cupra",
+  //   "Dacia",
+  //   "Daihatsu",
+  //   "Dodge",
+  //   "Dongfeng",
+  //   "Dr",
+  //   "Ferrari",
+  //   "Fiat",
+  //   "Ford",
+  //   "Genesis",
+  //   "Honda",
+  //   "Hummer",
+  //   "Hyundai",
+  //   "Infiniti",
+  //   "Isuzu",
+  //   "Iveco",
+  //   "Jaguar",
+  //   "Jeep",
+  //   "Kia",
+  //   "Lamborghini",
+  //   "Lancia",
+  //   "Land rover",
+  //   "Lexus",
+  //   "Lotus",
+  //   "Maserati",
+  //   "Mazda",
+  //   "Mclaren",
+  //   "Mercedes-Benz",
+  //   "Mini",
+  //   "Mitsubishi",
+  //   "Nissan",
+  //   "Opel",
+  //   "Peugeout",
+  //   "Polestar",
+  //   "Porsche",
+  //   "Renault",
+  //   "Rolls-royce",
+  //   "Seat",
+  //   "Skoda",
+  //   "Smart",
+  //   "Subaru",
+  //   "Suzuki",
+  //   "Tesla",
+  //   "Toyota",
+  //   "Volvo",
+  //   "Volkswagen",
+  //   "Voyah",
+  // ];
 
   const fuelOptions = [
     {
       name: "BENZINA",
-      description:
-        "Seleziona benzina se il tuo veicolo richiede SP95, SP98 o SP100",
+      description: "Seleziona benzina se il tuo veicolo richiede SP95, SP98 o SP100",
       image: benzina,
     },
     {
       name: "DIESEL",
-      description:
-        "Seleziona diesel se il tuo veicolo richiede gasolio standard o premium",
+      description: "Seleziona diesel se il tuo veicolo richiede gasolio standard o premium",
       image: DIESEL,
     },
     {
       name: "ELETTRICO",
-      description:
-        "Seleziona elettrico se il tuo veicolo richiede una ricarica tramite energia elettrica",
+      description: "Seleziona elettrico se il tuo veicolo richiede una ricarica tramite energia elettrica",
       image: ELETTRICO,
     },
     {
       name: "IBRIDO",
-      description:
-        "Seleziona ibrido se il tuo veicolo utilizza sia engine elettrico che combustione interna",
+      description: "Seleziona ibrido se il tuo veicolo utilizza sia engine elettrico che combustione interna",
       image: IBRIDO,
     },
   ];
@@ -126,10 +123,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
     <div className="space-y-10">
       {/* Registrazione  */}
       <div className="space-y-16">
-        <VehicleInsertionHeader
-          title="Registrazione"
-          subtitle="Inserisci i dati base del tuo veicolo"
-        />
+        <VehicleInsertionHeader title="Registrazione" subtitle="Inserisci i dati base del tuo veicolo" />
         {/* Categoria */}
         <div className="relative flex flex-col gap-3">
           <Label htmlFor="category" className="relative">
@@ -142,11 +136,9 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
             value={formData.category || ""}
             onChange={(e) => handleInputChange("category", e.target.value)}
             className={`relative shadow-md rounded-lg border ${
-              hasError("category") && !formData.category
-                ? "border-red"
-                : "border-gray-100"
+              hasError("category") && !formData.category ? "border-primary" : "border-gray-100"
             } w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal text-black focus:outline-none ${
-              formData.category === "" ? "border-red-500" : ""
+              formData.category === "" ? "border-primary" : ""
             }`}
           >
             <option value="" disabled></option>
@@ -187,7 +179,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
 
           {/* Custom Dropdown Arrow */}
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
 
@@ -201,24 +193,22 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               value={formData.brand || ""}
               onChange={(e) => handleInputChange("brand", e.target.value)}
               className={`relative shadow-md rounded-lg ${
-                hasError("brand") && !formData.brand
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("brand") && !formData.brand ? "border-primary" : "border-gray-100"
               } border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal text-black  invalid:text-white focus:outline-none`}
             >
               <option value="" disabled>
                 Select a brand
               </option>
               {carBrands.map((brand, index) => (
-                <option key={index} className="text-black" value={brand}>
-                  {brand}
+                <option key={index} className="text-black" value={brand?.name}>
+                  {brand?.name}
                 </option>
               ))}
             </select>
 
             {/* Custom Dropdown Arrow */}
             <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-              <IoIosArrowDown className="w-4 h-4 text-red" />
+              <IoIosArrowDown className="w-4 h-4 text-primary" />
             </div>
           </div>
 
@@ -232,9 +222,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               value={formData.model || ""}
               onChange={(e) => handleInputChange("model", e.target.value)}
               className={`shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal ${
-                hasError("model") && !formData.model
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("model") && !formData.model ? "border-primary" : "border-gray-100"
               }`}
             />
           </div>
@@ -246,13 +234,9 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               required
               id="anno"
               value={formData.year || ""}
-              onChange={(e) =>
-                handleInputChange("year", Number(e.target.value))
-              }
+              onChange={(e) => handleInputChange("year", Number(e.target.value))}
               className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal text-black invalid:text-white focus:outline-none ${
-                hasError("year") && !formData.year
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("year") && !formData.year ? "border-primary" : "border-gray-100"
               }`}
             >
               <option value="" disabled>
@@ -367,7 +351,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
 
             {/* Custom Dropdown Arrow */}
             <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-              <IoIosArrowDown className="w-4 h-4 text-red" />
+              <IoIosArrowDown className="w-4 h-4 text-primary" />
             </div>
           </div>
         </div>
@@ -378,10 +362,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
       </div>
       {/* Dettagli */}
       <div className="space-y-16">
-        <VehicleInsertionHeader
-          title="Dettagli"
-          subtitle="Inserisci le informazioni utili per aiutare gli utenti"
-        />
+        <VehicleInsertionHeader title="Dettagli" subtitle="Inserisci le informazioni utili per aiutare gli utenti" />
 
         <div className="max-w-4xl flex flex-wrap items-center justify-start gap-10">
           {/* Trasmissione */}
@@ -392,14 +373,10 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               required
               id="transmission"
               value={formData.transmission || ""}
-              onChange={(e) =>
-                handleInputChange("transmission", e.target.value)
-              }
+              onChange={(e) => handleInputChange("transmission", e.target.value)}
               className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal
               text-black invalid:text-white focus:outline-none ${
-                hasError("transmission") && !formData.transmission
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("transmission") && !formData.transmission ? "border-primary" : "border-gray-100"
               }`}
             >
               <option value="" disabled className="">
@@ -415,7 +392,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
 
             {/* Custom Dropdown Arrow */}
             <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-              <IoIosArrowDown className="w-4 h-4 text-red" />
+              <IoIosArrowDown className="w-4 h-4 text-primary" />
             </div>
           </div>
           {/* Colore */}
@@ -427,9 +404,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               value={formData.color || ""}
               onChange={(e) => handleInputChange("color", e.target.value)}
               className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal  text-black invalid:text-white focus:outline-none ${
-                hasError("color") && !formData.color
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("color") && !formData.color ? "border-primary" : "border-gray-100"
               }`}
             >
               <option value="" disabled>
@@ -475,7 +450,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
 
             {/* Custom Dropdown Arrow */}
             <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-              <IoIosArrowDown className="w-4 h-4 text-red" />
+              <IoIosArrowDown className="w-4 h-4 text-primary" />
             </div>
           </div>
           {/* 0-100 km/h  */}
@@ -487,18 +462,12 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
                 id="kmh"
                 type="number"
                 value={formData.kmh || ""}
-                onChange={(e) =>
-                  handleInputChange("kmh", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("kmh", Number(e.target.value))}
                 className={`relatile shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal ${
-                  hasError("kmh") && !formData.kmh
-                    ? "border-red"
-                    : "border-gray-100"
+                  hasError("kmh") && !formData.kmh ? "border-primary" : "border-gray-100"
                 }`}
               />
-              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">
-                SEC
-              </p>
+              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">SEC</p>
             </div>
           </div>
           {/* Motore */}
@@ -511,9 +480,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               value={formData.engine || ""}
               onChange={(e) => handleInputChange("engine", e.target.value)}
               className={`shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal ${
-                hasError("engine") && !formData.engine
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("engine") && !formData.engine ? "border-primary" : "border-gray-100"
               }`}
             />
           </div>
@@ -526,18 +493,12 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
                 id="maxSpeed"
                 type="number"
                 value={formData.maxSpeed || ""}
-                onChange={(e) =>
-                  handleInputChange("maxSpeed", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("maxSpeed", Number(e.target.value))}
                 className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal ${
-                  hasError("maxSpeed") && !formData.maxSpeed
-                    ? "border-red"
-                    : "border-gray-100"
+                  hasError("maxSpeed") && !formData.maxSpeed ? "border-primary" : "border-gray-100"
                 }`}
               />
-              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">
-                KM/H
-              </p>
+              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">KM/H</p>
             </div>
           </div>
           {/* Cavalli */}
@@ -549,18 +510,12 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
                 id="horsePower"
                 type="number"
                 value={formData.horsePower || ""}
-                onChange={(e) =>
-                  handleInputChange("horsePower", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("horsePower", Number(e.target.value))}
                 className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal ${
-                  hasError("horsePower") && !formData.horsePower
-                    ? "border-red"
-                    : "border-gray-100"
+                  hasError("horsePower") && !formData.horsePower ? "border-primary" : "border-gray-100"
                 }`}
               />
-              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">
-                CV
-              </p>
+              <p className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 text-sm font-medium">CV</p>
             </div>
           </div>
           {/* seats  */}
@@ -571,13 +526,9 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
               required
               id="seats"
               value={formData.seats || ""}
-              onChange={(e) =>
-                handleInputChange("seats", Number(e.target.value))
-              }
+              onChange={(e) => handleInputChange("seats", Number(e.target.value))}
               className={`relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal text-black invalid:text-white focus:outline-none ${
-                hasError("seats") && !formData.seats
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("seats") && !formData.seats ? "border-primary" : "border-gray-100"
               }`}
             >
               <option value="" disabled>
@@ -617,7 +568,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
 
             {/* Custom Dropdown Arrow */}
             <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-              <IoIosArrowDown className="w-4 h-4 text-red" />
+              <IoIosArrowDown className="w-4 h-4 text-primary" />
             </div>
           </div>
         </div>
@@ -628,39 +579,20 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
       </div>
       {/* Carburante */}
       <div className="space-y-16">
-        <VehicleInsertionHeader
-          title="Carburante"
-          subtitle=" Seleziona il tipo di carburante necessario per il tuo veicolo"
-        />
+        <VehicleInsertionHeader title="Carburante" subtitle=" Seleziona il tipo di carburante necessario per il tuo veicolo" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {fuelOptions.map((fuel, index) => (
             <div
               key={index}
               onClick={() => handleInputChange("fuelType", fuel.name)}
               className={`${
-                hasError("fuelType") && !formData.fuelType
-                  ? "border-red"
-                  : "border-gray-100"
+                hasError("fuelType") && !formData.fuelType ? "border-primary" : "border-gray-100"
               } lg:w-[270px] xl:w-[270px] 2xl:w-[280px] border px-4 py-7 shadow-lg rounded-lg flex flex-col items-center justify-center gap-2 cursor-pointer
-                  ${
-                    formData.fuelType === fuel.name
-                      ? "shadow shadow-red/10"
-                      : "border-gray-200"
-                  }`}
+                  ${formData.fuelType === fuel.name ? "shadow shadow-primary/20" : "border-gray-200"}`}
             >
-              <Image
-                src={fuel.image}
-                alt={fuel.name}
-                width={40}
-                height={40}
-                className="w-10 h-10 xl:h-10 xl:w-10 2xl:h-12 2xl:w-12"
-              />
-              <h2 className="xl:text-[17px] 2xl:text-lg font-semibold">
-                {fuel.name}
-              </h2>
-              <p className="text-xs text-text_light_gray font-medium leading-tight text-center">
-                {fuel.description}
-              </p>
+              <Image src={fuel.image} alt={fuel.name} width={40} height={40} className="w-10 h-10 xl:h-10 xl:w-10 2xl:h-12 2xl:w-12" />
+              <h2 className="xl:text-[17px] 2xl:text-lg font-semibold">{fuel.name}</h2>
+              <p className="text-xs text-text_light_gray font-medium leading-tight text-center">{fuel.description}</p>
             </div>
           ))}
         </div>
@@ -675,8 +607,7 @@ export function BasicInfoStep({ errors }: BasicInfoStepProps) {
             onChange={handleCheckboxChange} // Track checkbox state
             className="mr-2 cursor-pointer"
           />
-          Confermo che affitterò come azienda registrata e fornirò la mia
-          assicurazione per il noleggio.
+          Confermo che affitterò come azienda registrata e fornirò la mia assicurazione per il noleggio.
         </label>
       </div>
       {/* Separator */}

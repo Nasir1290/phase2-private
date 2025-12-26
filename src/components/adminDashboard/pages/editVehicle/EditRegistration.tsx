@@ -6,17 +6,11 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface RegistrationProps {
   formData: VehicleFormData;
-  onFormChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onFormChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   setFormData: React.Dispatch<React.SetStateAction<VehicleFormData>>;
 }
 
-const EditRegistration = ({
-  formData,
-  onFormChange,
-  setFormData,
-}: RegistrationProps) => {
+const EditRegistration = ({ formData, onFormChange, setFormData }: RegistrationProps) => {
   const categories = [
     "Coupè",
     "Elettrica",
@@ -132,10 +126,7 @@ const EditRegistration = ({
 
   return (
     <div className="space-y-10">
-      <VehicleInsertionHeader
-        title="Registrazione"
-        subtitle="Inserisci i dati base del tuo veicolo"
-      />
+      <VehicleInsertionHeader title="Registrazione" subtitle="Inserisci i dati base del tuo veicolo" />
       <div className="flex flex-wrap items-center justify-start gap-10">
         {/* Categoria */}
         <div className="relative flex flex-col gap-3">
@@ -158,7 +149,7 @@ const EditRegistration = ({
             ))}
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
 
@@ -181,7 +172,7 @@ const EditRegistration = ({
             ))}
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
 
@@ -202,11 +193,7 @@ const EditRegistration = ({
           <Label htmlFor="year">Anno</Label>
           <select
             id="year"
-            value={
-              formData.year !== null && formData.year !== undefined
-                ? formData.year.toString()
-                : ""
-            } // Convert year to string for the select value
+            value={formData.year !== null && formData.year !== undefined ? formData.year.toString() : ""} // Convert year to string for the select value
             onChange={(e) => {
               const selectedYear = Number(e.target.value); // Convert the selected value to a number
               setFormData({
@@ -226,7 +213,7 @@ const EditRegistration = ({
             ))}
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
       </div>

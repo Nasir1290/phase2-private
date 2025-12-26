@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import { LiaTrashSolid } from "react-icons/lia";
 import { Separator } from "@/components/ui/separator";
@@ -37,11 +30,7 @@ const AcceptedCars = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
   const vehiclesPerPage = 10;
-  const {
-    data: getAllCars,
-    isLoading,
-    error,
-  } = useGetAllCarsWithSuspendedQuery(`page=${currentPage}&limit=${vehiclesPerPage}`);
+  const { data: getAllCars, isLoading, error } = useGetAllCarsWithSuspendedQuery(`page=${currentPage}&limit=${vehiclesPerPage}`);
   const acceptedCars = getAllCars?.data || [];
   const [updateCarType] = useUpdateCarTypeMutation();
   const [updateCarStatus] = useUpdateCarStatusMutation();
@@ -76,11 +65,7 @@ const AcceptedCars = () => {
   }
 
   if (error) {
-    return (
-      <h2 className="text-gray-600 font-semibold text-lg">
-        No cars available at the moment. Please accept car first
-      </h2>
-    );
+    return <h2 className="text-gray-600 font-semibold text-lg">No cars available at the moment. Please accept car first</h2>;
   }
 
   const handleClick = (id: number) => {
@@ -99,13 +84,9 @@ const AcceptedCars = () => {
       }).unwrap();
 
       if (res.success) {
-        toast.success(
-          res.message || `Car marked as ${newCarType} successfully!`
-        );
+        toast.success(res.message || `Car marked as ${newCarType} successfully!`);
       } else {
-        toast.error(
-          res.message || `Failed to update car type. Please try again.`
-        );
+        toast.error(res.message || `Failed to update car type. Please try again.`);
       }
     } catch (error: any) {
       console.error("Failed to update car status", error);
@@ -128,13 +109,9 @@ const AcceptedCars = () => {
       }).unwrap();
 
       if (res.success) {
-        toast.success(
-          res.message || `Car marked as ${newCarType} successfully!`
-        );
+        toast.success(res.message || `Car marked as ${newCarType} successfully!`);
       } else {
-        toast.error(
-          res.message || `Failed to update car type. Please try again.`
-        );
+        toast.error(res.message || `Failed to update car type. Please try again.`);
       }
     } catch (error: any) {
       console.error("Failed to update car status", error);
@@ -159,16 +136,11 @@ const AcceptedCars = () => {
       if (res.success) {
         toast.success(`CAR ${newStatus}!`); // Update to newStatus
       } else {
-        toast.error(
-          res.message ||
-            `Failed to update car status to ${carStatus}. Please try again.`
-        );
+        toast.error(res.message || `Failed to update car status to ${carStatus}. Please try again.`);
       }
     } catch (error: any) {
       console.error("Failed to update car status", error);
-      toast.error(
-        error?.data?.message || `Failed to update car status. Please try again.`
-      );
+      toast.error(error?.data?.message || `Failed to update car status. Please try again.`);
     }
   };
 
@@ -184,9 +156,7 @@ const AcceptedCars = () => {
         toast.error(res.message || `Failed to delete car. Please try again.`);
       }
     } catch (error: any) {
-      toast.error(
-        error?.data?.message || `Failed to delete car. Please try again.`
-      );
+      toast.error(error?.data?.message || `Failed to delete car. Please try again.`);
     }
   };
 
@@ -195,12 +165,8 @@ const AcceptedCars = () => {
       {/* Header  */}
       <div className="mt-10 md:mt-0 mb-12 md:mb-16 space-y-5">
         <div className="flex flex-col items-start gap-5">
-          <h2 className="text-red font-extrabold text-3xl md:text-[30px] uppercase">
-            Accepted Vehicles
-          </h2>
-          <p className="text-black text-base font-medium max-w-[1100px] ">
-            View all the cars and their current status
-          </p>
+          <h2 className="text-primary font-extrabold text-3xl md:text-[30px] uppercase">Accepted Vehicles</h2>
+          <p className="text-black text-base font-medium max-w-[1100px] ">View all the cars and their current status</p>
         </div>
         <div>
           <Separator className="mt-10 mb-20 w-2/3" />
@@ -210,49 +176,25 @@ const AcceptedCars = () => {
       <Table className="w-full">
         <TableHeader>
           <TableRow className="">
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Sl No
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Image
-            </TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Sl No</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Image</TableHead>
 
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Brand
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Model
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Category
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Transmission
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Car Owner
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Details
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Seats
-            </TableHead>
-            <TableHead className="px-4 text-sm text-text_light_gray">
-              Status
-            </TableHead>
-            <TableHead className="text-sm text-text_light_gray px-20">
-              Actions
-            </TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Brand</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Model</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Category</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Transmission</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Car Owner</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Details</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Seats</TableHead>
+            <TableHead className="px-4 text-sm text-text_light_gray">Status</TableHead>
+            <TableHead className="text-sm text-text_light_gray px-20">Actions</TableHead>
             <TableHead className="px-4 text-sm text-text_light_gray"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="relative">
           {acceptedCars.map((car: any, index: any) => (
             <TableRow key={car.id}>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray font-semibold">
-                {index + 1}.
-              </TableCell>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray font-semibold">{index + 1}.</TableCell>
               <TableCell className="px-4">
                 <Image
                   src={car.mainImage || "/default-image.png"}
@@ -262,34 +204,20 @@ const AcceptedCars = () => {
                   className="h-14 w-20 rounded object-cover"
                 />
               </TableCell>
-              <TableCell className="px-4  text-[15px] text-text_dark_gray">
-                {car.brand}
-              </TableCell>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray">
-                {car.model}
-              </TableCell>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray">
-                {car.category}
-              </TableCell>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray">
-                {car.transmission}
-              </TableCell>
+              <TableCell className="px-4  text-[15px] text-text_dark_gray">{car.brand}</TableCell>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray">{car.model}</TableCell>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray">{car.category}</TableCell>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray">{car.transmission}</TableCell>
               <TableCell className="px-4 text-[15px] text-text_dark_gray">
                 {car.owner?.firstName} {car.owner?.lastName}
               </TableCell>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray font-medium underline hover:text-red hover:cursor-pointer">
-                <Link href={`/dashboard/accepted-vehicles/${car.id}`}>
-                  View Details
-                </Link>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray font-medium underline hover:text-primary hover:cursor-pointer">
+                <Link href={`/dashboard/accepted-vehicles/${car.id}`}>View Details</Link>
               </TableCell>
-              <TableCell className="px-4 text-[15px] text-text_dark_gray">
-                {car.seats}
-              </TableCell>
+              <TableCell className="px-4 text-[15px] text-text_dark_gray">{car.seats}</TableCell>
               <TableCell
                 className={
-                  car.acceptanceStatus === "ACCEPTED"
-                    ? "px-4 text-green font-medium text-sm"
-                    : "px-4 text-text_dark_gray font-medium text-sm"
+                  car.acceptanceStatus === "ACCEPTED" ? "px-4 text-green font-medium text-sm" : "px-4 text-text_dark_gray font-medium text-sm"
                 }
               >
                 {car.acceptanceStatus}
@@ -300,13 +228,7 @@ const AcceptedCars = () => {
                     onClick={() => handleUpdateCarStatus(car.id, car.carStatus)}
                     className="bg-gray-200 text-text_dark_gray px-6 py-2 rounded-md flex gap-2 items-center w-32 text-sm font-medium"
                   >
-                    <Image
-                      src={suspend}
-                      alt="suspend"
-                      width={20}
-                      height={20}
-                      className="h-3 w-3"
-                    />
+                    <Image src={suspend} alt="suspend" width={20} height={20} className="h-3 w-3" />
                     Suspend
                   </button>
                 ) : (
@@ -314,20 +236,14 @@ const AcceptedCars = () => {
                     onClick={() => handleUpdateCarStatus(car.id, car.carStatus)}
                     className="bg-gray-200 text-text_dark_gray px-4 py-1.5 rounded-md flex gap-2 items-center w-32 text-sm font-semibold"
                   >
-                    <Image
-                      src={active}
-                      alt="active"
-                      width={100}
-                      height={100}
-                      className="h-7 w-7 rounded-full"
-                    />
+                    <Image src={active} alt="active" width={100} height={100} className="h-7 w-7 rounded-full" />
                     ACTIVE
                   </button>
                 )}
 
                 <button
                   onClick={() => handleDelete(car.id)}
-                  className="bg-red/90 text-white px-6 py-2 rounded-md flex gap-2 items-center w-32 text-sm font-medium"
+                  className="bg-primary/90 text-white px-6 py-2 rounded-md flex gap-2 items-center w-32 text-sm font-medium"
                 >
                   <LiaTrashSolid className="w-5 h-5" />
                   Delete
@@ -335,7 +251,7 @@ const AcceptedCars = () => {
                 <div className="relative">
                   <button
                     ref={dropdownButtonRef}
-                    className="text-black hover:text-red w-28 px-4 py-2.5 rounded-md flex gap-2 items-center"
+                    className="text-black hover:text-primary w-28 px-4 py-2.5 rounded-md flex gap-2 items-center"
                     onClick={() => handleClick(car.id)}
                   >
                     <HiOutlineDotsVertical className="w-5 h-5" />
@@ -350,32 +266,22 @@ const AcceptedCars = () => {
                       <ul>
                         <button
                           onClick={() => handleAddToOffer(car.id, car.carType)}
-                          className={`flex items-center gap-3 text-black mx-auto text-sm font-normal hover:font-medium hover:text-red hover:bg-red/5 px-4 py-4 hover:bg-gray-50 cursor-pointer ${
-                            car.carType === "BEST_OFFER"
-                              ? "text-red cursor-not-allowed"
-                              : ""
+                          className={`flex items-center gap-3 text-black mx-auto text-sm font-normal hover:font-medium hover:text-primary hover:bg-primary/5 px-4 py-4 hover:bg-gray-50 cursor-pointer ${
+                            car.carType === "BEST_OFFER" ? "text-primary cursor-not-allowed" : ""
                           }`}
                         >
                           <MdOutlineLocalOffer size={18} />
-                          {car.carType === "BEST_OFFER"
-                            ? "Remove from Best Offer Section"
-                            : "Add to Best Offer Section"}
+                          {car.carType === "BEST_OFFER" ? "Remove from Best Offer Section" : "Add to Best Offer Section"}
                         </button>
 
                         <button
-                          onClick={() =>
-                            handleAddToPopuler(car.id, car.carType)
-                          }
-                          className={`flex items-center gap-3 text-black mx-auto text-sm font-normal hover:font-medium hover:text-red hover:bg-red/5 px-4 py-4 hover:bg-gray-50 cursor-pointer ${
-                            car.carType === "POPULAR"
-                              ? "text-red cursor-not-allowed"
-                              : ""
+                          onClick={() => handleAddToPopuler(car.id, car.carType)}
+                          className={`flex items-center gap-3 text-black mx-auto text-sm font-normal hover:font-medium hover:text-primary hover:bg-primary/5 px-4 py-4 hover:bg-gray-50 cursor-pointer ${
+                            car.carType === "POPULAR" ? "text-primary cursor-not-allowed" : ""
                           }`}
                         >
                           <GiPartyPopper size={18} />
-                          {car.carType === "POPULAR"
-                            ? "Remove from Popular Section"
-                            : "Add to Popular Section"}
+                          {car.carType === "POPULAR" ? "Remove from Popular Section" : "Add to Popular Section"}
                         </button>
                       </ul>
                     </div>,
@@ -387,11 +293,7 @@ const AcceptedCars = () => {
         </TableBody>
       </Table>
       <div className="flex justify-center mt-6">
-        <Pagination
-          totalPages={totalPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
+        <Pagination totalPages={totalPage} currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
     </div>
   );

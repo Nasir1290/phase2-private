@@ -7,36 +7,18 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface DetailsProps {
   formData: VehicleFormData;
-  onFormChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onFormChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   setFormData: React.Dispatch<React.SetStateAction<VehicleFormData>>;
 }
 
 const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
-  const colors = [
-    "Giallo",
-    "Arancione",
-    "Rosso",
-    "Viola",
-    "Rosa",
-    "Azzurro",
-    "Blu",
-    "Verde",
-    "Grigio",
-    "Marrone",
-    "Bianco",
-    "Nero",
-  ];
+  const colors = ["Giallo", "Arancione", "Rosso", "Viola", "Rosa", "Azzurro", "Blu", "Verde", "Grigio", "Marrone", "Bianco", "Nero"];
 
   const seatsOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
   return (
     <div className="space-y-10">
-      <VehicleInsertionHeader
-        title="Dettagli"
-        subtitle="Inserisci le informazioni utili per aiutare gli utenti"
-      />
+      <VehicleInsertionHeader title="Dettagli" subtitle="Inserisci le informazioni utili per aiutare gli utenti" />
 
       <div className="flex flex-wrap items-center justify-start gap-10">
         {/* Trasmissione */}
@@ -59,7 +41,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             </option>
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
 
@@ -82,7 +64,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             ))}
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
 
@@ -92,11 +74,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
           <Input
             id="kmh"
             type="number"
-            value={
-              formData.kmh !== undefined && formData.kmh !== null
-                ? formData.kmh.toString()
-                : ""
-            }
+            value={formData.kmh !== undefined && formData.kmh !== null ? formData.kmh.toString() : ""}
             onChange={(e) => {
               const kmhValue = e.target.value ? Number(e.target.value) : 0;
               setFormData({ ...formData, kmh: kmhValue });
@@ -125,9 +103,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             type="number" // Change to 'number' to enforce numeric input
             value={formData.maxSpeed || ""} // Ensure value is either a number or an empty string
             onChange={(e) => {
-              const maxSpeedValue = e.target.value
-                ? Number(e.target.value)
-                : ""; // Convert to number
+              const maxSpeedValue = e.target.value ? Number(e.target.value) : ""; // Convert to number
               setFormData({ ...formData, maxSpeed: maxSpeedValue });
             }}
             className="shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal text-black"
@@ -142,9 +118,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             type="number" // Change to 'number' to enforce numeric input
             value={formData.horsePower || ""} // Ensure value is either a number or an empty string
             onChange={(e) => {
-              const horsePowerValue = e.target.value
-                ? Number(e.target.value)
-                : ""; // Convert to number
+              const horsePowerValue = e.target.value ? Number(e.target.value) : ""; // Convert to number
               setFormData({ ...formData, horsePower: horsePowerValue });
             }}
             className="shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent text-sm font-normal text-black"
@@ -158,9 +132,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             id="seats"
             value={formData.seats || ""} // Ensure the value is a string or empty string
             onChange={(e) => {
-              const selectedSeats = e.target.value
-                ? Number(e.target.value)
-                : ""; // Convert to number
+              const selectedSeats = e.target.value ? Number(e.target.value) : ""; // Convert to number
               setFormData({ ...formData, seats: selectedSeats });
             }}
             className="relative shadow-md rounded-lg border border-gray-100 w-60 px-4 py-2.5 appearance-none bg-transparent pr-8 text-sm font-normal text-black invalid:text-white"
@@ -175,7 +147,7 @@ const EditDetails = ({ formData, onFormChange, setFormData }: DetailsProps) => {
             ))}
           </select>
           <div className="absolute top-12 left-52 transform -translate-y-1/2 pointer-events-none">
-            <IoIosArrowDown className="w-4 h-4 text-red" />
+            <IoIosArrowDown className="w-4 h-4 text-primary" />
           </div>
         </div>
       </div>

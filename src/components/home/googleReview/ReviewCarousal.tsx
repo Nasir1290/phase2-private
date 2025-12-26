@@ -27,8 +27,7 @@ const reviews = [
     name: "Nicole Recine",
     date: "a month ago",
     rating: 5,
-    review:
-      "Io e mia mamma ci siamo  trovate davvero benissimo, molto professionali. Prezzo ottimo. D`ora in poi ci affideremo a voi! Grazie mille",
+    review: "Io e mia mamma ci siamo  trovate davvero benissimo, molto professionali. Prezzo ottimo. D`ora in poi ci affideremo a voi! Grazie mille",
     avatar: img1,
   },
   {
@@ -36,8 +35,7 @@ const reviews = [
     name: "Gabriele Demircan",
     date: "2 months ago",
     rating: 4,
-    review:
-      "Furgone tenuto bene, consegna e riconsegna chiavi facile e comoda. Cinghie disponibili per legare le cose e...",
+    review: "Furgone tenuto bene, consegna e riconsegna chiavi facile e comoda. Cinghie disponibili per legare le cose e...",
     avatar: "",
   },
   {
@@ -45,8 +43,7 @@ const reviews = [
     name: "Demon Mal",
     date: "2 months ago",
     rating: 5,
-    review:
-      "Personale gentile e comprensivi, prezzi adatti in base ad ogni esigenza. Consiglio per privati o ditte.",
+    review: "Personale gentile e comprensivi, prezzi adatti in base ad ogni esigenza. Consiglio per privati o ditte.",
     avatar: "",
   },
   {
@@ -54,8 +51,7 @@ const reviews = [
     name: "Lucia",
     date: "4 months ago",
     rating: 5,
-    review:
-      "Servizio completo. Ragazzi davvero super gentili. Supporto molto accogliente Consiglio!!",
+    review: "Servizio completo. Ragazzi davvero super gentili. Supporto molto accogliente Consiglio!!",
     avatar: "",
   },
   {
@@ -63,8 +59,7 @@ const reviews = [
     name: "Samuel John",
     date: "a month ago",
     rating: 5,
-    review:
-      "Noleggio furgone ha funzionato benissimo. Tutto ben organizzato. Prezzo top 👍🏽 …",
+    review: "Noleggio furgone ha funzionato benissimo. Tutto ben organizzato. Prezzo top 👍🏽 …",
     avatar: "",
   },
   {
@@ -80,8 +75,7 @@ const reviews = [
     name: "Sergio Karatepe",
     date: "3 months ago",
     rating: 5,
-    review:
-      "Esperienza positivissima, titolari gentilissimi e molto disponibili Consigliatissimo",
+    review: "Esperienza positivissima, titolari gentilissimi e molto disponibili Consigliatissimo",
     avatar: "",
   },
   {
@@ -178,13 +172,13 @@ export default function ReviewCarousel() {
     <div className="my-10 md:mx-auto md:px-4 relative">
       {/* Custom Navigation Buttons */}
       <button
-        className="hidden md:flex custom-prev absolute top-1/2 left-[-28px] z-10 transform -translate-y-1/2 text-4xl font-thin text-red"
+        className="hidden md:flex custom-prev absolute top-1/2 left-[-28px] z-10 transform -translate-y-1/2 text-4xl font-thin text-primary"
         aria-label="Previous"
       >
         <BsChevronLeft />
       </button>
       <button
-        className="hidden md:flex custom-next absolute top-1/2 right-[-28px] z-10 transform -translate-y-1/2 text-4xl font-thin text-red"
+        className="hidden md:flex custom-next absolute top-1/2 right-[-28px] z-10 transform -translate-y-1/2 text-4xl font-thin text-primary"
         aria-label="Next"
       >
         <BsChevronRight />
@@ -227,11 +221,7 @@ export default function ReviewCarousel() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-start justify-between gap-3">
                     {review.avatar ? (
-                      <Image
-                        src={review.avatar}
-                        alt={`${review.name}'s Avatar`}
-                        className="rounded-full h-7 w-7"
-                      />
+                      <Image src={review.avatar} alt={`${review.name}'s Avatar`} className="rounded-full h-7 w-7" />
                     ) : (
                       <div
                         style={{
@@ -248,9 +238,7 @@ export default function ReviewCarousel() {
 
                     <div>
                       <h3 className="text-sm font-bold">{review.name}</h3>
-                      <p className="text-sm text-text_light_gray font-medium">
-                        {review.date}
-                      </p>
+                      <p className="text-sm text-text_light_gray font-medium">{review.date}</p>
                     </div>
                   </div>
                   <FcGoogle className="text-2xl" />
@@ -261,10 +249,7 @@ export default function ReviewCarousel() {
                 <p className="text-[13px] mt-2">{review.review}</p>
 
                 {/* Link */}
-                <a
-                  href="https://g.page/r/CSE8B-rI3SAyEBM/review"
-                  className="text-text_light_gray text-[13px] font-semibold"
-                >
+                <a href="https://g.page/r/CSE8B-rI3SAyEBM/review" className="text-text_light_gray text-[13px] font-semibold">
                   Leggi di più
                 </a>
               </div>

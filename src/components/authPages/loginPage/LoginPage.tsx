@@ -10,11 +10,7 @@ import search from "@/assets/home/search.svg";
 import Modal from "@/components/shared/modal/Modal";
 import swiss from "@/assets/swiss.svg";
 import { useRouter } from "next/navigation";
-import {
-  useForgotPasswordMutation,
-  useLoginMutation,
-  useVerifyUserMutation,
-} from "@/redux/api/authApi";
+import { useForgotPasswordMutation, useLoginMutation, useVerifyUserMutation } from "@/redux/api/authApi";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import SearchField from "@/components/shared/searchField/SearchField";
@@ -59,10 +55,7 @@ const LoginPage = () => {
         }
       )?.data;
 
-      const errorMessage =
-        apiError?.errorMessages?.map((err) => err.message).join(", ") ||
-        apiError?.message ||
-        "An unexpected error occurred";
+      const errorMessage = apiError?.errorMessages?.map((err) => err.message).join(", ") || apiError?.message || "An unexpected error occurred";
 
       toast.error(errorMessage);
     }
@@ -124,11 +117,7 @@ const LoginPage = () => {
     setIsOtpModalOpen(!isOtpModalOpen);
   };
 
-  const handleSearchResult = (
-    result: string,
-    longitude: number,
-    latitude: number
-  ) => {
+  const handleSearchResult = (result: string, longitude: number, latitude: number) => {
     // Create the URL with the search parameters
     const newUrl = `/veicoli?latitude=${latitude}&longitude=${longitude}`;
 
@@ -141,12 +130,7 @@ const LoginPage = () => {
       {/* Search Part  */}
       <div className="bg-section_bg h-40 hidden md:flex items-center justify-center">
         <div className="container mx-auto px-4 pt-12 pb-10 flex gap-2 mb-4 w-[800px]">
-          <SearchField
-            onResult={handleSearchResult}
-            countryList={["Svizzera", "Italy"]}
-            searchIcon={search}
-            flagIcon={swiss}
-          />
+          <SearchField onResult={handleSearchResult} countryList={["Svizzera", "Italy"]} searchIcon={search} flagIcon={swiss} />
         </div>
       </div>
       {/* Login Part  */}
@@ -155,33 +139,22 @@ const LoginPage = () => {
         <div className="xl:w-1/2 space-y-10 ">
           <header className="max-w-2xl text-start">
             <div className="flex flex-col gap-4">
-              <span className="text-sm font-medium text-text_light_gray uppercase">
-                INIZIA
-              </span>
+              <span className="text-sm font-medium text-text_light_gray uppercase">INIZIA</span>
               <h1 className="text-3xl md:text-[30px] font-extrabold">
-                Chi <span className="text-red">siamo?</span>
+                Chi <span className="text-primary">siamo?</span>
               </h1>
             </div>
           </header>
           <p className="text-text_light_gray font-normal text-sm">
-            Bittengo è il marketplace dedicato al noleggio di veicoli che unisce
-            affidabilità, convenienza e semplicità. Collaboriamo esclusivamente
-            con aziende selezionate che rispettano elevati standard di qualità,
-            assicurandoti mezzi sempre in ottime condizioni e tariffe
-            competitive. Il nostro obiettivo è offrirti un&apos;esperienza di
-            noleggio trasparente e senza sorprese, con un supporto clienti
-            attivo 7 giorni su 7 per rispondere a ogni tua esigenza. Che tu
-            abbia bisogno di un’auto per un viaggio o di un furgone per un
-            trasloco, su Bittengo troverai la soluzione perfetta in pochi click.
-            Scopri un nuovo modo di noleggiare, comodo, sicuro e su misura per
-            te.
+            Bittengo è il marketplace dedicato al noleggio di veicoli che unisce affidabilità, convenienza e semplicità. Collaboriamo esclusivamente
+            con aziende selezionate che rispettano elevati standard di qualità, assicurandoti mezzi sempre in ottime condizioni e tariffe competitive.
+            Il nostro obiettivo è offrirti un&apos;esperienza di noleggio trasparente e senza sorprese, con un supporto clienti attivo 7 giorni su 7
+            per rispondere a ogni tua esigenza. Che tu abbia bisogno di un’auto per un viaggio o di un furgone per un trasloco, su Bittengo troverai
+            la soluzione perfetta in pochi click. Scopri un nuovo modo di noleggiare, comodo, sicuro e su misura per te.
           </p>
           <p className="text-text_light_gray font-normal text-sm">
             Sei un azienda?{" "}
-            <Link
-              href="/partnership"
-              className="text-red underline font-medium"
-            >
+            <Link href="/partnership" className="text-primary underline font-medium">
               Partnership
             </Link>
           </p>
@@ -199,12 +172,7 @@ const LoginPage = () => {
                 <Label htmlFor="email" className="font-normal">
                   E-mail
                 </Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="shadow-md rounded-lg w-full border"
-                />
+                <Input type="email" id="email" name="email" className="shadow-md rounded-lg w-full border" />
               </div>
 
               {/* Password */}
@@ -212,12 +180,7 @@ const LoginPage = () => {
                 <Label htmlFor="password" className="font-normal">
                   Password
                 </Label>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="shadow-md rounded-lg w-full border"
-                />
+                <Input type="password" id="password" name="password" className="shadow-md rounded-lg w-full border" />
               </div>
 
               {/* Submit Button */}
@@ -225,7 +188,7 @@ const LoginPage = () => {
             </form>
             <p className="mx-auto text-center text-text_light_gray font-normal text-[13px]">
               Dimenticato la password?{" "}
-              <button onClick={toggleModal} className="text-red font-medium">
+              <button onClick={toggleModal} className="text-primary font-medium">
                 {" "}
                 ripristina
               </button>
@@ -238,10 +201,7 @@ const LoginPage = () => {
                 Termini e le Condizioni
               </Link>
                e{" "}
-              <Link
-                href="/terms-condition/#privacy-policy"
-                className="underline font-medium"
-              >
+              <Link href="/terms-condition/#privacy-policy" className="underline font-medium">
                 l&apos;Informativa sulla Privacy
               </Link>
             </p>
@@ -256,20 +216,14 @@ const LoginPage = () => {
                 <Label htmlFor="email" className="font-normal">
                   E-mail
                 </Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="shadow-md rounded-lg w-full border"
-                />
+                <Input type="email" id="email" name="email" className="shadow-md rounded-lg w-full border" />
               </div>
               {/* Submit Button */}
-              <button className="bg-red hover:bg-red/80 text-white z-30 px-6 md:px-10 py-3 rounded-lg font-normal w-full">
+              <button className="bg-primary hover:bg-primary/80 text-white z-30 px-6 md:px-10 py-3 rounded-lg font-normal w-full">
                 Ripristina password
               </button>
               <p className="mx-auto text-center text-text_light_gray text-xs">
-                Inserisci il tuo indirizzo e-mail e ti invieremo un link <br />{" "}
-                per reimpostare la tua password.
+                Inserisci il tuo indirizzo e-mail e ti invieremo un link <br /> per reimpostare la tua password.
               </p>
             </form>
           </Modal>
@@ -285,34 +239,20 @@ const LoginPage = () => {
             <Label htmlFor="email" className="font-normal">
               E-mail
             </Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              className="shadow-md rounded-lg w-full border"
-            />
+            <Input type="email" id="email" name="email" className="shadow-md rounded-lg w-full border" />
           </div>
           {/* Otp  */}
           <div className="grid w-full items-center gap-3">
             <Label htmlFor="email" className="font-normal">
               OTP
             </Label>
-            <Input
-              type="number"
-              id="otp"
-              name="otp"
-              className="shadow-md rounded-lg w-full border"
-            />
+            <Input type="number" id="otp" name="otp" className="shadow-md rounded-lg w-full border" />
           </div>
           {/* Submit Button */}
-          <button className="bg-red hover:bg-red/80 text-white z-30 px-6 md:px-10 py-3 rounded-lg font-normal w-full">
-            Invia
-          </button>
+          <button className="bg-primary hover:bg-primary/80 text-white z-30 px-6 md:px-10 py-3 rounded-lg font-normal w-full">Invia</button>
           <p className="mx-auto text-center text-text_light_gray text-xs">
-            Abbiamo inviato un&apos;e-mail con un link per verificare il tuo
-            account. Segui le istruzioni per completare la procedura. Se non
-            ricevi l&apos;e-mail entro pochi minuti, controlla la cartella Spam
-            o Promozioni. Quell&apos;OTP non sarà più valido dopo 5 minuti.
+            Abbiamo inviato un&apos;e-mail con un link per verificare il tuo account. Segui le istruzioni per completare la procedura. Se non ricevi
+            l&apos;e-mail entro pochi minuti, controlla la cartella Spam o Promozioni. Quell&apos;OTP non sarà più valido dopo 5 minuti.
           </p>
         </form>
       </Modal>

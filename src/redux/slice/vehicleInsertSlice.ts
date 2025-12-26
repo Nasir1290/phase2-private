@@ -21,14 +21,19 @@ const formSlice = createSlice({
     setCurrentStep(state, action: PayloadAction<FormStep>) {
       state.currentStep = action.payload;
     },
-    // Add resetFormData action to clear formData
     resetFormData(state) {
-      state.formData = {}; // Reset formData to an empty object
+      state.formData = {};
+      state.currentStep = "basic";
+    },
+    initializeStep(state, action: PayloadAction<FormStep>) {
+      const validSteps: FormStep[] = ["basic", "media", "details", "pricing", "description", "publish"];
+      if (validSteps.includes(action.payload) && state.currentStep !== action.payload) {
+        state.currentStep = action.payload;
+      }
     },
   },
 });
 
-export const { updateFormData, setCurrentStep, resetFormData } =
-  formSlice.actions;
+export const { updateFormData, setCurrentStep, resetFormData, initializeStep } = formSlice.actions;
 
 export default formSlice.reducer;

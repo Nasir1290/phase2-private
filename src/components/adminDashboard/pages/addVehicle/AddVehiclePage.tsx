@@ -57,11 +57,7 @@ const AddVehiclePage = () => {
   });
 
   const handleFormChange = (
-    e:
-      | React.ChangeEvent<
-          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
-      | { target: { id: string; value: any } } // Add this type
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | { target: { id: string; value: any } } // Add this type
   ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
@@ -155,40 +151,21 @@ const AddVehiclePage = () => {
         <div className="mt-10 md:mt-0 mb-12 md:mb-16 space-y-5">
           {/* Page Header Section */}
           <div className="flex flex-col items-start gap-5">
-            <h2 className="text-red font-extrabold text-3xl md:text-[30px] uppercase">
-              Add New Vehicle
-            </h2>
-            <p className="text-black text-base font-medium max-w-[1100px]">
-              View all the requested cars and their current status
-            </p>
+            <h2 className="text-primary font-extrabold text-3xl md:text-[30px] uppercase">Add New Vehicle</h2>
+            <p className="text-black text-base font-medium max-w-[1100px]">View all the requested cars and their current status</p>
           </div>
           <Separator className="mt-10 mb-20 w-2/3" />
         </div>
 
         {/* Input Fields */}
         <div className="space-y-20">
-          <Registration
-            formData={formData}
-            onFormChange={handleFormChange}
-            setFormData={setFormData}
-          />
-          <Details
-            formData={formData}
-            onFormChange={handleFormChange}
-            setFormData={setFormData}
-          />
+          <Registration formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
+          <Details formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
           <Fuel formData={formData} onFormChange={handleFormChange} />
           <Photos formData={formData} setFormData={setFormData} />
-          <Description
-            formData={formData}
-            onFormChange={handleFormChange}
-            setFormData={setFormData}
-          />
+          <Description formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
           <Price formData={formData} setFormData={setFormData} />
-          <Accessori
-            formData={formData}
-            onFormChange={handleAccessoriesChange}
-          />
+          <Accessori formData={formData} onFormChange={handleAccessoriesChange} />
           <Contact formData={formData} onFormChange={handleFormChange} />
           <Authentication formData={formData} setFormData={setFormData} />
 
@@ -200,26 +177,14 @@ const AddVehiclePage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`bg-red hover:bg-red text-white py-2 px-8 w-48 rounded-lg shadow-lg text-lg font-semibold flex items-center justify-center ${
+              className={`bg-primary hover:bg-primary text-white py-2 px-8 w-48 rounded-lg shadow-lg text-lg font-semibold flex items-center justify-center ${
                 isLoading ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
               {isLoading ? (
                 <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path
                       className="opacity-75"
                       fill="currentColor"

@@ -6,14 +6,7 @@ import Image from "next/image";
 import { LuImageOff } from "react-icons/lu";
 import { useGetCarByIDQuery } from "@/redux/api/carApi";
 import { usePathname } from "next/navigation";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/vehicleDetailsPage/RentalTable";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/vehicleDetailsPage/RentalTable";
 import Loading from "@/components/shared/loading/Loading";
 const VehicleDetails = () => {
   const pathname = usePathname();
@@ -30,13 +23,13 @@ const VehicleDetails = () => {
       {/* Header Section */}
       <header>
         <div className="flex items-center gap-5">
-          <Image
+          {/* <Image
             src={carDetails?.logo}
             alt={`${carDetails?.model} logo`}
             width={100}
             height={100}
             className="w-8 h-8"
-          />
+          /> */}
           <h1 className="text-2xl font-semibold">{carDetails?.model}</h1>
         </div>
       </header>
@@ -54,11 +47,9 @@ const VehicleDetails = () => {
               className="w-full h-full lg:h-[500px] object-cover rounded-lg"
             />
           ) : (
-            <div className="w-[470px] h-64 bg-red/20 flex flex-col  items-center justify-center gap-4 rounded-lg ">
+            <div className="w-[470px] h-64 bg-primary/20 flex flex-col  items-center justify-center gap-4 rounded-lg ">
               <LuImageOff size={30} className=" text-text_dark_gray" />
-              <span className="text-text_dark_gray font-medium">
-                No image found
-              </span>
+              <span className="text-text_dark_gray font-medium">No image found</span>
             </div>
           )}
         </section>
@@ -75,14 +66,9 @@ const VehicleDetails = () => {
                 className="w-[470px] h-64 object-cover rounded-lg"
               />
             ) : (
-              <div
-                key={index}
-                className="w-[470px] h-64 bg-red/20 flex flex-col items-center justify-center gap-4 rounded-lg"
-              >
+              <div key={index} className="w-[470px] h-64 bg-primary/20 flex flex-col items-center justify-center gap-4 rounded-lg">
                 <LuImageOff size={30} className=" text-text_dark_gray" />
-                <span className="text-text_dark_gray font-medium">
-                  No image found
-                </span>
+                <span className="text-text_dark_gray font-medium">No image found</span>
               </div>
             )
           )}
@@ -92,58 +78,34 @@ const VehicleDetails = () => {
           <h2 className="font-semibold text-2xl">Car Details</h2>
           <div className="grid grid-cols-3 gap-4 w-1/2">
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Anno
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.year}</span>
+              <span className="text-lg font-medium text-text_light_gray">Anno</span> <span className="text-[15px]">{carDetails?.year}</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Color
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.color}</span>
+              <span className="text-lg font-medium text-text_light_gray">Color</span> <span className="text-[15px]">{carDetails?.color}</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                0-100 km/h
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.kmh} sec</span>
+              <span className="text-lg font-medium text-text_light_gray">0-100 km/h</span> <span className="text-[15px]">{carDetails?.kmh} sec</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Transmission
-              </span>{" "}
+              <span className="text-lg font-medium text-text_light_gray">Transmission</span>{" "}
               <span className="text-[15px]">{carDetails?.transmission}</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Engine
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.engine}</span>
+              <span className="text-lg font-medium text-text_light_gray">Engine</span> <span className="text-[15px]">{carDetails?.engine}</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Max Speed
-              </span>{" "}
+              <span className="text-lg font-medium text-text_light_gray">Max Speed</span>{" "}
               <span className="text-[15px]">{carDetails?.maxSpeed} km/h</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Horsepower
-              </span>{" "}
+              <span className="text-lg font-medium text-text_light_gray">Horsepower</span>{" "}
               <span className="text-[15px]">{carDetails?.horsePower} CV</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Seats
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.seats}</span>
+              <span className="text-lg font-medium text-text_light_gray">Seats</span> <span className="text-[15px]">{carDetails?.seats}</span>
             </p>
             <p className="flex flex-col">
-              <span className="text-lg font-medium text-text_light_gray">
-                Fuel
-              </span>{" "}
-              <span className="text-[15px]">{carDetails?.fuelType}</span>
+              <span className="text-lg font-medium text-text_light_gray">Fuel</span> <span className="text-[15px]">{carDetails?.fuelType}</span>
             </p>
           </div>
         </section>
@@ -191,12 +153,8 @@ const VehicleDetails = () => {
                     <TableCell className="font-medium border-b">
                       {info.rentalTime} {info.rentalTime === 1 ? "ora" : "ore"}
                     </TableCell>
-                    <TableCell className="font-medium border-b">
-                      {info.price} .-
-                    </TableCell>
-                    <TableCell className="font-medium border-b">
-                      {info.kilometerPerHour} km/h
-                    </TableCell>
+                    <TableCell className="font-medium border-b">{info.price} .-</TableCell>
+                    <TableCell className="font-medium border-b">{info.kilometerPerHour} km/h</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -206,13 +164,11 @@ const VehicleDetails = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-2xl">Accessories</h3>
             <ul style={{ listStyle: "disc", paddingLeft: "20px" }}>
-              {carDetails?.accessories.map(
-                (accessory: string, index: number) => (
-                  <li key={index} className="text-[15px]">
-                    {accessory}
-                  </li>
-                )
-              )}
+              {carDetails?.accessories.map((accessory: string, index: number) => (
+                <li key={index} className="text-[15px]">
+                  {accessory}
+                </li>
+              ))}
             </ul>
           </div>
           {/* Description */}
@@ -232,11 +188,9 @@ const VehicleDetails = () => {
                 className="w-full h-full lg:h-[500px] object-cover rounded-lg"
               />
             ) : (
-              <div className="w-[470px] h-64 bg-red/20 flex flex-col  items-center justify-center gap-4 rounded-lg ">
+              <div className="w-[470px] h-64 bg-primary/20 flex flex-col  items-center justify-center gap-4 rounded-lg ">
                 <LuImageOff size={30} className=" text-text_dark_gray" />
-                <span className="text-text_dark_gray font-medium">
-                  No image found
-                </span>
+                <span className="text-text_dark_gray font-medium">No image found</span>
               </div>
             )}
           </section>

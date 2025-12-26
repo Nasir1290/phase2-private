@@ -35,15 +35,11 @@ export function ContactStep({ errors }: ContactStepProps) {
     dispatch(updateFormData({ advertiserName }));
   }, [advertiserName, dispatch]);
   // Image state for authentication
-  const [authenticationImage, setAuthenticationImage] = useState<string | null>(
-    null
-  );
+  const [authenticationImage, setAuthenticationImage] = useState<string | null>(null);
 
   const { data: getme } = useGetMyProfileQuery({});
 
-  const [phoneNumber, setPhoneNumber] = useState<string>(
-    getme?.data?.phoneNumber || ""
-  ); // Set initial phone number from Redux
+  const [phoneNumber, setPhoneNumber] = useState<string>(getme?.data?.phoneNumber || ""); // Set initial phone number from Redux
   const [email, setEmail] = useState<string>(getme?.data?.email || "");
 
   useEffect(() => {
@@ -56,15 +52,7 @@ export function ContactStep({ errors }: ContactStepProps) {
     // if (getme?.data?.email && !email) {
     //   setEmail(getme?.data?.email);
     // }
-  }, [
-    getme?.data?.firstName,
-    getme?.data?.lastName,
-    getme?.data?.phoneNumber,
-    getme?.data?.email,
-    advertiserName,
-    phoneNumber,
-    email,
-  ]);
+  }, [getme?.data?.firstName, getme?.data?.lastName, getme?.data?.phoneNumber, getme?.data?.email, advertiserName, phoneNumber, email]);
   useEffect(() => {
     // Dispatch formData updates
     dispatch(updateFormData({ advertiserName, phoneNumber, email }));
@@ -109,10 +97,7 @@ export function ContactStep({ errors }: ContactStepProps) {
 
   // Initialize the authentication image with formData if it's a valid file
   useEffect(() => {
-    if (
-      formData.authenticationFile &&
-      formData.authenticationFile instanceof File
-    ) {
+    if (formData.authenticationFile && formData.authenticationFile instanceof File) {
       const imageUrl = URL.createObjectURL(formData.authenticationFile);
       setAuthenticationImage(imageUrl);
     }
@@ -122,10 +107,7 @@ export function ContactStep({ errors }: ContactStepProps) {
     <div className="space-y-6">
       {/* Contact Information */}
       <div>
-        <VehicleInsertionHeader
-          title="Contatto"
-          subtitle="Gestisci le tue opzioni di contatto in modo rapido e semplice"
-        />
+        <VehicleInsertionHeader title="Contatto" subtitle="Gestisci le tue opzioni di contatto in modo rapido e semplice" />
         {/* Name of the inserter & Phone number */}
         <div className="space-y-10">
           {/* Name of the inserter */}
@@ -136,21 +118,11 @@ export function ContactStep({ errors }: ContactStepProps) {
             <Input
               required
               type="text"
-              readOnly
+              // readOnly
               id="advertiserName"
-              value={
-                advertiserName ||
-                `${getme?.data?.firstName}${
-                  getme?.data?.lastName ? ` ${getme?.data?.lastName}` : ""
-                }`
-              }
+              value={advertiserName || `${getme?.data?.firstName}${getme?.data?.lastName ? ` ${getme?.data?.lastName}` : ""}`}
               onChange={(e) =>
-                setAdvertiserName(
-                  e.target.value ||
-                    `${getme?.data?.firstName}${
-                      getme?.data?.lastName ? ` ${getme?.data?.lastName}` : ""
-                    }`
-                )
+                setAdvertiserName(e.target.value || `${getme?.data?.firstName}${getme?.data?.lastName ? ` ${getme?.data?.lastName}` : ""}`)
               }
               placeholder="Bittengo SAGL"
               className="border border-black/5 shadow-lg shadow-black/10 p-5 max-w-[280px] rounded-lg"
@@ -191,20 +163,14 @@ export function ContactStep({ errors }: ContactStepProps) {
                 E-mail
               </Label>
               <div className="relative">
-                <Image
-                  src={emailIcon}
-                  alt="email"
-                  className="z-10 absolute top-3.5 left-4 rounded-lg w-6 h-6"
-                />
+                <Image src={emailIcon} alt="email" className="z-10 absolute top-3.5 left-4 rounded-lg w-6 h-6" />
                 <Input
                   required
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={`relative border shadow-md w-72 rounded-lg px-12 py-6 ${
-                    hasError("description") && !formData.description
-                      ? "border-red"
-                      : "border-black/5"
+                    hasError("description") && !formData.description ? "border-primary" : "border-black/5"
                   }`}
                   placeholder="email@hotmail.com"
                 />
@@ -228,20 +194,14 @@ export function ContactStep({ errors }: ContactStepProps) {
               </div>
 
               <div className="relative">
-                <Image
-                  src={whatsapp}
-                  alt="whatsapp"
-                  className="z-10 absolute top-[13px] left-4 rounded-lg w-6 h-6"
-                />
+                <Image src={whatsapp} alt="whatsapp" className="z-10 absolute top-[13px] left-4 rounded-lg w-6 h-6" />
                 <p className="z-10 absolute top-[13px] left-12">wa.me/</p>
                 <Input
                   required
                   id="whatsapp"
                   type="number"
                   value={formData.whatsapp || ""} // Default to formData from Redux
-                  onChange={(e) =>
-                    dispatch(updateFormData({ whatsapp: e.target.value }))
-                  }
+                  onChange={(e) => dispatch(updateFormData({ whatsapp: e.target.value }))}
                   className={`relative border shadow-md w-72 rounded-lg pl-[108px] pr-5 py-6`}
                   placeholder="41792682812"
                 />
@@ -256,10 +216,7 @@ export function ContactStep({ errors }: ContactStepProps) {
       </div>
       {/* Ubicazione */}
       <div>
-        <VehicleInsertionHeader
-          title="Ubicazione"
-          subtitle="Indica il luogo in cui si trova parcheggiato il veicolo"
-        />
+        <VehicleInsertionHeader title="Ubicazione" subtitle="Indica il luogo in cui si trova parcheggiato il veicolo" />
         {/* Ubicazione */}
         <div className="relative space-y-4">
           {/* <MapComponent onResult={handleResult} /> */}
@@ -278,61 +235,37 @@ export function ContactStep({ errors }: ContactStepProps) {
         <Separator className="my-20" />
       </div>
       <div>
-        <VehicleInsertionHeader
-          title="Autentificazione"
-          subtitle="Carica l'immagine della carta grigia del tuo veicolo"
-        />
+        <VehicleInsertionHeader title="Autentificazione" subtitle="Carica l'immagine della carta grigia del tuo veicolo" />
         <div
           className={`relative xl:w-2/5 aspect-video rounded-lg overflow-hidden border shadow-lg flex items-center justify-center ${
-            hasError("description") && !formData.description
-              ? "border-red"
-              : "border-black/5"
+            hasError("description") && !formData.description ? "border-primary" : "border-black/5"
           }`}
         >
           {authenticationImage ? (
             <div className="relative w-full h-full">
-              <Image
-                src={authenticationImage}
-                alt="Authentication Image"
-                layout="fill"
-                className="object-cover"
-              />
-              <button
-                onClick={removeAuthenticationImage}
-                className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-lg"
-              >
+              <Image src={authenticationImage} alt="Authentication Image" layout="fill" className="object-cover" />
+              <button onClick={removeAuthenticationImage} className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-lg">
                 <X className="w-4 h-4" />
               </button>
             </div>
           ) : (
-            <div
-              {...getRootProps()}
-              className="w-full h-full flex flex-col items-center justify-center rounded-lg cursor-pointer transition-colors"
-            >
+            <div {...getRootProps()} className="w-full h-full flex flex-col items-center justify-center rounded-lg cursor-pointer transition-colors">
               <input {...getInputProps()} />
               <Image src={upload} alt="upload" className="w-5 h-5" />
-              <span className="text-sm text-gray-500 mt-4">
-                Clicca o trascina l&apos;immagine
-              </span>
+              <span className="text-sm text-gray-500 mt-4">Clicca o trascina l&apos;immagine</span>
             </div>
           )}
         </div>
       </div>
       {/* Modal */}
       {openModal && (
-        <div
-          className="fixed -inset-8 bg-section_bg/60 flex justify-center items-center z-50"
-          onClick={toggleModal}
-        >
+        <div className="fixed -inset-8 bg-section_bg/60 flex justify-center items-center z-50" onClick={toggleModal}>
           <div
             className="bg-white p-6 rounded-2xl shadow-xl shadow-black/20 max-w-[300px] mx-auto relative min-w-[400px]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <button
-              onClick={toggleModal}
-              className="absolute top-3 right-3 text-lg text-gray-500 hover:text-red-500"
-            >
+            <button onClick={toggleModal} className="absolute top-3 right-3 text-lg text-gray-500 hover:text-primary">
               <CgClose size={15} />
             </button>
 
@@ -340,18 +273,11 @@ export function ContactStep({ errors }: ContactStepProps) {
             <div className="p-3">
               <div className="flex items-center justify-start gap-3">
                 <h2 className="text-xl font-medium">Whatsapp</h2>
-                <Image
-                  src={whatsapp}
-                  alt="whatsapp"
-                  width={200}
-                  height={200}
-                  className="w-6 h-6"
-                />
+                <Image src={whatsapp} alt="whatsapp" width={200} height={200} className="w-6 h-6" />
               </div>
               <p className="text-sm text-text_light_gray mt-6">
-                Per aggiungere il tuo collegamento a WhatsApp, inserisci il tuo
-                numero di telefono con il prefisso internazionale, seguito dal
-                numero, senza spazi e senza lo 0 iniziale.
+                Per aggiungere il tuo collegamento a WhatsApp, inserisci il tuo numero di telefono con il prefisso internazionale, seguito dal numero,
+                senza spazi e senza lo 0 iniziale.
               </p>
               <div className="flex items-center gap-2 text-sm mt-5">
                 <p className="font-medium">Esempio: </p>

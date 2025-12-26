@@ -5,9 +5,7 @@ import TerminiCondizioni from "./TerminiCondizioni";
 import PrivacyPolicy from "./PrivacyPolicyPage";
 
 const TermsAndConditionPage = () => {
-  const [activeTab, setActiveTab] = useState<
-    "terminiCondizioni" | "privacyPolicy"
-  >("terminiCondizioni");
+  const [activeTab, setActiveTab] = useState<"terminiCondizioni" | "privacyPolicy">("terminiCondizioni");
 
   // Check if the URL contains the fragment identifier
   useEffect(() => {
@@ -48,7 +46,7 @@ const TermsAndConditionPage = () => {
         <button
           className={`px-4 py-2 font-medium text-[15px] ${
             activeTab === "terminiCondizioni"
-              ? "bg-red w-52 rounded-lg text-white mb-5 "
+              ? "bg-primary w-52 rounded-lg text-white mb-5 "
               : "w-52 border border-black/20 shadow-md py-3 mb-5 rounded-lg font-medium "
           }`}
           onClick={() => setActiveTab("terminiCondizioni")}
@@ -58,7 +56,7 @@ const TermsAndConditionPage = () => {
         <button
           className={`px-4 py-2 font-medium text-[15px] ${
             activeTab === "privacyPolicy"
-              ? "bg-red w-52 rounded-lg text-white mb-5 "
+              ? "bg-primary w-52 rounded-lg text-white mb-5 "
               : "w-52 border border-black/20 shadow-md py-3 mb-5 rounded-lg font-medium "
           }`}
           onClick={() => setActiveTab("privacyPolicy")}

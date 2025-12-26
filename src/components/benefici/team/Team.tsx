@@ -31,28 +31,20 @@ export default function Team() {
           <div className="max-w-[500px]">
             <header className="max-w-2xl text-start mb-5 lg:mb-16">
               <div className="flex flex-col gap-4">
-                <span className="text-sm font-medium text-text_light_gray uppercase">
-                  CHI SIAMO
-                </span>
+                <span className="text-sm font-medium text-text_light_gray uppercase">CHI SIAMO</span>
 
                 <h1 className="text-2xl md:text-[30px] font-extrabold">
-                  Team giovane pronto ad <br /> offrirvi{" "}
-                  <span className="text-red">un noleggio innovativo</span>
+                  Team giovane pronto ad <br /> offrirvi <span className="text-primary">un noleggio innovativo</span>
                 </h1>
               </div>
             </header>
           </div>
           <p className="text-sm md:text-[15px] font-normal text-text_light_gray ">
-            Il nostro team giovane e dinamico è il cuore pulsante di Bittengo,
-            sempre all’avanguardia sulle ultime tendenze del noleggio veicoli.
-            Con una visione fresca e innovativa, ci impegniamo a rendere il tuo
-            noleggio un&apos;esperienza semplice, conveniente e sicura. Offriamo
-            soluzioni moderne che soddisfano le tue esigenze, garantendo un
-            servizio rapido e trasparente. Attenti alla qualità, offriamo
-            supporto clienti disponibile 7 giorni su 7. Scegli Bittengo per un
-            noleggio che unisce tecnologia avanzata e un’esperienza
-            personalizzata, rendendo ogni viaggio senza stress e al passo con i
-            tempi.
+            Il nostro team giovane e dinamico è il cuore pulsante di Bittengo, sempre all’avanguardia sulle ultime tendenze del noleggio veicoli. Con
+            una visione fresca e innovativa, ci impegniamo a rendere il tuo noleggio un&apos;esperienza semplice, conveniente e sicura. Offriamo
+            soluzioni moderne che soddisfano le tue esigenze, garantendo un servizio rapido e trasparente. Attenti alla qualità, offriamo supporto
+            clienti disponibile 7 giorni su 7. Scegli Bittengo per un noleggio che unisce tecnologia avanzata e un’esperienza personalizzata, rendendo
+            ogni viaggio senza stress e al passo con i tempi.
           </p>
         </div>
         <div className="w-full lg:w-1/2 mx-auto">
@@ -68,9 +60,7 @@ export default function Team() {
                   className="w-32 lg:w-[135px] object-cover rounded-full border-1 border-footer_bg/30"
                 />
               </div>
-              <span className="block mt-2 text-base font-semibold">
-                {teamMembers[0].name}
-              </span>
+              <span className="block mt-2 text-base font-semibold">{teamMembers[0].name}</span>
             </div>
 
             {/* Right Member - Giulia */}
@@ -84,9 +74,7 @@ export default function Team() {
                   className="w-32 lg:w-[145px] object-cover rounded-full border-1 border-footer_bg/30"
                 />
               </div>
-              <span className="block mt-2 text-base font-semibold">
-                {teamMembers[1].name}
-              </span>
+              <span className="block mt-2 text-base font-semibold">{teamMembers[1].name}</span>
             </div>
 
             {/* Left/Bottom Member - Leonardo */}
@@ -100,9 +88,7 @@ export default function Team() {
                   className="w-32 lg:w-[160px] object-cover rounded-full border-1 border-footer_bg/30"
                 />
               </div>
-              <span className="block mt-2 text-base font-semibold">
-                {teamMembers[2].name}
-              </span>
+              <span className="block mt-2 text-base font-semibold">{teamMembers[2].name}</span>
             </div>
           </div>
         </div>

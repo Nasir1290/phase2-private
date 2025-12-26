@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import mapboxgl, { Map } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +13,7 @@ export default function Mapbox() {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
-console.log(isLoading);
+
   useEffect(() => {
        if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
       setIsLoading(false);
@@ -106,11 +107,11 @@ console.log(`Added marker ${index + 1}: ${markerData.title}`);
 
   return (
     <div className="flex flex-col items-center w-full h-full sm:my-5">
-      <div className="w-full p-4 bg-gray-100 rounded-t-lg">
+      {/* <div className="w-full p-4 bg-gray-100 rounded-t-lg">
         <p className="text-sm">
           Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
         </p>
-      </div>
+      </div> */}
       <div
         ref={mapContainer}
         className="w-full h-[600px] rounded-b-lg shadow-lg"
