@@ -2,7 +2,7 @@
 "use client";
 
 import { Button, Modal, Select, Slider } from "antd";
-import { RotateCcw, Settings, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useState } from "react";
 
 import Cabriolet from "@/assets/filterIcons/Cabriolet.svg";
@@ -17,11 +17,11 @@ import Monovolume from "@/assets/filterIcons/Monovolume.svg";
 import Sportiva from "@/assets/filterIcons/Sportiva.svg";
 import StationWagon from "@/assets/filterIcons/Station wagon.svg";
 import Suv from "@/assets/filterIcons/Suv.svg";
-import menual from "@/assets/filterIcons/menual.svg";
 import automatic from "@/assets/filterIcons/automatic.svg";
+import menual from "@/assets/filterIcons/menual.svg";
+import filter from "@/assets/vehicle/filter.svg";
 import { carBrands } from "@/lib/brands";
 import Image from "next/image";
-import filter from "@/assets/vehicle/filter.svg";
 import { IoIosArrowDown } from "react-icons/io";
 
 
@@ -56,7 +56,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
   const [selectedFuel, setSelectedFuel] = useState<string>("");
   const [selectedTransmission, setSelectedTransmission] = useState<string>("automatico");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-
+console.log(open);
   const handleReset = () => {
     setSelectedCategory("");
     setSelectedBrand("Ferrari");

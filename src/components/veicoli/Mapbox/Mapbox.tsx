@@ -12,7 +12,7 @@ export default function Mapbox() {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
-
+console.log(isLoading);
   useEffect(() => {
        if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
       setIsLoading(false);
