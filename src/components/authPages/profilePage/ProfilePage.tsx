@@ -56,7 +56,6 @@ const ProfilePage = () => {
                 key={tab}
                 className={`block px-4 py-2 font-medium ${activeTab === tab ? " text-primary underline" : ""}`}
                 onClick={() => {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   handleTabChange(tab as any);
                   setOpenDrawer(false);
                 }}
