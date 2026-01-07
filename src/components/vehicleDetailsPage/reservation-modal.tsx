@@ -9,6 +9,7 @@ import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import Image from "next/image";
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -75,7 +76,7 @@ export default function ReservationModal({ isOpen, onClose, vehicleName }: Reser
                 <span className="sm:mr-9">{summary.checkInTime}</span>
                 {/* <Edit className="w-4 h-4 text-primary cursor-pointer" /> */}
                 <div className="w-3 h-3 cursor-pointer">
-                  <img src={edit.src} alt="Edit" />
+                  <Image height={100} width={100} src={edit.src} alt="Edit" />
                 </div>
               </div>
             </div>
@@ -86,7 +87,7 @@ export default function ReservationModal({ isOpen, onClose, vehicleName }: Reser
                 <span className="sm:mr-9">{summary.checkOutTime}</span>
                 {/* <Edit className="w-4 h-4 text-primary cursor-pointer" /> */}
                 <div className="w-3 h-3 cursor-pointer">
-                  <img src={edit.src} alt="Edit" />
+                  <Image height={100} width={100} src={edit.src} alt="Edit" />
                 </div>
               </div>
             </div>

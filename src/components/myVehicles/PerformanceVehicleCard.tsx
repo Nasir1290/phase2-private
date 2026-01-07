@@ -82,7 +82,7 @@ const PerformanceVehicleCard: React.FC<VehicleCardProps> = ({ id, mainImage, mod
                 transition={{ duration: 0.4, ease: "easeInOut" }}
                 className="w-full h-full"
               >
-                <img
+                <Image
                   src={mainImage}
                   alt={model}
                   width={320}

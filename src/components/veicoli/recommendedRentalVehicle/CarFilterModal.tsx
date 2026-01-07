@@ -143,7 +143,9 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                     >
                       <path d="M4 14h2v2H4v-2zm6 0h2v2h-2v-2zm6 0h2v2h-2v-2zm6 0h2v2h-2v-2zM2 8h28v4H2V8zm2-2h24l-2-4H6L4 6z" />
                     </svg> */}
-                      <img
+                      <Image
+                      height={28}
+                      width={28}
                         src={category.icon.src}
                         alt={category.name}
                         className={`w-28 h-auto ${selectedCategory === category.id ? "text-primary" : "text-gray-600"}`}
@@ -178,7 +180,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                     <Option key={i} value={brandName}>
                       <div className="flex items-center py-1">
                         <div className="w-5 h-5 bg-gray-200 rounded mr-3 flex items-center justify-center">
-                          <img src={brand.logo.src} alt="logo" className={`w-5 h-auto `} />
+                          <Image height={100} width={100} src={brand.logo.src} alt="logo" className={`w-5 h-auto `} />
                         </div>
                         {brandName}
                       </div>
@@ -224,7 +226,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                     withDeposit ? "border-primary bg-red-50 text-primary" : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
                   }`}
                 >
-                  <img src={ConDeposito.src} alt="Con deposito" className={`w-5 h-auto `} />
+                  <Image height={100} width={100} src={ConDeposito.src} alt="Con deposito" className={`w-5 h-auto `} />
                   <p className="text-sm ">Con deposito</p>
                 </button>
                 <button
@@ -233,7 +235,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                     withoutDeposit ? "border-primary bg-red-50 text-primary" : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
                   }`}
                 >
-                  <img src={ConDeposito.src} alt="Con deposito" className={`w-5 h-auto `} />
+                  <Image height={100} width={100} src={ConDeposito.src} alt="Con deposito" className={`w-5 h-auto `} />
                   <p className="text-sm ">Senza deposito</p>
                 </button>
               </div>
@@ -269,7 +271,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                       : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  <img src={menual.src} alt="menual" className={`w-5 h-auto `} />
+                  <Image height={100} width={100} src={menual.src} alt="menual" className={`w-5 h-auto `} />
                   Manuale
                 </button>
                 <button
@@ -280,7 +282,7 @@ export default function VehicleFilterModal({ open, onClose, onApply }: VehicleFi
                       : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  <img src={automatic.src} alt="automatic" className={`w-5 h-auto `} />
+                  <Image height={100} width={100} src={automatic.src} alt="automatic" className={`w-5 h-auto `} />
                   Automatico
                 </button>
               </div>

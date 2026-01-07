@@ -43,6 +43,7 @@ export function StepController() {
     if (currentStep !== stepFromQuery) {
       dispatch(setCurrentStep(stepFromQuery));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const currentIndex = stepOrder.indexOf(currentStep);

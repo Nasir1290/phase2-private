@@ -5,7 +5,7 @@ import VehicleInsertPage from "@/components/vehicleInsert/VehicleInsertPage";
 const page = () => {
   const vehicle = {
     id: "3",
-    imageUrl:
+    mainImage:
       "https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds",
     logo: "https://wallpapercave.com/wp/wp2657676.jpg",
     brand: "Ford",
@@ -14,7 +14,7 @@ const page = () => {
     seats: 3,
     deposit: 300,
     available: true,
-    price: 230,
+    price: [],
     maxSpeed: 150,
     whatsappNumber: "+41123456789",
     phoneNumber: "+41123456789",
@@ -33,7 +33,7 @@ const page = () => {
       </div>{" "}
       <div className="mb-14">
         <p className="text-text_light_gray mb-3">Veicolo selezionato “Maserati Ghibli Gransport”</p>
-        <FavoritesCard {...vehicle} isFavorite={false} />
+        <FavoritesCard vehicle={vehicle} isFavorite={false} />
       </div>
       <VehicleInsertPage />
     </div>

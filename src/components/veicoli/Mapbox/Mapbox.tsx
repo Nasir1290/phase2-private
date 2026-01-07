@@ -101,6 +101,7 @@ console.log(`Added marker ${index + 1}: ${markerData.title}`);
     return () => {
       mapInstance.remove();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array - only run once
 
 

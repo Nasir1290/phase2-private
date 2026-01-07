@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { CalendarDays, CheckCircle2, CircleDot, Square, Clock3, MapPin, ExternalLink } from 'lucide-react'
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export default function BookingConfirmation() {
   return (
@@ -57,7 +58,9 @@ export default function BookingConfirmation() {
             <div className="p-3 sm:p-4">
               <div className="flex flex-col gap-4 sm:flex-row">
                 <div className="sm:w-[280px]">
-                  <img
+                  <Image
+                    height={400}
+                    width={280}
                     src="/placeholder-ro7fx.png"
                     alt="Maserati Ghibli Gransport"
                     className="h-40 w-full rounded-md object-cover sm:h-full"

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BadgeCheck, Briefcase, ChevronDown, ChevronRight, Menu, Paperclip, Send, Trash2, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type Message = {
   id: string;
@@ -236,7 +237,7 @@ function Sidebar({
         {vehicles.slice(0, 1).map((v) => (
           <div key={v.id} className="rounded-lg border">
             <div className="flex gap-3 p-3">
-              <img src="/exotic-sport-car.png" alt={v.name} width={96} height={64} className="h-16 w-24 rounded-md object-cover" />
+              <Image src="/exotic-sport-car.png" alt={v.name} width={96} height={64} className="h-16 w-24 rounded-md object-cover" />
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-2">
                   <div className="truncate text-sm font-medium">{v.name}</div>
@@ -294,7 +295,7 @@ function Sidebar({
           {vehicles.slice(1).map((v) => (
             <div key={v.id} className="rounded-lg border">
               <button className="flex w-full items-center gap-3 p-3 text-left hover:bg-muted/60" onClick={() => toggleVehicle(v.id)}>
-                <img
+                <Image
                   src={v.image || "/placeholder.svg"}
                   alt={v.name}
                   width={96}

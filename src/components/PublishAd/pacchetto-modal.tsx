@@ -5,6 +5,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import { Check, X } from "lucide-react";
 import { SkeletonCard } from "../ui/skeleton-card";
+import Image from "next/image";
 interface PacchettoModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,7 +50,7 @@ export default function PacchettoModal({ isOpen, onClose }: PacchettoModalProps)
           <Star className="w-6 h-6 text-yellow-400 fill-current" />
         </div> */}
 
-        <img src={stars.src} alt="Stars" className="mx-auto mb-8 max-w-28" />
+        <Image height={100} width={100} src={stars.src} alt="Stars" className="mx-auto mb-8 max-w-28" />
 
         {/* Visual Representation */}
         <div className="mb-6">

@@ -1,14 +1,24 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { X, VolumeX, Volume2, ChevronUp, ChevronDown, Settings, Play, Pause } from "lucide-react"
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  X,
+  VolumeX,
+  Volume2,
+  ChevronUp,
+  ChevronDown,
+  Settings,
+  Play,
+  Pause,
+} from "lucide-react";
+import Image from "next/image";
 
 interface VideoPlayerProps {
-  onClose?: () => void
-  onNext?: () => void
-  onPrevious?: () => void
-  onRent?: () => void
+  onClose?: () => void;
+  onNext?: () => void;
+  onPrevious?: () => void;
+  onRent?: () => void;
 }
 
 const videoData = [
@@ -33,137 +43,154 @@ const videoData = [
     title: "Bentley Mulsanne (Silver), 2023",
     price: 890,
   },
-]
+];
 
-export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: VideoPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
-  const [showSettings, setShowSettings] = useState(false)
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
+export default function VideoPlayer({
+  onClose,
+  onNext,
+  onPrevious,
+  onRent,
+}: VideoPlayerProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(
+    null
+  );
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-
-  const currentVideo = videoData[currentVideoIndex]
-  const nextVideo = videoData[(currentVideoIndex + 1) % videoData.length]
-  const prevVideo = videoData[currentVideoIndex === 0 ? videoData.length - 1 : currentVideoIndex - 1]
+  const currentVideo = videoData[currentVideoIndex];
+  const nextVideo = videoData[(currentVideoIndex + 1) % videoData.length];
+  const prevVideo =
+    videoData[
+      currentVideoIndex === 0 ? videoData.length - 1 : currentVideoIndex - 1
+    ];
 
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
-        videoRef.current.pause()
+        videoRef.current.pause();
       } else {
-        videoRef.current.play()
+        videoRef.current.play();
       }
-      setIsPlaying(!isPlaying)
+      setIsPlaying(!isPlaying);
     }
-  }
+  };
 
   const toggleMute = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
     }
-  }
+  };
 
   const slideToNext = () => {
-    if (isAnimating) return
+    if (isAnimating) return;
 
-    setIsAnimating(true)
-    setSlideDirection("next")
-    setIsPlaying(false)
+    setIsAnimating(true);
+    setSlideDirection("next");
+    setIsPlaying(false);
 
     // Pause current video
     if (videoRef.current) {
-      videoRef.current.pause()
+      videoRef.current.pause();
     }
 
     // After animation completes
     setTimeout(() => {
-      const nextIndex = (currentVideoIndex + 1) % videoData.length
-      setCurrentVideoIndex(nextIndex)
-      setSlideDirection(null)
-      setIsAnimating(false)
-      
+      const nextIndex = (currentVideoIndex + 1) % videoData.length;
+      setCurrentVideoIndex(nextIndex);
+      setSlideDirection(null);
+      setIsAnimating(false);
+
       // Auto-play the new video
       setTimeout(() => {
         if (videoRef.current) {
-          videoRef.current.currentTime = 0
-          videoRef.current.play().then(() => {
-            setIsPlaying(true)
-          }).catch(() => {
-            setIsPlaying(false)
-          })
+          videoRef.current.currentTime = 0;
+          videoRef.current
+            .play()
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {
+              setIsPlaying(false);
+            });
         }
-      }, 50)
-    }, 400) // Match the CSS transition duration
+      }, 50);
+    }, 400); // Match the CSS transition duration
 
-    onNext?.()
-  }
+    onNext?.();
+  };
 
   const slideToPrevious = () => {
-    if (isAnimating) return
+    if (isAnimating) return;
 
-    setIsAnimating(true)
-    setSlideDirection("prev")
-    setIsPlaying(false)
+    setIsAnimating(true);
+    setSlideDirection("prev");
+    setIsPlaying(false);
 
     // Pause current video
     if (videoRef.current) {
-      videoRef.current.pause()
+      videoRef.current.pause();
     }
 
     // After animation completes
     setTimeout(() => {
-      const prevIndex = currentVideoIndex === 0 ? videoData.length - 1 : currentVideoIndex - 1
-      setCurrentVideoIndex(prevIndex)
-      setSlideDirection(null)
-      setIsAnimating(false)
-      
+      const prevIndex =
+        currentVideoIndex === 0 ? videoData.length - 1 : currentVideoIndex - 1;
+      setCurrentVideoIndex(prevIndex);
+      setSlideDirection(null);
+      setIsAnimating(false);
+
       // Auto-play the new video
       setTimeout(() => {
         if (videoRef.current) {
-          videoRef.current.currentTime = 0
-          videoRef.current.play().then(() => {
-            setIsPlaying(true)
-          }).catch(() => {
-            setIsPlaying(false)
-          })
+          videoRef.current.currentTime = 0;
+          videoRef.current
+            .play()
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {
+              setIsPlaying(false);
+            });
         }
-      }, 50)
-    }, 400) // Match the CSS transition duration
+      }, 50);
+    }, 400); // Match the CSS transition duration
 
-    onPrevious?.()
-  }
+    onPrevious?.();
+  };
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       switch (e.key) {
         case " ":
-          e.preventDefault()
-          togglePlay()
-          break
+          e.preventDefault();
+          togglePlay();
+          break;
         case "Escape":
-          onClose?.()
-          break
+          onClose?.();
+          break;
         case "ArrowUp":
-          e.preventDefault()
-          slideToPrevious()
-          break
+          e.preventDefault();
+          slideToPrevious();
+          break;
         case "ArrowDown":
-          e.preventDefault()
-          slideToNext()
-          break
+          e.preventDefault();
+          slideToNext();
+          break;
         case "m":
-          toggleMute()
-          break
+          toggleMute();
+          break;
       }
-    }
+    };
 
-    window.addEventListener("keydown", handleKeyPress)
-    return () => window.removeEventListener("keydown", handleKeyPress)
-  }, [isPlaying, isMuted, onClose, currentVideoIndex, isAnimating])
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, isMuted, onClose, currentVideoIndex, isAnimating]);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -174,10 +201,10 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
           {/* Current Video */}
           <div
             className={`absolute inset-0 transition-transform duration-400 ease-out ${
-              slideDirection === "next" 
-                ? "transform -translate-y-full" 
-                : slideDirection === "prev" 
-                ? "transform translate-y-full" 
+              slideDirection === "next"
+                ? "transform -translate-y-full"
+                : slideDirection === "prev"
+                ? "transform translate-y-full"
                 : "transform translate-y-0"
             }`}
           >
@@ -191,11 +218,13 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
               playsInline
               onClick={togglePlay}
               onLoadedData={() => {
-                console.log("[v0] Video loaded:", currentVideo.title)
+                console.log("[v0] Video loaded:", currentVideo.title);
               }}
             >
               <source src={currentVideo.src} type="video/mp4" />
-              <img
+              <Image
+                height={100}
+                width={100}
                 src={currentVideo.poster || "/placeholder.svg"}
                 alt={currentVideo.title}
                 className="w-full h-full object-cover"
@@ -219,7 +248,9 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
                 playsInline
               >
                 <source src={nextVideo.src} type="video/mp4" />
-                <img
+                <Image
+                  height={100}
+                  width={100}
                   src={nextVideo.poster || "/placeholder.svg"}
                   alt={nextVideo.title}
                   className="w-full h-full object-cover"
@@ -244,7 +275,9 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
                 playsInline
               >
                 <source src={prevVideo.src} type="video/mp4" />
-                <img
+                <Image
+                  height={100}
+                  width={100}
                   src={prevVideo.poster || "/placeholder.svg"}
                   alt={prevVideo.title}
                   className="w-full h-full object-cover"
@@ -275,8 +308,12 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
             <div className="flex items-end justify-between">
               <div className="text-white">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl font-bold">$ {currentVideo.price}</span>
-                  <span className="bg-green-500 text-xs px-2 py-1 rounded font-medium">NO DEPOSIT</span>
+                  <span className="text-2xl font-bold">
+                    $ {currentVideo.price}
+                  </span>
+                  <span className="bg-green-500 text-xs px-2 py-1 rounded font-medium">
+                    NO DEPOSIT
+                  </span>
                 </div>
                 <p className="text-sm text-gray-300">{currentVideo.title}</p>
               </div>
@@ -308,7 +345,11 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
             className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm"
             onClick={toggleMute}
           >
-            {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
+            {isMuted ? (
+              <VolumeX className="w-5 h-5 text-white" />
+            ) : (
+              <Volume2 className="w-5 h-5 text-white" />
+            )}
           </Button>
         </div>
 
@@ -348,9 +389,15 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
             {showSettings && (
               <div className="absolute right-12 bottom-0 bg-black/80 backdrop-blur-sm rounded-lg p-3 min-w-[150px]">
                 <div className="text-white text-sm space-y-2">
-                  <button className="block w-full text-left hover:text-blue-400">Quality</button>
-                  <button className="block w-full text-left hover:text-blue-400">Speed</button>
-                  <button className="block w-full text-left hover:text-blue-400">Report</button>
+                  <button className="block w-full text-left hover:text-blue-400">
+                    Quality
+                  </button>
+                  <button className="block w-full text-left hover:text-blue-400">
+                    Speed
+                  </button>
+                  <button className="block w-full text-left hover:text-blue-400">
+                    Report
+                  </button>
                 </div>
               </div>
             )}
@@ -358,7 +405,12 @@ export default function VideoPlayer({ onClose, onNext, onPrevious, onRent }: Vid
         </div>
       </div>
 
-      {showSettings && <div className="fixed inset-0 z-[-1]" onClick={() => setShowSettings(false)} />}
+      {showSettings && (
+        <div
+          className="fixed inset-0 z-[-1]"
+          onClick={() => setShowSettings(false)}
+        />
+      )}
     </div>
-  )
+  );
 }

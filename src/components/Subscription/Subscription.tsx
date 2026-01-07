@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 // import SUBSCRIPTIONS from "@/assets/subscription/subscription.png";
 import BADGE from "@/assets/Badge unico business (2).svg";

@@ -58,7 +58,7 @@ function UploadSlot({
     >
       {file ? (
         <>
-          <img src={file.preview} alt={label} className="absolute inset-0 w-full h-full object-cover" />
+          <Image height={100} width={100} src={file.preview} alt={label} className="absolute inset-0 w-full h-full object-cover" />
           {!!onRemove && (
             <button
               onClick={(e) => {
@@ -121,7 +121,7 @@ function ImmaginiTab({
         <div className="relative rounded-xl border border-gray-200 bg-white shadow-sm p-3">
           <div className="relative w-full h-60 overflow-hidden rounded-lg">
             {mainImage ? (
-              <img src={mainImage.preview} alt="Immagine principale" className="absolute inset-0 w-full h-full object-cover rounded-lg" />
+              <Image height={100} width={100} src={mainImage.preview} alt="Immagine principale" className="absolute inset-0 w-full h-full object-cover rounded-lg" />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-gray-500">
                 <Camera className="w-6 h-6 mr-2" />
