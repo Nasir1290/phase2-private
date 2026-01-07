@@ -32,6 +32,7 @@ interface VehicleCardProps {
   whatsappNumber: string;
   phoneNumber: string;
   location: string;
+  isInrisalto: boolean;
 }
 
 const VehicleCard: React.FC<VehicleCardProps> = ({
@@ -48,6 +49,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
   whatsappNumber,
   phoneNumber,
   location,
+  isInrisalto = false,
 }) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -59,7 +61,13 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
   }, []);
   return (
     <div className="w-full ">
-      <div className="flex flex-col lg:flex-row items-start  bg-white rounded-2xl border border-black/5 shadow-md w-full">
+      <div
+        className={`flex flex-col lg:flex-row items-start ${
+          isInrisalto
+            ? "bg-[#D1252B05] rounded-2xl border border-[#D1252B]"
+            : "bg-white rounded-2xl border border-black/5"
+        } shadow-md w-full`}
+      >
         {/* Car Image */}
         <div className="w-full lg:w-auto lg:flex-shrink-0 p-2">
           <div className="relative w-full overflow-hidden rounded-xl">
@@ -92,7 +100,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
               {isHeartClicked ? (
                 <Image src={redHeart} alt="heart" width={20} height={20} />
               ) : (
-                <Image src={heart} alt="heart" width={20} height={20}  />
+                <Image src={heart} alt="heart" width={20} height={20} />
               )}
             </div>
           </div>
@@ -103,8 +111,18 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
           <div className="w-full flex flex-col items-start gap-2 xl:gap-2">
             {/* Title */}
             <div className="flex justify-start items-center gap-5 mb-2">
-              <Image src={logo} alt={model} width={500} height={500} className="w-8 h-8" unoptimized />
-              <Link href={`/veicoli/${id}`} className="text-[16px] lg:text-[19px] font-bold">
+              <Image
+                src={logo}
+                alt={model}
+                width={500}
+                height={500}
+                className="w-8 h-8"
+                unoptimized
+              />
+              <Link
+                href={`/veicoli/${id}`}
+                className="text-[16px] lg:text-[19px] font-bold"
+              >
                 {brand} {model}
               </Link>
             </div>
@@ -113,39 +131,79 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
             <div className="w-full flex items-center justify-between md:justify-start gap-5 md:gap-8 text-gray-600 text-sm">
               {/* Transmission */}
               <div className="flex items-center  gap-2 sm:gap-2.5">
-                <Image src={transmission === "AUTOMATIC" ? automatic : manuale} alt={transmission} width={100} height={100} className="w-4 h-4" />
-                <p className="text-text_dark_gray text-[14px]">{transmission === "AUTOMATIC" ? "Automatico" : "Manuale"}</p>
+                <Image
+                  src={transmission === "AUTOMATIC" ? automatic : manuale}
+                  alt={transmission}
+                  width={100}
+                  height={100}
+                  className="w-4 h-4"
+                />
+                <p className="text-text_dark_gray text-[14px]">
+                  {transmission === "AUTOMATIC" ? "Automatico" : "Manuale"}
+                </p>
               </div>
               {/* Seat for pc*/}
               <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-                <Image src={seat} alt="seat" width={20} height={20} className="w-5 h-5 md:w-4 md:h-4" />
+                <Image
+                  src={seat}
+                  alt="seat"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5 md:w-4 md:h-4"
+                />
                 <p className="text-text_dark_gray text-[13px]">{seats}</p>
               </div>
               {/* Deposit */}
               <div className="flex items-center gap-2 sm:gap-2.5">
-                <Image src={deposit ? deposito : noDiposite} alt="deposit" width={24} height={24} className="w-4 h-4 md:w-4 md:h-4" />
+                <Image
+                  src={deposit ? deposito : noDiposite}
+                  alt="deposit"
+                  width={24}
+                  height={24}
+                  className="w-4 h-4 md:w-4 md:h-4"
+                />
                 <p className="text-text_dark_gray text-[13px]">
                   {/* {deposit ? `${deposit} CHF` : "Nessun deposito"} */}
 
-                  {Number(deposit) === 0 ? "Nessun deposito" : Number(deposit) >= 1 ? `${Number(deposit)} CHF` : "N/A"}
+                  {Number(deposit) === 0
+                    ? "Nessun deposito"
+                    : Number(deposit) >= 1
+                    ? `${Number(deposit)} CHF`
+                    : "N/A"}
                 </p>
               </div>
               {/* Viewers for mobile*/}
               <div className="xl:hidden  flex items-center gap-2 sm:gap-2.5 text-gray-500 text-sm py-3">
-                <Image src={eye} alt="viewers" width={24} height={16} className="w-4 h-4" />
+                <Image
+                  src={eye}
+                  alt="viewers"
+                  width={24}
+                  height={16}
+                  className="w-4 h-4"
+                />
                 <p className="text-[14px] text-text_dark_gray">{randomViews}</p>
               </div>
             </div>
 
             {/* Viewers for pc*/}
             <div className="hidden  xl:flex items-center gap-2 sm:gap-2.5 text-gray-500 text-sm py-3">
-              <Image src={eye} alt="viewers" width={24} height={16} className="w-4 h-4" />
-              <p className="text-[14px] text-text_dark_gray/70">{randomViews} utenti stanno vedendo questo veicolo</p>
+              <Image
+                src={eye}
+                alt="viewers"
+                width={24}
+                height={16}
+                className="w-4 h-4"
+              />
+              <p className="text-[14px] text-text_dark_gray/70">
+                {randomViews} utenti stanno vedendo questo veicolo
+              </p>
             </div>
             {/* Location for mobile */}
             <div className=" flex  items-center gap-2 sm:gap-2.5   text-[14px] mb-2 sm:mb-0 lg:bg-[#BCC3CE]/10 rounded-full py-1 lg:px-2 text-sm">
               <IoLocationOutline className=" size-4 text-primary" />
-              <p className="text-text_dark_gray text-[13px] font-normal">{location.split(",").slice(0, -1).join(",")}</p>
+              <p className="text-text_dark_gray text-[13px] font-normal">
+                {location.split(",").slice(0, -1).join(",")}
+              </p>
             </div>
 
             {/* Availability Badge */}
@@ -159,13 +217,23 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
           <div className="w-full flex flex-col justify-between items-start lg:items-end">
             {/* Price */}
             <div className="hidden md:block space-y-4">
-              <p className="text-[13px] text-text_light_gray font-medium">PREZZO GIORNALIERO</p>
+              <p className="text-[13px] text-text_light_gray font-medium">
+                PREZZO GIORNALIERO
+              </p>
               <div className="flex flex-row lg:flex-col items-start xl:items-end gap-20 xl:gap-4">
                 <p className="text-[19px] font-bold">CHF {price}</p>
 
                 <p className="flex items-center gap-2 text-sm font-semibold text-text_light_gray">
-                  <Image src={kilometers || "/placeholder.svg"} alt="kilometers" width={24} height={16} className="w-4 h-4" />
-                  {maxSpeed === "Unlimited" ? "KM illimitati" : `${maxSpeed} KM`}
+                  <Image
+                    src={kilometers || "/placeholder.svg"}
+                    alt="kilometers"
+                    width={24}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  {maxSpeed === "Unlimited"
+                    ? "KM illimitati"
+                    : `${maxSpeed} KM`}
                 </p>
               </div>
             </div>
@@ -173,15 +241,27 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
             <div className="md:hidden flex justify-between items-center space-y-4 w-full">
               {/* KM INCLUSI */}
               <div className="flex flex-col gap-2">
-                <p className="text-[13px] text-text_light_gray font-medium">KM INCLUSI</p>
+                <p className="text-[13px] text-text_light_gray font-medium">
+                  KM INCLUSI
+                </p>
                 <p className="flex items-center gap-2 text-sm font-semibold text-text_light_gray">
-                  <Image src={kilometers || "/placeholder.svg"} alt="kilometers" width={24} height={16} className="w-4 h-4" />
-                  {maxSpeed === "Unlimited" ? "KM illimitati" : `${maxSpeed} KM`}
+                  <Image
+                    src={kilometers || "/placeholder.svg"}
+                    alt="kilometers"
+                    width={24}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  {maxSpeed === "Unlimited"
+                    ? "KM illimitati"
+                    : `${maxSpeed} KM`}
                 </p>
               </div>
               {/* PREZZO  */}
               <div className="flex flex-col items-end gap-2">
-                <p className="text-[13px] text-text_light_gray font-medium">PREZZO GIORNALIERO</p>
+                <p className="text-[13px] text-text_light_gray font-medium">
+                  PREZZO GIORNALIERO
+                </p>
                 <p className="md:text-[19px] font-bold">CHF {price}</p>
               </div>
             </div>
@@ -205,7 +285,13 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
         </div>
       </div>
 
-      <ContactModal isOpen={isContactModalOpen} toggleModal={toggleModal} id={id} whatsappNumber={whatsappNumber} phoneNumber={phoneNumber} />
+      <ContactModal
+        isOpen={isContactModalOpen}
+        toggleModal={toggleModal}
+        id={id}
+        whatsappNumber={whatsappNumber}
+        phoneNumber={phoneNumber}
+      />
     </div>
   );
 };

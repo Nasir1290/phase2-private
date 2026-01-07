@@ -3,7 +3,11 @@
 
 import order from "@/assets/vehicle/frecce-filtro.svg";
 import { carBrands } from "@/lib/brands";
-import { useGetAllAcceptedCarQuery } from "@/redux/api/carApi";
+import {
+  useCurrentInCimaCarQuery,
+  useGetAllAcceptedCarQuery,
+  useInRisaltoCarsQuery,
+} from "@/redux/api/carApi";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -20,6 +24,14 @@ const MapModal = dynamic(() => import("./MapModal"), {
   loading: () => <p>Loading map...</p>,
 });
 
+export const brandLogos: { [key: string]: string } = carBrands.reduce(
+  (acc, brand) => {
+    acc[brand?.name?.trim()?.toLowerCase()] = brand.logo;
+    return acc;
+  },
+  {} as { [key: string]: string }
+);
+
 const VehicleList = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +43,10 @@ const VehicleList = () => {
   const categoryParam = searchParams.get("category");
   const latitude = parseFloat(searchParams.get("latitude") || "0");
   const longitude = parseFloat(searchParams.get("longitude") || "0");
+  const { data: inCimaCarData, isLoading: incimaCarLoading } =
+    useCurrentInCimaCarQuery("");
+  const { data: inRisaltoCarData, isLoading: inRisaltoLoading } =
+    useInRisaltoCarsQuery("");
 
   const vehiclesPerPage = 10;
 
@@ -54,12 +70,60 @@ const VehicleList = () => {
     { name: "longitude", value: longitude || undefined },
   ]);
 
-  const brandLogos: { [key: string]: string } = carBrands.reduce((acc, brand) => {
-    acc[brand?.name?.trim()?.toLowerCase()] = brand.logo;
-    return acc;
-  }, {} as { [key: string]: string });
+  // const allCars = getAllCars?.data || [];
 
-  const vehicles = getAllCars?.data || [];
+  // const inCimaCar = inCimaCarData?.data;
+  // const inCimaCarFromList = allCars.find((c: any) => c.id === inCimaCar?.id);
+
+  // const inRisaltoCar = inRisaltoCarData?.data || [];
+  // const inRisaltoCarIds = inRisaltoCar.map((c: any) => c?.car?.id);
+  // const inRisaltoCarsFromList = allCars.filter((c: any) =>
+  //   inRisaltoCarIds.includes(c.id)
+  // );
+
+  // // Collect IDs that must be excluded from "other cars"
+  // const excludedIds = new Set<number | string>();
+
+  // if (inCimaCarFromList) {
+  //   excludedIds.add(inCimaCarFromList.id);
+  // }
+
+  // inRisaltoCarsFromList.forEach((c: any) => {
+  //   excludedIds.add(c.id);
+  // });
+
+  // // Remaining cars (no duplicates)
+  // const otherCars = allCars.filter((c: any) => !excludedIds.has(c.id));
+
+  // // Final vehicles list (order matters)
+  // const vehicles = [
+  //   ...(inCimaCarFromList ? [inCimaCarFromList] : []),
+  //   ...inRisaltoCarsFromList,
+  //   ...otherCars,
+  // ];
+
+  const allCars = getAllCars?.data || [];
+
+  const inCimaCar = inCimaCarData?.data;
+  const inCimaCarFromList = allCars.find((c: any) => c.id === inCimaCar?.id);
+
+  const inRisaltoCar = inRisaltoCarData?.data || [];
+  const inRisaltoCarIds = inRisaltoCar.map((c: any) => c?.car?.id);
+
+  // Build vehicles normally (no priority yet)
+  const vehiclesBase = [
+    ...allCars.filter((c: any) => inRisaltoCarIds.includes(c.id)),
+    ...allCars.filter((c: any) => !inRisaltoCarIds.includes(c.id)),
+  ];
+
+  // Force inCima to top WITHOUT duplicating
+  const vehicles = inCimaCarFromList
+    ? [
+        inCimaCarFromList,
+        ...vehiclesBase.filter((c: any) => c.id !== inCimaCarFromList.id),
+      ]
+    : vehiclesBase;
+
   const totalPage = getAllCars?.meta?.totalPage || 0;
 
   const toggleDropdown = () => {
@@ -84,7 +148,10 @@ const VehicleList = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -104,6 +171,7 @@ const VehicleList = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [brandParam]);
+  if (incimaCarLoading || inRisaltoLoading) return <Loading />;
 
   const handleApplyFilters = (filters: any) => {
     console.log("Applied filters:", filters);
@@ -118,14 +186,31 @@ const VehicleList = () => {
       {!isLoading && (
         <>
           <div className="flex items-center justify-between my-10">
-            <p className="text-text_light_gray font-medium text-sm">{getAllCars?.meta?.total} Risultati</p>
+            <p className="text-text_light_gray font-medium text-sm">
+              {getAllCars?.meta?.total} Risultati
+            </p>
             <div className="flex items-center gap-4">
               <MapModal />
 
-              <VehicleFilterModal open={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} onApply={handleApplyFilters} />
-              <div onClick={toggleDropdown} className="flex items-center gap-2 cursor-pointer">
-                <Image src={order} alt="order" width={20} height={20} className="h-4 w-4" />
-                <p className="text-text_dark_gray text-sm cursor-pointer">Ordina per</p>
+              <VehicleFilterModal
+                open={isFilterModalOpen}
+                onClose={() => setIsFilterModalOpen(false)}
+                onApply={handleApplyFilters}
+              />
+              <div
+                onClick={toggleDropdown}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Image
+                  src={order}
+                  alt="order"
+                  width={20}
+                  height={20}
+                  className="h-4 w-4"
+                />
+                <p className="text-text_dark_gray text-sm cursor-pointer">
+                  Ordina per
+                </p>
                 <div ref={dropdownRef} className="relative dropdown-container">
                   <button>
                     <SlArrowDown className="h-3 w-3 font-bold text-primary" />
@@ -137,7 +222,9 @@ const VehicleList = () => {
                         <li
                           onClick={() => handleSelect("Raccomandato")}
                           className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
-                            selectedOption === "Raccomandato" ? "bg- text-gray-500 cursor-not-allowed" : ""
+                            selectedOption === "Raccomandato"
+                              ? "bg- text-gray-500 cursor-not-allowed"
+                              : ""
                           }`}
                         >
                           Raccomandato
@@ -145,7 +232,9 @@ const VehicleList = () => {
                         <li
                           onClick={() => handleSelect("Dal più caro")}
                           className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
-                            selectedOption === "Dal più caro" ? "bg- text-gray-500 cursor-not-allowed" : ""
+                            selectedOption === "Dal più caro"
+                              ? "bg- text-gray-500 cursor-not-allowed"
+                              : ""
                           }`}
                         >
                           Dal più caro
@@ -153,7 +242,9 @@ const VehicleList = () => {
                         <li
                           onClick={() => handleSelect("Dal meno caro")}
                           className={`px-4 py-2 cursor-pointer hover:bg-primary/5 text-sm ${
-                            selectedOption === "Dal meno caro" ? "bg- text-gray-500 cursor-not-allowed" : ""
+                            selectedOption === "Dal meno caro"
+                              ? "bg- text-gray-500 cursor-not-allowed"
+                              : ""
                           }`}
                         >
                           Dal meno caro
@@ -168,11 +259,15 @@ const VehicleList = () => {
 
           <div className="space-y-4 grid grid-cols-1 gap-4">
             {vehicles.map((vehicle: any) => {
-              const selectedPrice = vehicle.price.find((p: any) => p.rentalTime === 24)?.price || 0;
-              const selectedKm = vehicle.price.find((p: any) => p.rentalTime === 24)?.kilometerPerHour || 0;
+              const selectedPrice =
+                vehicle.price.find((p: any) => p.rentalTime === 24)?.price || 0;
+              const selectedKm =
+                vehicle.price.find((p: any) => p.rentalTime === 24)
+                  ?.kilometerPerHour || 0;
               const isAvailable = vehicle.carStatus === "ACTIVE";
               if (!isAvailable) return null;
-              const brandLogo = brandLogos[vehicle?.brand?.trim()?.toLowerCase()];
+              const brandLogo =
+                brandLogos[vehicle?.brand?.trim()?.toLowerCase()];
               return (
                 <VehicleCard
                   key={vehicle?.id}
@@ -190,13 +285,18 @@ const VehicleList = () => {
                   whatsappNumber={vehicle?.whatsapp}
                   phoneNumber={vehicle?.phoneNumber}
                   location={vehicle?.location}
+                  isInrisalto={inRisaltoCarIds.includes(vehicle?.id)}
                 />
               );
             })}
           </div>
 
           <div className="flex justify-center mt-6">
-            <Pagination totalPages={totalPage} currentPage={currentPage} onPageChange={setCurrentPage} />
+            <Pagination
+              totalPages={totalPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </>
       )}

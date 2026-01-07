@@ -2,6 +2,7 @@ import plus from "@/assets/Plus.svg";
 import standard from "@/assets/Standard.svg";
 import BADGE from "@/assets/VANTAGGI/BADGE.png";
 import { Check } from "lucide-react";
+import Image from "next/image";
 
 export default function PricingTable() {
   return (
@@ -13,7 +14,7 @@ export default function PricingTable() {
             <div className="text-center pb-6 pt-8">
               <h3 className="text-xl font-bold mb-6">Standard</h3>
               <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                <img src={standard.src} alt="Badge" className="w-12 h-12" />
+                <Image src={standard.src} alt="Badge" className="w-12 h-12" />
               </div>
               <p className="text-sm text-[#AAAAAA] leading-relaxed">
                 L&#39;essenziale per iniziare
@@ -64,7 +65,7 @@ export default function PricingTable() {
             <div className="text-center pb-6 pt-8">
               <h3 className="text-xl font-bold mb-6">Plus</h3>
               <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                <img src={plus.src} alt="Badge" className="w-12 h-12" />
+                <Image src={plus.src} alt="Badge" className="w-12 h-12" />
               </div>
               <p className="text-sm text-[#AAAAAA] leading-relaxed">
                 Perfetto per piccole aziende che
@@ -117,7 +118,7 @@ export default function PricingTable() {
             <div className="text-center pb-6 pt-8">
               <h3 className="text-xl font-bold mb-6">Business</h3>
               <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                <img src={BADGE.src} alt="Badge" className="w-12 h-12" />
+                <Image src={BADGE.src} alt="Badge" className="w-12 h-12" />
               </div>
               <p className="text-sm text-[#AAAAAA] leading-relaxed">
                 La soluzione ideale per aziende

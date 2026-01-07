@@ -12,7 +12,11 @@ import VehicleFaq from "./vehicleFaq/VehicleFaq";
 const VeicoliPage = () => {
   const router = useRouter();
 
-  const handleSearchResult = (result: string, longitude: number, latitude: number) => {
+  const handleSearchResult = (
+    result: string,
+    longitude: number,
+    latitude: number
+  ) => {
     // Create the URL with the search parameters
     const newUrl = `/veicoli?latitude=${latitude}&longitude=${longitude}`;
 
@@ -26,7 +30,12 @@ const VeicoliPage = () => {
       <div className="bg-[#FAFAFA] h-48 md:h-40 flex items-center justify-center">
         {/* Search Bar */}
         <div className="container mx-auto px-4 pt-6 flex flex-col  md:flex-row gap-2 mb-4 w-[800px]">
-          <SearchField onResult={handleSearchResult} countryList={["Svizzera", "Italy"]} searchIcon={search} flagIcon={swiss} />
+          <SearchField
+            onResult={handleSearchResult}
+            countryList={["Svizzera", "Italy"]}
+            searchIcon={search}
+            flagIcon={swiss}
+          />
         </div>
       </div>
       <div className="space-y-20 xl:space-y-40">

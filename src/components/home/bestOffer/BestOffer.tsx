@@ -6,10 +6,10 @@ import Image from "next/image";
 import fire from "@/assets/home/popularVehicle/in-evidence.svg";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useGetAllCarByTypesQuery } from "@/redux/api/carApi";
+import { useInHomePageCarsQuery } from "@/redux/api/carApi";
 
 const BestOffer = () => {
-  const { data: getAllCar } = useGetAllCarByTypesQuery(`carType=BEST_OFFER`);
+  const { data: getAllCar } = useInHomePageCarsQuery(`carType=BEST_OFFER`);
   const cars = getAllCar?.data || [];
   console.log(cars);
   return (
@@ -25,13 +25,18 @@ const BestOffer = () => {
       {/* Display Cars or Message */}
       <div className="pt-10">
         {cars?.length === 0 ? (
-          <div className="text-center text-xl font-bold text-gray-500">No cars available in this section.</div>
+          <div className="text-center text-xl font-bold text-gray-500">
+            No cars available in this section.
+          </div>
         ) : (
           // Display best offer cars
           <div className="flex overflow-x-auto gap-6 xl:gap-4 2xl:gap-6 scrollbar-hide">
-            {cars.map((car: any) => (
-              <div key={car.id} className="flex-shrink-0 relative w-64 md:w-72 lg:w-[280px] xl:lg:w-[268px] 2xl:lg:w-[280px]">
-                <Link href={`/veicoli/${car?.id}`} passHref>
+            {cars.map((carInfo: any) => (
+              <div
+                key={carInfo.car?.id}
+                className="flex-shrink-0 relative w-64 md:w-72 lg:w-[280px] xl:lg:w-[268px] 2xl:lg:w-[280px]"
+              >
+                <Link href={`/veicoli/${carInfo?.car?.id}`} passHref>
                   <div className="relative w-full h-40 overflow-hidden rounded-2xl mb-5">
                     <motion.div
                       initial={{ scale: 1 }}
@@ -41,8 +46,8 @@ const BestOffer = () => {
                     >
                       <Image
                         className="w-full h-full object-cover"
-                        src={car?.mainImage || "/default-image.png"}
-                        alt={car?.model}
+                        src={carInfo?.car?.mainImage || "/default-image.png"}
+                        alt={carInfo?.car?.model}
                         width={1000}
                         height={1000}
                       />
@@ -51,17 +56,25 @@ const BestOffer = () => {
                 </Link>
 
                 <h4 className="text-base font-normal mb-1">
-                  {car?.brand} {car?.model}
+                  {carInfo?.car?.brand} {carInfo?.car?.model}
                 </h4>
-                <p className="font-bold text-[16px]">{car?.price?.[2]?.price || "N/A"} CHF</p>
+                <p className="font-bold text-[16px]">
+                  {carInfo?.car?.price?.[2]?.price || "N/A"} CHF
+                </p>
 
                 <div className="absolute top-3 left-0 z-40">
-                  {car?.carType === "BEST_OFFER" && (
+                 
                     <div className="flex items-center gap-2 bg-primary text-white py-1 pl-2 pr-4 rounded-r-full">
-                      <Image src={fire} alt="car" width={500} height={500} className="h-4 w-4" />
+                      <Image
+                        src={fire}
+                        alt="car"
+                        width={500}
+                        height={500}
+                        className="h-4 w-4"
+                      />
                       <p className="text-xs font-normal">In evidenza</p>
                     </div>
-                  )}
+                 
                 </div>
               </div>
             ))}

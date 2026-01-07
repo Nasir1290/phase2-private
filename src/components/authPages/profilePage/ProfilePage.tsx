@@ -14,7 +14,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const ProfilePage = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [tabs] = useState(["Profile", "Abbonamento", "Sicurezza", "Preferiti", "Performance", "Notifiche"]);
+  const [tabs] = useState([
+    "Profile",
+    "Abbonamento",
+    "Sicurezza",
+    "Preferiti",
+    "Performance",
+    "Notifiche",
+  ]);
   // const [activeTab, setActiveTab] = useState<"profile" | "sicurezza" | "Abbonamento" | "Preferiti" | "Notifiche" | "Performance">("profile");
 
   const searchParams = useSearchParams();
@@ -35,7 +42,9 @@ const ProfilePage = () => {
           {tabs.map((tab) => (
             <button
               key={tab}
-              className={` py-2 font-medium ${activeTab === tab ? " text-primary underline" : ""}`}
+              className={` py-2 font-medium ${
+                activeTab === tab ? " text-primary underline" : ""
+              }`}
               // onClick={() => setActiveTab(tab as any)}
               onClick={() => handleTabChange(tab)}
             >
@@ -45,16 +54,25 @@ const ProfilePage = () => {
         </div>
         <div className="md:hidden flex justify-between gap-3 border-b mb-4">
           <button
-            className={`px-4 py-2 font-medium ${activeTab === "sicurezza" ? " text-primary underline" : ""}`}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "sicurezza" ? " text-primary underline" : ""
+            }`}
             onClick={() => setOpenDrawer(true)}
           >
             <RiMenu2Fill size={24} />
           </button>
-          <Drawer title="Basic Drawer" closable={{ "aria-label": "Close Button" }} onClose={() => setOpenDrawer(false)} open={openDrawer}>
+          <Drawer
+            title="Basic Drawer"
+            closable={{ "aria-label": "Close Button" }}
+            onClose={() => setOpenDrawer(false)}
+            open={openDrawer}
+          >
             {tabs.map((tab) => (
               <button
                 key={tab}
-                className={`block px-4 py-2 font-medium ${activeTab === tab ? " text-primary underline" : ""}`}
+                className={`block px-4 py-2 font-medium ${
+                  activeTab === tab ? " text-primary underline" : ""
+                }`}
                 onClick={() => {
                   handleTabChange(tab as any);
                   setOpenDrawer(false);

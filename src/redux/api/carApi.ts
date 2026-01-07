@@ -42,7 +42,7 @@ const carApi = baseApi.injectEndpoints({
     // get All Vehicle Owners --done
     getAllCarOwners: build.query({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      query: (query:string|any) => ({
+      query: (query: string | any) => ({
         url: `/car/owners?${query}`,
         method: "GET",
       }),
@@ -52,6 +52,13 @@ const carApi = baseApi.injectEndpoints({
     getCarByID: build.query({
       query: (id) => ({
         url: `/car/single/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Car"],
+    }),
+    getCarBySlug: build.query({
+      query: (slug: string) => ({
+        url: `/car/get-by-slug/${slug}`,
         method: "GET",
       }),
       providesTags: ["Car"],
@@ -157,7 +164,7 @@ const carApi = baseApi.injectEndpoints({
     }),
     getAllCarsWithSuspended: build.query({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      query: (query:string|any) => ({
+      query: (query: string | any) => ({
         url: `/car/all-with-suspended?${query}`,
         method: "GET",
       }),
@@ -166,11 +173,40 @@ const carApi = baseApi.injectEndpoints({
 
     getAllCarByTypes: build.query({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      query: (query:string|any) => ({
+      query: (query: string | any) => ({
         url: `/car/all?${query}`,
         method: "GET",
       }),
       providesTags: ["Car"],
+    }),
+    getCarPromotionWithCheckoutId: build.query({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      query: (checkoutId: string | any) => ({
+        url: `/car/car-promotion/${checkoutId}`,
+        method: "GET",
+      }),
+      providesTags: ["Car"],
+    }),
+    currentInCimaCar: build.query({
+      query: () => ({
+        url: `/car/current-in-cima`,
+        method: "GET",
+      }),
+      providesTags: ["Promotion"],
+    }),
+    inHomePageCars: build.query({
+      query: () => ({
+        url: `/car/in-homepage`,
+        method: "GET",
+      }),
+      providesTags: ["Promotion"],
+    }),
+    inRisaltoCars: build.query({
+      query: () => ({
+        url: `/car//in-risalto`,
+        method: "GET",
+      }),
+      providesTags: ["Promotion"],
     }),
   }),
 });
@@ -192,4 +228,9 @@ export const {
   useBookCarMutation,
   useGetAllCarsWithSuspendedQuery,
   useGetAllCarByTypesQuery,
+  useGetCarBySlugQuery,
+  useGetCarPromotionWithCheckoutIdQuery,
+  useCurrentInCimaCarQuery,
+  useInHomePageCarsQuery,
+  useInRisaltoCarsQuery,
 } = carApi;
