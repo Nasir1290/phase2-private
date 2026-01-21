@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { VehicleInsertionHeader } from "@/components/shared/sectionHeader/SectionHeader";
 // import { VehicleFormData } from "@/types/vehiclStep";

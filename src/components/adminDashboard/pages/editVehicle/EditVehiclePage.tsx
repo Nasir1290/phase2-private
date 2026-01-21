@@ -5,7 +5,10 @@ import { Separator } from "@/components/ui/separator";
 import { useState, useEffect } from "react";
 import { VehicleFormData } from "@/types/vehiclStep";
 import { useRouter } from "next/navigation";
-import { useGetCarByIDQuery, useUpdateCarDetailsMutation } from "@/redux/api/carApi";
+import {
+  useGetCarByIDQuery,
+  useUpdateCarDetailsMutation,
+} from "@/redux/api/carApi";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import EditRegistration from "./EditRegistration";
@@ -104,7 +107,11 @@ const EditVehicle = () => {
   // console.log(formData)
 
   // Handle form field changes
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -178,22 +185,44 @@ const EditVehicle = () => {
   return (
     <div className="px-4 py-8">
       <form onSubmit={handleSubmit} className="space-y-8">
-        <EditRegistration formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
-        <EditDetails formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
+        <EditRegistration
+          formData={formData}
+          onFormChange={handleFormChange}
+          setFormData={setFormData}
+        />
+        <EditDetails
+          formData={formData}
+          onFormChange={handleFormChange}
+          setFormData={setFormData}
+        />
         <EditFuel formData={formData} onFormChange={handleFormChange} />
-        <EditPhotos formData={formData} setFormData={setFormData} />
-        <EditDescription formData={formData} onFormChange={handleFormChange} setFormData={setFormData} />
+        <EditPhotos
+          formData={formData}
+          setFormData={setFormData}
+          carId={id as string}
+        />
+        <EditDescription
+          formData={formData}
+          onFormChange={handleFormChange}
+          setFormData={setFormData}
+        />
         <EditPrice formData={formData} setFormData={setFormData} />
-        <EditAccessori formData={formData} onFormChange={handleAccessoriesChange} />
+        <EditAccessori
+          formData={formData}
+          onFormChange={handleAccessoriesChange}
+        />
         <EditContact formData={formData} onFormChange={handleFormChange} />
-        <EditAuthentication formData={formData} />
+        <EditAuthentication formData={formData} setFormData={setFormData} />
 
         <div>
           <Separator className="my-20" />
         </div>
 
         <div className="flex justify-end">
-          <button type="submit" className="bg-primary hover:bg-primary text-white py-2 px-8 w-48 rounded-lg shadow-lg text-lg font-semibold">
+          <button
+            type="submit"
+            className="bg-primary hover:bg-primary text-white py-2 px-8 w-48 rounded-lg shadow-lg text-lg font-semibold"
+          >
             Salva
           </button>
         </div>

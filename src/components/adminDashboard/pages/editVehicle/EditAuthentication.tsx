@@ -160,7 +160,6 @@
 
 
 
-/* eslint-disable @next/next/no-img-element */
 import { VehicleInsertionHeader } from "@/components/shared/sectionHeader/SectionHeader";
 import { X } from "lucide-react";
 import Image from "next/image";

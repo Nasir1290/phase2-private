@@ -1,12 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/edit-vehicle/[slug]/page.tsx
 import { Separator } from "@/components/ui/separator";
 import EditVehiclePage from "@/components/vehicleEdit/EditVehiclePage";
 
-export default async function VehicleEditPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function VehicleEditPage({ params }: { params: any }) {
   const { slug } = await params;
   return (
     <div className="container mx-auto pt-32 pb-8">
