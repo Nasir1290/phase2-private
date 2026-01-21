@@ -9,6 +9,7 @@ import dots from "@/assets/myVehicles/elenco-opzioni.svg";
 import playIcon from "@/assets/myVehicles/pulsante-attiva.svg";
 import { Separator } from "../ui/separator";
 import trash from "@/assets/myVehicles/elimina.svg";
+import modification from "@/assets/myVehicles/modification.svg";
 import promotionIcon from "@/assets/myVehicles/promotionIcon.svg";
 import pause from "@/assets/myVehicles/sospendere.svg";
 import MyVehicleModal from "../shared/myVehicleModal/MyVehicleModal";
@@ -262,6 +263,19 @@ const MyVehicleCard: React.FC<VehicleCardProps> = ({
                     width={100}
                     height={100}
                     className="w-3.5 h-3.5"
+                  />
+                </Link>
+                <Link
+                  href={`/edit-vehicle/${slug}`}
+                  className="rounded font-[450] px-4 py-2 hover:bg-primary/5 cursor-pointer flex justify-between"
+                >
+                  <span>Modifica</span>
+                  <Image
+                    src={modification}
+                    alt="Modifica"
+                    width={100}
+                    height={100}
+                    className="w-4 h-4"
                   />
                 </Link>
                 <li

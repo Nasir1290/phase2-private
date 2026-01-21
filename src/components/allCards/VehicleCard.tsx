@@ -19,7 +19,7 @@ import ContactModal from "../veicoli/contactModal/ContactModal";
 
 interface VehicleCardProps {
   id: string;
-  imageUrl: string;
+  mainImage: string;
   logo: string;
   brand: string;
   model: string;
@@ -37,7 +37,7 @@ interface VehicleCardProps {
 
 const VehicleCard: React.FC<VehicleCardProps> = ({
   id,
-  imageUrl,
+  mainImage,
   logo,
   brand,
   model,
@@ -80,7 +80,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
               {/* Link wraps only the image */}
               <Link href={`/veicoli/${id}`}>
                 <Image
-                  src={imageUrl}
+                  src={mainImage}
                   alt={model}
                   width={320}
                   height={240}

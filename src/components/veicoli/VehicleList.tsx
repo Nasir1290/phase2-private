@@ -272,7 +272,7 @@ const VehicleList = () => {
                 <VehicleCard
                   key={vehicle?.id}
                   id={vehicle?.id}
-                  imageUrl={vehicle?.mainImage}
+                  mainImage={vehicle?.mainImage}
                   logo={brandLogo}
                   brand={vehicle?.brand}
                   model={vehicle?.model}

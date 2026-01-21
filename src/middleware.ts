@@ -46,5 +46,6 @@ export const config = {
     "/vehicle-insert",
     "/profile",
     "/my-vehicles",
+    "/edit-vehicle/:slug",
   ],
 };

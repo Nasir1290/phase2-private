@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -11,7 +12,7 @@ import { FormStep } from "@/types/vehiclStep";
 import { ReactNode, useEffect, useState } from "react";
 import { PricingStep } from "./steps/Pricing";
 import { ContactStep } from "./steps/Contact";
-import { useCreateCarMutation } from "@/redux/api/carApi";
+import { useCreateCarByOwnerMutation } from "@/redux/api/carApi";
 import { useGetMyProfileQuery } from "@/redux/api/authApi";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -22,14 +23,23 @@ export function StepController() {
   const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [createCar] = useCreateCarMutation();
+  const [createCar] = useCreateCarByOwnerMutation();
   const { data: getProfile } = useGetMyProfileQuery({});
   const userId = getProfile?.data?.id;
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { currentStep, formData } = useSelector((state: RootState) => state.form);
+  const { currentStep, formData } = useSelector(
+    (state: RootState) => state.form
+  );
 
-  const stepOrder: FormStep[] = ["basic", "media", "details", "pricing", "description", "publish"];
+  const stepOrder: FormStep[] = [
+    "basic",
+    "media",
+    "details",
+    "pricing",
+    "description",
+    "publish",
+  ];
 
   // Get current step from URL query
   const getStepFromQuery = (): FormStep => {
@@ -43,7 +53,7 @@ export function StepController() {
     if (currentStep !== stepFromQuery) {
       dispatch(setCurrentStep(stepFromQuery));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const currentIndex = stepOrder.indexOf(currentStep);
@@ -66,7 +76,8 @@ export function StepController() {
         if (!formData.horsePower) errors.push("Horse power is required");
         if (!formData.seats) errors.push("Number of seats is required");
         if (!formData.fuelType) errors.push("Fuel type is required");
-        if (!formData.isConfirmed) errors.push("Please confirm the vehicle details");
+        if (!formData.isConfirmed)
+          errors.push("Please confirm the vehicle details");
         break;
 
       case "media":
@@ -74,9 +85,14 @@ export function StepController() {
         break;
 
       case "details":
-        const descriptionWordCount = (formData.description || "").trim().split(/\s+/).filter(Boolean).length;
-        if (descriptionWordCount < 20) errors.push("Description must be at least 20 words");
-        if (formData.deposite === undefined || formData.deposite === null) errors.push("Deposit amount is required");
+        const descriptionWordCount = (formData.description || "")
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean).length;
+        if (descriptionWordCount < 20)
+          errors.push("Description must be at least 20 words");
+        if (formData.deposite === undefined || formData.deposite === null)
+          errors.push("Deposit amount is required");
         if (!formData.depositePolicy) errors.push("Deposit policy is required");
         if (!formData.fuelPolicy) errors.push("Fuel policy is required");
         if (!formData.mileagePolicy) errors.push("Mileage policy is required");
@@ -89,9 +105,15 @@ export function StepController() {
           break;
         }
 
-        const nineHourEntry = formData.price.find((item) => item.rentalTime === 9);
-        const twentyFourHourEntry = formData.price.find((item) => item.rentalTime === 24);
-        const thirtyHourEntry = formData.price.find((item) => item.rentalTime === 30);
+        const nineHourEntry = formData.price.find(
+          (item) => item.rentalTime === 9
+        );
+        const twentyFourHourEntry = formData.price.find(
+          (item) => item.rentalTime === 24
+        );
+        const thirtyHourEntry = formData.price.find(
+          (item) => item.rentalTime === 30
+        );
         if (!nineHourEntry || nineHourEntry.price <= 0) {
           errors.push("9-hour rental price is required");
         }
@@ -103,21 +125,31 @@ export function StepController() {
         }
 
         formData.price.forEach((entry) => {
-          if (entry.rentalTime !== 24 && entry.price > 0 && !entry.kilometerPerHour && entry.kilometerPerHour !== "Unlimited") {
-            errors.push(`Kilometer limit is required for ${entry.rentalTime}h rental`);
+          if (
+            entry.rentalTime !== 24 &&
+            entry.price > 0 &&
+            !entry.kilometerPerHour &&
+            entry.kilometerPerHour !== "Unlimited"
+          ) {
+            errors.push(
+              `Kilometer limit is required for ${entry.rentalTime}h rental`
+            );
           }
         });
 
-        if (!formData.accessories) errors.push("Accessories information is required");
+        if (!formData.accessories)
+          errors.push("Accessories information is required");
         break;
 
       case "description":
-        if (!formData.advertiserName) errors.push("Advertiser name is required");
+        if (!formData.advertiserName)
+          errors.push("Advertiser name is required");
         if (!formData.phoneNumber) errors.push("Phone number is required");
         if (!formData.email) errors.push("Email is required");
         if (!formData.whatsapp) errors.push("WhatsApp number is required");
         if (!formData.location) errors.push("Location is required");
-        if (!formData.authenticationFile) errors.push("Authentication file is required");
+        if (!formData.authenticationFile)
+          errors.push("Authentication file is required");
         break;
     }
 
@@ -152,7 +184,24 @@ export function StepController() {
     dispatch(setCurrentStep(step));
   };
 
-  const handleNext = () => {
+  // const handleNext = () => {
+  //   const stepErrors = validateStep(currentStep);
+
+  //   if (stepErrors.length > 0) {
+  //     setErrors(stepErrors);
+  //     toast.error("Please fix the errors before proceeding");
+  //     return;
+  //   }
+
+  //   setErrors([]);
+  //   if (currentIndex < stepOrder.length - 1) {
+  //     navigateToStep(stepOrder[currentIndex + 1]);
+  //   }
+  // };
+
+  const handleNext = async () => {
+    if (isSubmitting) return;
+
     const stepErrors = validateStep(currentStep);
 
     if (stepErrors.length > 0) {
@@ -162,8 +211,87 @@ export function StepController() {
     }
 
     setErrors([]);
+
+    if (currentStep === "description") {
+      const res = await submitCar();
+
+      if (res?.success && res?.data?.slug) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("step", "publish");
+        params.set("slug", res.data.slug);
+
+        router.replace(`?${params.toString()}`, { scroll: false });
+        dispatch(setCurrentStep("publish"));
+      }
+
+      return;
+    }
+
     if (currentIndex < stepOrder.length - 1) {
       navigateToStep(stepOrder[currentIndex + 1]);
+    }
+  };
+
+  const submitCar = async () => {
+    if (isSubmitting) return false;
+    setIsSubmitting(true);
+
+    const bodyData = new FormData();
+
+    const data = {
+      // ownerId: userId,
+      category: formData.category,
+      brand: formData.brand,
+      model: formData.model,
+      year: formData.year,
+      transmission: formData.transmission,
+      color: formData.color,
+      kmh: formData.kmh,
+      engine: formData.engine,
+      maxSpeed: formData.maxSpeed,
+      horsePower: formData.horsePower,
+      seats: formData.seats,
+      fuelType: formData.fuelType,
+      description: formData.description,
+      deposite: formData.deposite,
+      depositePolicy: formData.depositePolicy,
+      fuelPolicy: formData.fuelPolicy,
+      mileagePolicy: formData.mileagePolicy,
+      damagePolicy: formData.damagePolicy,
+      accessories: formData.accessories,
+      price: formData.price,
+      advertiserName: formData.advertiserName,
+      phoneNumber: formData.phoneNumber,
+      email: formData.email,
+      whatsapp: formData.whatsapp,
+      location: formData.location,
+      latitude: formData.latitude,
+      longitude: formData.longitude,
+    };
+
+    bodyData.append("bodyData", JSON.stringify(data));
+
+    formData.otherImages?.forEach((img) => bodyData.append("otherImages", img));
+    if (formData.video) bodyData.append("video", formData.video);
+    if (formData.mainImage) bodyData.append("mainImage", formData.mainImage);
+    if (formData.authenticationFile)
+      bodyData.append("authenticationFile", formData.authenticationFile);
+
+    try {
+      const res = await createCar(bodyData).unwrap();
+      toast.success("Car created successfully");
+      return res; // { success, data, message }
+    } catch (error: any) {
+      if (Array.isArray(error?.data?.errorMessages)) {
+        error.data.errorMessages.forEach((msg: any) =>
+          toast.error(`${msg?.path}: ${msg?.message}`)
+        );
+      } else {
+        toast.error("Failed to create car");
+      }
+      return { success: false };
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -174,93 +302,99 @@ export function StepController() {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!isAllStepsComplete()) {
-      const allErrors: string[] = [];
-      stepOrder.forEach((step) => {
-        const stepErrors = validateStep(step);
-        allErrors.push(...stepErrors);
-      });
-      setErrors(allErrors);
-      toast.error("Please complete all required fields");
-      return;
-    }
+  // const handleSubmit = async () => {
+  //   if (!isAllStepsComplete()) {
+  //     const allErrors: string[] = [];
+  //     stepOrder.forEach((step) => {
+  //       const stepErrors = validateStep(step);
+  //       allErrors.push(...stepErrors);
+  //     });
+  //     setErrors(allErrors);
+  //     toast.error("Please complete all required fields");
+  //     return;
+  //   }
 
-    if (isSubmitting) return;
-    setIsSubmitting(true);
+  //   if (isSubmitting) return;
+  //   setIsSubmitting(true);
 
-    const bodyData = new FormData();
-    const data = {
-      ownerId: userId,
-      category: formData?.category,
-      brand: formData?.brand,
-      model: formData?.model,
-      year: formData?.year,
-      transmission: formData?.transmission,
-      color: formData?.color,
-      kmh: formData?.kmh,
-      engine: formData?.engine,
-      maxSpeed: formData?.maxSpeed,
-      horsePower: formData?.horsePower,
-      seats: formData?.seats,
-      fuelType: formData?.fuelType,
-      description: formData?.description,
-      deposite: formData?.deposite,
-      depositePolicy: formData?.depositePolicy,
-      fuelPolicy: formData?.fuelPolicy,
-      mileagePolicy: formData?.mileagePolicy,
-      damagePolicy: formData?.damagePolicy,
-      accessories: formData?.accessories,
-      price: formData?.price,
-      advertiserName: formData?.advertiserName,
-      phoneNumber: formData?.phoneNumber,
-      email: formData?.email,
-      whatsapp: formData?.whatsapp,
-      location: formData?.location,
-      latitude: formData?.latitude,
-      longitude: formData?.longitude,
-    };
+  //   const bodyData = new FormData();
+  //   const data = {
+  //     ownerId: userId,
+  //     category: formData?.category,
+  //     brand: formData?.brand,
+  //     model: formData?.model,
+  //     year: formData?.year,
+  //     transmission: formData?.transmission,
+  //     color: formData?.color,
+  //     kmh: formData?.kmh,
+  //     engine: formData?.engine,
+  //     maxSpeed: formData?.maxSpeed,
+  //     horsePower: formData?.horsePower,
+  //     seats: formData?.seats,
+  //     fuelType: formData?.fuelType,
+  //     description: formData?.description,
+  //     deposite: formData?.deposite,
+  //     depositePolicy: formData?.depositePolicy,
+  //     fuelPolicy: formData?.fuelPolicy,
+  //     mileagePolicy: formData?.mileagePolicy,
+  //     damagePolicy: formData?.damagePolicy,
+  //     accessories: formData?.accessories,
+  //     price: formData?.price,
+  //     advertiserName: formData?.advertiserName,
+  //     phoneNumber: formData?.phoneNumber,
+  //     email: formData?.email,
+  //     whatsapp: formData?.whatsapp,
+  //     location: formData?.location,
+  //     latitude: formData?.latitude,
+  //     longitude: formData?.longitude,
+  //   };
 
-    bodyData.append("bodyData", JSON.stringify(data));
+  //   bodyData.append("bodyData", JSON.stringify(data));
 
-    if (formData?.otherImages) {
-      formData.otherImages.forEach((image) => {
-        bodyData.append("otherImages", image);
-      });
-    }
+  //   if (formData?.otherImages) {
+  //     formData.otherImages.forEach((image) => {
+  //       bodyData.append("otherImages", image);
+  //     });
+  //   }
 
-    if (formData?.video) {
-      bodyData.append("video", formData.video);
-    }
+  //   if (formData?.video) {
+  //     bodyData.append("video", formData.video);
+  //   }
 
-    if (formData?.mainImage) {
-      bodyData.append("mainImage", formData.mainImage);
-    }
+  //   if (formData?.mainImage) {
+  //     bodyData.append("mainImage", formData.mainImage);
+  //   }
 
-    if (formData?.authenticationFile) {
-      bodyData.append("authenticationFile", formData.authenticationFile);
-    }
+  //   if (formData?.authenticationFile) {
+  //     bodyData.append("authenticationFile", formData.authenticationFile);
+  //   }
 
-    try {
-      const res = await createCar(bodyData).unwrap();
+  //   try {
+  //     const res = await createCar(bodyData).unwrap();
 
-      if (res.success === true) {
-        toast.success("Car Created Successfully");
-        router.push(`/inserted-vehicle/${res.data.id}`);
-        dispatch(resetFormData());
-      }
-    } catch (error: any) {
-      if (Array.isArray(error?.data?.errorMessages)) {
-        error.data.errorMessages.forEach((msg: any) => {
-          toast.error(`${msg?.path}: ${msg?.message}` || "Unknown error");
-        });
-      } else {
-        toast.error(`${error?.path}: ${error?.message}` || "An error occurred");
-      }
-      console.error("Error submitting data:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
+  //     if (res.success === true) {
+  //       toast.success("Car Created Successfully");
+  //       router.push(`/inserted-vehicle/${res.data.id}`);
+  //       dispatch(resetFormData());
+  //     }
+  //   } catch (error: any) {
+  //     if (Array.isArray(error?.data?.errorMessages)) {
+  //       error.data.errorMessages.forEach((msg: any) => {
+  //         toast.error(`${msg?.path}: ${msg?.message}` || "Unknown error");
+  //       });
+  //     } else {
+  //       toast.error(`${error?.path}: ${error?.message}` || "An error occurred");
+  //     }
+  //     console.error("Error submitting data:", error);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  const handleSubmit = () => {
+    toast.success("Vehicle published successfully");
+    dispatch(resetFormData());
+    router.push("/my-vehicles");
   };
 
   const handleReset = () => {
@@ -271,11 +405,13 @@ export function StepController() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       {/* Error Display */}
       {errors.length > 0 && (
         <div className="p-4 bg-red-50 border border-primary-200 rounded-md">
-          <h3 className="text-primary font-medium mb-2">Please fix the following errors:</h3>
+          <h3 className="text-primary font-medium mb-2">
+            Please fix the following errors:
+          </h3>
           <ul className="list-disc list-inside text-primary space-y-1">
             {errors.map((error, index) => (
               <li key={index}>{error}</li>
@@ -293,35 +429,85 @@ export function StepController() {
           <div className="flex items-center gap-4">
             <button
               onClick={handlePrevious}
-              className="w-[140px] py-1.5 rounded text-[15px] shadow shadow-black/10 border border-gray-200/20 font-medium"
+              disabled={isSubmitting}
+              className="w-[140px] py-1.5 rounded text-[15px] shadow border font-medium disabled:opacity-50"
             >
               Indietro
             </button>
+
             <button
               onClick={handleReset}
-              className="w-[140px] py-1.5 rounded text-[15px] shadow shadow-black/10 border border-gray-200/20 font-medium"
+              disabled={isSubmitting}
+              className="w-[140px] py-1.5 rounded text-[15px] shadow border font-medium disabled:opacity-50"
             >
-              reset
+              Reset
             </button>
           </div>
         )}
 
         {currentIndex < stepOrder.length - 1 ? (
-          <button onClick={handleNext} className="w-[140px] py-1.5 rounded text-[15px] font-medium bg-primary text-white">
-            Avanti
+          <button
+            onClick={handleNext}
+            disabled={isSubmitting}
+            className={`w-[140px] py-1.5 rounded text-[15px] font-medium ${
+              isSubmitting
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-primary text-white"
+            }`}
+          >
+            {isSubmitting && currentStep === "description" ? (
+              <div className="flex items-center gap-2 justify-center">
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12z"
+                  />
+                </svg>
+                Creating…
+              </div>
+            ) : (
+              "Avanti"
+            )}
           </button>
         ) : (
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}
             className={`w-[140px] py-1.5 rounded text-[15px] font-medium ${
-              isSubmitting ? "bg-gray-300 text-white cursor-not-allowed" : "bg-primary text-white cursor-pointer"
+              isSubmitting
+                ? "bg-gray-300 text-white cursor-not-allowed"
+                : "bg-primary text-white cursor-pointer"
             }`}
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2 ml-3">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"

@@ -15,6 +15,16 @@ const carApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Car"],
     }),
+    createCarByOwner: build.mutation({
+      query: (formData) => {
+        return {
+          url: "/car/create-by-user",
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Car"],
+    }),
     // get all accepted cars --done
     getAllAcceptedCar: build.query({
       query: (arg: TQuery[]) => {
@@ -153,6 +163,14 @@ const carApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Car"],
     }),
+    updateCarDetailsByOwner: build.mutation({
+      query: ({ id, data }) => ({
+        url: `/car/update-by-owner/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Car"],
+    }),
 
     bookCar: build.mutation({
       query: (data) => ({
@@ -208,11 +226,27 @@ const carApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Promotion"],
     }),
+
+    updateCarByOwner: build.mutation({
+      query: ({ id, formData }) => ({
+        url: `/car/update-by-owner/${id}`,
+        method: "PATCH",
+        body: formData, // will be FormData
+      }),
+    }),
+    removeOtherImage: build.mutation({
+      query: (data) => ({
+        url: `/car/remove-other-image`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateCarMutation,
+  useCreateCarByOwnerMutation,
   useGetAllAcceptedCarQuery,
   useGetAllPendingCarQuery,
   useGetAllCarOwnersQuery,
@@ -233,4 +267,7 @@ export const {
   useCurrentInCimaCarQuery,
   useInHomePageCarsQuery,
   useInRisaltoCarsQuery,
+  useUpdateCarByOwnerMutation,
+  useUpdateCarDetailsByOwnerMutation,
+  useRemoveOtherImageMutation
 } = carApi;
